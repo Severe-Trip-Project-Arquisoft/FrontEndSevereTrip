@@ -4,7 +4,7 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import { ProductsToolbar, ProductCard } from './components';
+import {ProductCard } from './components';
 import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +29,6 @@ const ProductList = () => {
 
   return (
     <div className={classes.root}>
-      <ProductsToolbar />
       <div className={classes.content}>
         <Grid
           container

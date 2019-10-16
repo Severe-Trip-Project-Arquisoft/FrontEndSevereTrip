@@ -1,22 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
-import { forwardRef } from 'react';
-import clsx from 'clsx';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Grid,
-  Divider
-} from '@material-ui/core';
+import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 
+
+import ListItem from '@material-ui/core/ListItem';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+
+import { HotelDetailToolbar} from './components';
+import mockData from './data';
+
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    padding: theme.spacing(3)
+  },
+  content: {
+    marginTop: theme.spacing(2)
+  },
   imageContainer: {
     height: 64,
     width: 64,
@@ -38,29 +42,26 @@ const useStyles = makeStyles(theme => ({
   statsIcon: {
     color: theme.palette.icon,
     marginRight: theme.spacing(1)
+  },
+  demo: {
+    backgroundColor: theme.palette.background.paper,
   }
 }));
 
-const CustomRouterLink = forwardRef((props, ref) => (
-  <div
-    ref={ref}
-  >
-    <RouterLink {...props} />
-  </div>
-));
-
-const HotelCard = props => {
-  const { className, hotel, ...rest } = props;
-
+const HotelDetail = () => {
   const classes = useStyles();
+  const [hotel] = useState(mockData);
 
   return (
+    <div className={classes.root}>
+      <HotelDetailToolbar />
+      <div className={classes.content}>
+
     <Card
-      {...rest}
-      className={clsx(classes.root, className)}
+      className={classes.root}
     >
       <CardContent>
-        <div className={classes.imageContainer}>
+	<div className={classes.imageContainer}>
           <img
             alt="Hotel"
             className={classes.image}
@@ -68,10 +69,8 @@ const HotelCard = props => {
           />
         </div>
         <Typography
-          align="rihth"
+          align="center"
           variant="h4"
-	  component={CustomRouterLink}
-          to="/hotelDetail"
         >
           {hotel.title}
         </Typography>
@@ -83,9 +82,27 @@ const HotelCard = props => {
         </Typography>
         <Typography
           align="center"
-          variant="h5"
+          variant="body1"
         >
-          {hotel.city}
+          {hotel.city} - {hotel.country}
+        </Typography>
+        <Typography
+          align="center"
+          variant="body1"
+        >
+          {hotel.address}
+        </Typography>
+        <Typography
+          align="center"
+          variant="body1"
+        >
+          {hotel.email}
+        </Typography>
+        <Typography
+          align="center"
+          variant="body1"
+        >
+          {hotel.phone}
         </Typography>
         <Typography
           align="center"
@@ -94,8 +111,36 @@ const HotelCard = props => {
           Precio por habitacion {hotel.price}
         </Typography>
       </CardContent>
+
+
+
+          <div className={classes.demo}>
+
+
+              {hotel.adiciones.map(add => (
+            <Grid item xs={12} md={6}>
+                <ListItem>
+                  <ListItemIcon>
+                    <RadioButtonCheckedIcon />
+                  </ListItemIcon>
+			<Typography
+          			align="center"
+			        variant="body1"
+		        >
+		          {add.tx}
+		        </Typography>
+
+                </ListItem>
+            </Grid>
+              ))}
+
+          </div>
+
+
+
+
       <Divider />
-      <CardActions>
+	<CardActions>
         <Grid
           container
           justify="space-between"
@@ -127,12 +172,12 @@ const HotelCard = props => {
         </Grid>
       </CardActions>
     </Card>
+
+
+
+      </div>
+    </div>
   );
 };
 
-HotelCard.propTypes = {
-  className: PropTypes.string,
-  hotel: PropTypes.object.isRequired
-};
-
-export default HotelCard;
+export default HotelDetail;

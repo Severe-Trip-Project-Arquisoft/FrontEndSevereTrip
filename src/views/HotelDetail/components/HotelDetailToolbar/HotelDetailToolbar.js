@@ -3,7 +3,19 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
+import { forwardRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
+const Reservation = '/reservations';
+const DeleteHotel = '/';
+
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div
+    ref={ref}
+  >
+    <RouterLink {...props} />
+  </div>
+));
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -14,17 +26,17 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1)
   },
   spacer: {
-    flexGrow: 1
+    flexGrow: 4
   },
   importButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(4)
   },
   exportButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(4)
   }
 }));
 
-const FavoritesToolbar = props => {
+const HotelsToolbar = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
@@ -36,21 +48,29 @@ const FavoritesToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
           variant="contained"
+	  component={CustomRouterLink}
+          to={DeleteHotel}
         >
-          Add favorite
+          Delete hotel
+        </Button>
+	<Button
+          color="primary"
+          variant="contained"
+	  component={CustomRouterLink}
+          to={Reservation}
+        >
+          Reserve
         </Button>
       </div>
     </div>
   );
 };
 
-FavoritesToolbar.propTypes = {
+HotelsToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default FavoritesToolbar;
+export default HotelsToolbar;

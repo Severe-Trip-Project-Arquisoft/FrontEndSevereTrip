@@ -3,56 +3,79 @@ import uuid from 'uuid/v1';
 export default [
   {
     id: uuid(),
-    title: 'Medium Corporation',
+    title: 'Hilton',
     description:
-      'Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.',
+      'Hilton Garden Inn Bogota Airport es una magnífica elección para los viajeros que visiten Bogotá, ya que ofrece un ambiente con encanto, además de numerosos servicios diseñados para mejorar tu estancia. Como está cerca de la mayoría de los puntos de referencia de Bogotá, como BotaniK (0,9 km) y Catedral de Fontibon (2,9 km), Hilton Garden Inn Bogota Airport es un fantástico destino para turistas.',
     imageUrl: '/images/products/product_2.png',
-    totalDownloads: '625',
+    city:'Bogota',
+    price:'100.000',
+    calification: '4.5',
     createdAt: '31/03/2019'
   },
   {
     id: uuid(),
-    title: 'Slack',
+    title: 'El Virrey',
     description:
-      'Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.',
+      'Somos un hotel muy agradable con un precio muy bueno. Estamos ubicados en el centro de Bogotá, al lado del centro histórico de La Candelaria y, sobre todo, a solo dos cuadras del famoso Museo del Oro.',
     imageUrl: '/images/products/product_3.png',
-    totalDownloads: '857',
-    createdAt: '03/04/2019'
-  },
-  {
-    id: uuid(),
-    title: 'Medium Corporation',
-    description:
-      'Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.',
-    imageUrl: '/images/products/product_2.png',
-    totalDownloads: '625',
+    city:'Bogota',
+    price:'50.000',
+    calification: '3.5',
     createdAt: '31/03/2019'
   },
   {
     id: uuid(),
-    title: 'Slack',
+    title: 'Hilton',
     description:
-      'Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.',
-    imageUrl: '/images/products/product_3.png',
-    totalDownloads: '857',
-    createdAt: '03/04/2019'
-  },
-  {
-    id: uuid(),
-    title: 'Medium Corporation',
-    description:
-      'Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.',
+      'Hilton Garden Inn Bogota Airport es una magnífica elección para los viajeros que visiten Bogotá, ya que ofrece un ambiente con encanto, además de numerosos servicios diseñados para mejorar tu estancia. Como está cerca de la mayoría de los puntos de referencia de Bogotá, como BotaniK (0,9 km) y Catedral de Fontibon (2,9 km), Hilton Garden Inn Bogota Airport es un fantástico destino para turistas.',
     imageUrl: '/images/products/product_2.png',
-    totalDownloads: '625',
+    city:'Bogota',
+    price:'100.000',
+    calification: '4.5',
     createdAt: '31/03/2019'
   },
   {
     id: uuid(),
-    title: 'Slack',
+    title: 'El Virrey',
     description:
-      'Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.',
+      'Somos un hotel muy agradable con un precio muy bueno. Estamos ubicados en el centro de Bogotá, al lado del centro histórico de La Candelaria y, sobre todo, a solo dos cuadras del famoso Museo del Oro.',
     imageUrl: '/images/products/product_3.png',
-    totalDownloads: '857',
-    createdAt: '03/04/2019'
+    city:'Bogota',
+    price:'50.000',
+    calification: '3.5',
+    createdAt: '31/03/2019'
+  },
+  {
+    id: uuid(),
+    title: 'Hilton',
+    description:
+      'Hilton Garden Inn Bogota Airport es una magnífica elección para los viajeros que visiten Bogotá, ya que ofrece un ambiente con encanto, además de numerosos servicios diseñados para mejorar tu estancia. Como está cerca de la mayoría de los puntos de referencia de Bogotá, como BotaniK (0,9 km) y Catedral de Fontibon (2,9 km), Hilton Garden Inn Bogota Airport es un fantástico destino para turistas.',
+    imageUrl: '/images/products/product_2.png',
+    city:'Bogota',
+    price:'100.000',
+    calification: '4.5',
+    createdAt: '31/03/2019'
+  },
+  {
+    id: uuid(),
+    title: 'El Virrey',
+    description:
+      'Somos un hotel muy agradable con un precio muy bueno. Estamos ubicados en el centro de Bogotá, al lado del centro histórico de La Candelaria y, sobre todo, a solo dos cuadras del famoso Museo del Oro.',
+    imageUrl: '/images/products/product_3.png',
+    city:'Bogota',
+    price:'50.000',
+    calification: '3.5',
+    createdAt: '31/03/2019'
+  },
+  {
+    id: uuid(),
+    title: 'Hilton',
+    description:
+      'Hilton Garden Inn Bogota Airport es una magnífica elección para los viajeros que visiten Bogotá, ya que ofrece un ambiente con encanto, además de numerosos servicios diseñados para mejorar tu estancia. Como está cerca de la mayoría de los puntos de referencia de Bogotá, como BotaniK (0,9 km) y Catedral de Fontibon (2,9 km), Hilton Garden Inn Bogota Airport es un fantástico destino para turistas.',
+    imageUrl: '/images/products/product_2.png',
+    city:'Bogota',
+    price:'100.000',
+    calification: '4.5',
+    createdAt: '31/03/2019'
   }
 ];
