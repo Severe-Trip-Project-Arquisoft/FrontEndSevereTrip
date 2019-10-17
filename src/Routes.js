@@ -11,6 +11,7 @@ import {
   Hotels as HotelsView,
   HotelInsert as HotelInsertView,
   HotelDetail as HotelDetailView,
+  DoingReservation as DoingReservationView,
   Reservations as ReservationsView,
   Favorites as FavoritesView,
   Cars as CarsView,
@@ -82,6 +83,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/reservations"
+      />
+      <RouteWithLayout
+        component={DoingReservationView}
+        exact
+        layout={MainLayout}
+        path="/doingReservations"
       />
       <RouteWithLayout
         component={FavoritesView}

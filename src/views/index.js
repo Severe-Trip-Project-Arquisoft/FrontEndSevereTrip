@@ -2,6 +2,7 @@ export { default as Account } from './Account';
 export { default as Hotels } from './Hotels';
 export { default as HotelInsert } from './HotelInsert';
 export { default as HotelDetail } from './HotelDetail';
+export { default as DoingReservation } from './DoingReservation';
 export { default as Favorites } from './Favorites';
 export { default as Reservations } from './Reservations';
 export { default as Cars } from './Cars';
