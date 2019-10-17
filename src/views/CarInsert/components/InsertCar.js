@@ -20,13 +20,14 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const InsertHT = props => {
+const InsertCar = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    hotelName: '',
+    carServiceName: '',
+    licensePlateNumber: '',
     address: '',
     email: '',
     phone: '',
@@ -37,21 +38,16 @@ const InsertHT = props => {
   });
 
   const [state, setState] = React.useState({
-    freeparking:false,
-    restaurant:false,
-    businessCenterInternetAccess:false,
-    breakfastAvailable:false,
-    laundryService:false,
-    conferenceFacilities:false,
-    meetingRooms:false,
-    internet:false,
-    freeInternet:false,
-    nonSmokingRooms:false,
-    suites:false,
-    roomsFamilies:false,
-    roomService:false,
-    safeBox:false,
-    flatScreenTV:false
+    airConditioning:false,
+    automaticGearbox:false,
+
+    cancellation:false,
+    theftProtection:false,
+    airportCharge:false,
+    yourRentalIncludesUnlimitedFreeKilometres:false,
+    amendments:false,
+    collisionDamageWaiver:false,
+    localTaxes:false,
   });
 
   const handleChange = event => {
@@ -75,7 +71,7 @@ const InsertHT = props => {
       >
         <CardHeader
           subheader="The information must be complete"
-          title="Insert a new hotel"
+          title="Insert a new car"
         />
         <Divider />
         <CardHeader
@@ -89,23 +85,39 @@ const InsertHT = props => {
           >
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
-                label="Name of hotel"
+                label="Name of car"
                 margin="dense"
-                name="hotelName"
+                name="carServiceName"
                 onChange={handleChange}
                 required
-                value={values.hotelName}
+                value={values.carServiceName}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="License Plate Number"
+                margin="dense"
+                name="licensePlateNumber"
+                onChange={handleChange}
+                required
+                value={values.licensePlateNumber}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+	            md={6}
               xs={12}
             >
               <TextField
@@ -121,7 +133,7 @@ const InsertHT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
@@ -137,7 +149,7 @@ const InsertHT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
@@ -153,7 +165,7 @@ const InsertHT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
@@ -169,7 +181,7 @@ const InsertHT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
@@ -185,7 +197,7 @@ const InsertHT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
@@ -201,7 +213,7 @@ const InsertHT = props => {
             </Grid>
 	    <Grid
               item
-	      md={12}
+	            md={12}
               xs={12}
             >
               <TextField
@@ -218,7 +230,7 @@ const InsertHT = props => {
         </CardContent>
         <Divider />
         <CardHeader
-          title="Establishment Services"
+          title="Services:"
         />
         <Divider />
         <CardContent>
@@ -228,135 +240,37 @@ const InsertHT = props => {
           >
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="freeparking"
-			onChange={handleChange}
-			value={state.freeparking} />}
-	            label="Free parking"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="airConditioning"
+          			onChange={handleChange}
+          			value={state.airConditioning} />}
+          	            label="Air Conditioning"
+          	          />
             </Grid>
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="restaurant"
-			onChange={handleChange}
-			value={state.restaurant} />}
-	            label="Restaurant"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="businessCenterInternetAccess"
-			onChange={handleChange}
-			value={state.businessCenterInternetAccess} />}
-	            label="Business center with Internet access"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="breakfastAvailable"
-			onChange={handleChange}
-			value={state.breakfastAvailable} />}
-	            label="Breakfast available"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="laundryService"
-			onChange={handleChange}
-			value={state.laundryService} />}
-	            label="Laundry service"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="conferenceFacilities"
-			onChange={handleChange}
-			value={state.conferenceFacilities} />}
-	            label="Conference facilities"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="meetingRooms"
-			onChange={handleChange}
-			value={state.meetingRooms} />}
-	            label="Meeting rooms"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="internet"
-			onChange={handleChange}
-			value={state.internet} />}
-	            label="Internet"
-	          />
-            </Grid>
-            <Grid
-              item
-	      md={4}
-              sm={6}
-              xs={12}
-            >
-		<FormControlLabel
-	            control={<Checkbox
-			name="freeInternet"
-			onChange={handleChange}
-			value={state.freeInternet} />}
-	            label="Free internet"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="automaticGearbox"
+          			onChange={handleChange}
+          			value={state.automaticGearbox} />}
+          	            label="Automatic gearbox"
+          	          />
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <CardHeader
-          title="Room Features"
+          title="Included in the price:"
         />
         <Divider />
         <CardContent>
@@ -366,87 +280,101 @@ const InsertHT = props => {
           >
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="nonSmokingRooms"
-			onChange={handleChange}
-			value={state.nonSmokingRooms} />}
-	            label="Non smoking rooms"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="cancellation"
+          			onChange={handleChange}
+          			value={state.cancellation} />}
+          	            label="Cancellation"
+          	          />
             </Grid>
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="suites"
-			onChange={handleChange}
-			value={state.suites} />}
-	            label="Suites"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="theftProtection"
+          			onChange={handleChange}
+          			value={state.theftProtection} />}
+          	            label="Theft Protection"
+          	          />
             </Grid>
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="roomsFamilies"
-			onChange={handleChange}
-			value={state.roomsFamilies} />}
-	            label="Rooms for families"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="airportCharge"
+          			onChange={handleChange}
+          			value={state.airportCharge} />}
+          	            label="Airport Charge"
+          	          />
             </Grid>
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="roomService"
-			onChange={handleChange}
-			value={state.roomService} />}
-	            label="Room service"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="yourRentalIncludesUnlimitedFreeKilometres"
+          			onChange={handleChange}
+          			value={state.yourRentalIncludesUnlimitedFreeKilometres} />}
+          	            label="Your Rental Includes Unlimited Free Kilometres"
+          	          />
             </Grid>
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="safeBox"
-			onChange={handleChange}
-			value={state.safeBox} />}
-	            label="Safe Box"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="amendments"
+          			onChange={handleChange}
+          			value={state.amendments} />}
+          	            label="Amendments"
+          	          />
             </Grid>
             <Grid
               item
-	      md={4}
+	            md={4}
               sm={6}
               xs={12}
             >
-		<FormControlLabel
-	            control={<Checkbox
-			name="flatScreenTV"
-			onChange={handleChange}
-			value={state.flatScreenTV} />}
-	            label="Flat screen TV"
-	          />
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="collisionDamageWaiver"
+          			onChange={handleChange}
+          			value={state.collisionDamageWaiver} />}
+          	            label="Collision Damage Waiver"
+          	          />
+            </Grid>
+            <Grid
+              item
+	            md={4}
+              sm={6}
+              xs={12}
+            >
+          		<FormControlLabel
+          	            control={<Checkbox
+          			name="localTaxes"
+          			onChange={handleChange}
+          			value={state.localTaxes} />}
+          	            label="Local Taxes"
+          	          />
             </Grid>
           </Grid>
         </CardContent>
@@ -456,7 +384,7 @@ const InsertHT = props => {
             color="primary"
             variant="contained"
           >
-            Save Hotel
+            Save Car
           </Button>
         </CardActions>
       </form>
@@ -464,8 +392,8 @@ const InsertHT = props => {
   );
 };
 
-InsertHT.propTypes = {
+InsertCar.propTypes = {
   className: PropTypes.string
 };
 
-export default InsertHT;
+export default InsertCar;
