@@ -51,7 +51,7 @@ const DoingReservation = props => {
   const handleDateChangeCheckOut = date => {
     setSelectedDateCheckOut(date);
   };
-  
+
   const handleChange = event => {
     setValues({
       ...values,
@@ -265,13 +265,6 @@ const DoingReservation = props => {
         </CardActions>
       </form>
     </Card>
-
-
-
-
-
-
-
       </div>
     </div>
   );
