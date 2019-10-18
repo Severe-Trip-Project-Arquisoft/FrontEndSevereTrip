@@ -50,7 +50,7 @@ const HotelsToolbar = props => {
         <Button
           color="primary"
           variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={HotelInsert}
         >
           Add hotel
