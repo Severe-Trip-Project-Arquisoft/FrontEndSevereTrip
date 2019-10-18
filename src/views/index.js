@@ -10,6 +10,7 @@ export { default as CarInsert } from './CarInsert';
 export { default as Restaurants } from './Restaurants';
 export { default as RestaurantInsert } from './RestaurantInsert';
 export { default as Flights } from './Flights';
+export { default as FlightInsert } from './FlightInsert';
 export { default as NotFound } from './NotFound';
 export { default as ProductList } from './ProductList';
 export { default as SignIn } from './SignIn';

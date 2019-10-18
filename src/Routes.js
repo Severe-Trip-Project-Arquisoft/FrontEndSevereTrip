@@ -19,6 +19,7 @@ import {
   Restaurants as RestaurantsView,
   RestaurantInsert as RestaurantInsertView,
   Flights as FlightsView,
+  FlightInsert as FlightInsertView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView
@@ -127,6 +128,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/flights"
+      />
+      <RouteWithLayout
+        component={FlightInsertView}
+        exact
+        layout={MainLayout}
+        path="/flightInsert"
       />
       <RouteWithLayout
         component={NotFoundView}
