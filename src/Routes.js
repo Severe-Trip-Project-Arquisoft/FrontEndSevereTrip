@@ -15,8 +15,11 @@ import {
   Reservations as ReservationsView,
   Favorites as FavoritesView,
   Cars as CarsView,
+  CarInsert as CarInsertView,
   Restaurants as RestaurantsView,
+  RestaurantInsert as RestaurantInsertView,
   Flights as FlightsView,
+  FlightInsert as FlightInsertView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView
@@ -103,16 +106,34 @@ const Routes = () => {
         path="/cars"
       />
       <RouteWithLayout
+        component={CarInsertView}
+        exact
+        layout={MainLayout}
+        path="/carInsert"
+      />
+      <RouteWithLayout
         component={RestaurantsView}
         exact
         layout={MainLayout}
         path="/restaurants"
       />
       <RouteWithLayout
+        component={RestaurantInsertView}
+        exact
+        layout={MainLayout}
+        path="/restaurantInsert"
+      />
+      <RouteWithLayout
         component={FlightsView}
         exact
         layout={MainLayout}
         path="/flights"
+      />
+      <RouteWithLayout
+        component={FlightInsertView}
+        exact
+        layout={MainLayout}
+        path="/flightInsert"
       />
       <RouteWithLayout
         component={NotFoundView}

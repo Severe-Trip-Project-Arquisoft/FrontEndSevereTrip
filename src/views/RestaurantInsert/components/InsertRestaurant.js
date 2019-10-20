@@ -13,8 +13,6 @@ import {
   TextField
 } from '@material-ui/core';
 
-
-import { postAction } from 'actions';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -22,23 +20,20 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const InsertHT = props => {
+const InsertRestaurant = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    hotelName: '',
-    address: '',
-    postalCode:'',
-    latitude:0.0,
-    longitude:0.0,
-    email: '',
-    phone: '',
-    price: '',
-    city: '',
-    country: '',
-    description: ''
+    restaurantName: '',
+    restaurantAddress: '',
+    restaurantEmail: '',
+    restaurantPhone: '',
+    averagePrice: '',
+    restaurantCity: '',
+    restaurantCountry: '',
+    restaurantDescription: ''
   });
 
   const [state, setState] = React.useState({
@@ -64,136 +59,9 @@ const InsertHT = props => {
       ...values,
       [event.target.name]: event.target.value
     });
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setState({ ...state, [event.target.name]: event.target.value });
   };
 
-
-  const handleSubmit = event => {
-        event.preventDefault();
-	var arraytags = new Array();
-	if(state.freeparking){
-		var tag = {
-		description : "Free parking",
-		name : "freeparking"
-		}
-		arraytags.push(tag);
-	}
-	if(state.restaurant){
-		tag = {
-		description : "Restaurant",
-		name : "restaurant"
-		}
-		arraytags.push(tag);
-	}
-	if(state.businessCenterInternetAccess){
-		tag = {
-		description : "Business Center Internet Access",
-		name : "businessCenterInternetAccess"
-		}
-		arraytags.push(tag);
-	}
-	if(state.breakfastAvailable){
-		tag = {
-		description : "Breakfast Available",
-		name : "breakfastAvailable"
-		}
-		arraytags.push(tag);
-	}
-	if(state.laundryService){
-		tag = {
-		description : "Laundry Service",
-		name : "laundryService"
-		}
-		arraytags.push(tag);
-	}
-	if(state.conferenceFacilities){
-		tag = {
-		description : "Conference Facilities",
-		name : "conferenceFacilities"
-		}
-		arraytags.push(tag);
-	}
-	if(state.meetingRooms){
-		tag = {
-		description : "Meeting Rooms",
-		name : "meetingRooms"
-		}
-		arraytags.push(tag);
-	}
-	if(state.internet){
-		tag = {
-		description : "Internet",
-		name : "internet"
-		}
-		arraytags.push(tag);
-	}
-	if(state.freeInternet){
-		tag = {
-		description : "Free Internet",
-		name : "freeInternet"
-		}
-		arraytags.push(tag);
-	}
-	if(state.nonSmokingRooms){
-		tag = {
-		description : "Non Smoking Rooms",
-		name : "nonSmokingRooms"
-		}
-		arraytags.push(tag);
-	}
-	if(state.suites){
-		tag = {
-		description : "Suites",
-		name : "suites"
-		}
-		arraytags.push(tag);
-	}
-	if(state.roomsFamilies){
-		tag = {
-		description : "Rooms Families",
-		name : "roomsFamilies"
-		}
-		arraytags.push(tag);
-	}
-	if(state.roomService){
-		tag = {
-		description : "Room Service",
-		name : "roomService"
-		}
-		arraytags.push(tag);
-	}
-	if(state.safeBox){
-		tag = {
-		description : "Safe Box",
-		name : "safeBox"
-		}
-		arraytags.push(tag);
-	}
-	if(state.flatScreenTV){
-		tag = {
-		description : "Flat Screen TV",
-		name : "flatScreenTV"
-		}
-		arraytags.push(tag);
-	}
-
-	var data = {
-		providerId: "0123558",
-		name: values.hotelName,
-		serviceType: "hotel",
-		latitude: values.latitude,
-		longitude: values.longitude,
-		address: values.address,
-		postalCode: values.postalCode,
-		city: values.city,
-		telephone: values.phone,
-		commentIds: [],
-		tags:arraytags
-	}
-	var dataPost = JSON.stringify(data);
-        console.log('form submission data',dataPost);
-	postAction(dataPost);
-    }
 
 
   return (
@@ -207,7 +75,7 @@ const InsertHT = props => {
       >
         <CardHeader
           subheader="The information must be complete"
-          title="Insert a new hotel"
+          title="Insert a new restaurant"
         />
         <Divider />
         <CardHeader
@@ -221,33 +89,33 @@ const InsertHT = props => {
           >
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
-                label="Name of hotel"
+                label="Name of restaurant"
                 margin="dense"
-                name="hotelName"
+                name="restaurantName"
                 onChange={handleChange}
                 required
-                value={values.hotelName}
+                value={values.restaurantName}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
                 label="Address"
                 margin="dense"
-                name="address"
+                name="restaurantAddress"
                 onChange={handleChange}
                 required
-                value={values.address}
+                value={values.restaurantAddress}
                 variant="outlined"
               />
             </Grid>
@@ -258,126 +126,76 @@ const InsertHT = props => {
             >
               <TextField
                 fullWidth
-                label="Latitude"
+                label="Email"
                 margin="dense"
-                name="latitude"
+                name="restaurantEmail"
                 onChange={handleChange}
-                type="number"
                 required
-                value={values.latitude}
+                value={values.restaurantEmail}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Longitude"
-                margin="dense"
-                name="longitude"
-                onChange={handleChange}
-                type="number"
-                required
-                value={values.longitude}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-	      md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Postal Code"
-                margin="dense"
-                name="postalCode"
-                onChange={handleChange}
-                required
-                value={values.postalCode}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-	      md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
-                margin="dense"
-                name="email"
-                onChange={handleChange}
-                required
-                value={values.email}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
                 label="Phone Number"
                 margin="dense"
-                name="phone"
+                name="restaurantPhone"
                 onChange={handleChange}
                 type="number"
-                value={values.phone}
+                value={values.restaurantPhone}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
-                label="Price for room $"
+                label="Average price per plate $"
                 margin="dense"
-                name="price"
+                name="averagePrice"
                 onChange={handleChange}
                 type="number"
-                value={values.price}
+                value={values.averagePrice}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
                 label="City"
                 margin="dense"
-                name="city"
+                name="restaurantCity"
                 onChange={handleChange}
                 required
-                value={values.city}
+                value={values.restaurantCity}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+	            md={6}
               xs={12}
             >
               <TextField
                 fullWidth
                 label="Country"
                 margin="dense"
-                name="country"
+                name="restaurantCountry"
                 onChange={handleChange}
                 required
-                value={values.country}
+                value={values.restaurantCountry}
                 variant="outlined"
               />
             </Grid>
@@ -390,9 +208,9 @@ const InsertHT = props => {
                 fullWidth
                 label="Description"
                 margin="dense"
-                name="description"
+                name="restaurantDescription"
                 onChange={handleChange}
-                value={values.description}
+                value={values.restaurantDescription}
                 variant="outlined"
               />
             </Grid>
@@ -400,7 +218,7 @@ const InsertHT = props => {
         </CardContent>
         <Divider />
         <CardHeader
-          title="Establishment Services"
+          title="Type of cooking"
         />
         <Divider />
         <CardContent>
@@ -635,10 +453,8 @@ const InsertHT = props => {
         <Divider />
         <CardActions>
           <Button
-	    type="submit"
             color="primary"
             variant="contained"
-	    onClick={handleSubmit}
           >
             Save Hotel
           </Button>
@@ -648,8 +464,8 @@ const InsertHT = props => {
   );
 };
 
-InsertHT.propTypes = {
+InsertRestaurant.propTypes = {
   className: PropTypes.string
 };
 
-export default InsertHT;
+export default InsertRestaurant;

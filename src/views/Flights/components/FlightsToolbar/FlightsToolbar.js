@@ -3,7 +3,18 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
+import { forwardRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
+const FlightInsert = '/flightInsert';
+
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div
+    ref={ref}
+  >
+    <RouterLink {...props} />
+  </div>
+));
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -41,6 +52,8 @@ const FlightsToolbar = props => {
         <Button
           color="primary"
           variant="contained"
+          component={CustomRouterLink}
+          to={FlightInsert}
         >
           Add flight
         </Button>
