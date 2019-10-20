@@ -65,7 +65,7 @@ const Topbar = props => {
           </IconButton>
 
           <IconButton
-            activeClassName={classes.active}
+            activeclassname={classes.active}
             className={classes.signOutButton}
             color="inherit"
 	          component={CustomRouterLink}

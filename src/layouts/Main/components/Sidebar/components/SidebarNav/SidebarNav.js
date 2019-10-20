@@ -66,7 +66,7 @@ const SidebarNav = props => {
           key={page.title}
         >
           <Button
-            activeClassName={classes.active}
+            activeclassname={classes.active}
             className={classes.button}
             component={CustomRouterLink}
             to={page.href}
