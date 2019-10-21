@@ -64,7 +64,7 @@ const HotelCard = props => {
           <img
             alt="Hotel"
             className={classes.image}
-            src={'/images/products/product_2.png'}
+            src={'/images/hotels/hotel5.png'}
           />
         </div>
         <Typography

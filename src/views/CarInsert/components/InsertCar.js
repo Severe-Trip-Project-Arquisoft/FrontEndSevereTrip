@@ -13,7 +13,6 @@ import {
   TextField
 } from '@material-ui/core';
 
-import { postAction } from 'actions';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -144,7 +143,7 @@ const InsertCar = props => {
 
   var dataPost = JSON.stringify(data);
         console.log('form submission data',dataPost);
-	      postAction(dataPost);
+//	      postAction(dataPost);
     }
 
   return (
