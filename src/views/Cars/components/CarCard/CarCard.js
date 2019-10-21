@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -39,6 +41,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div
+    ref={ref}
+  >
+    <RouterLink {...props} />
+  </div>
+));
+
 const CarCard = props => {
   const { className, car, ...rest } = props;
 
@@ -61,6 +71,8 @@ const CarCard = props => {
           align="center"
           gutterBottom
           variant="h4"
+          component={CustomRouterLink}
+          to="/carDetail"
         >
           {car.title}
         </Typography>

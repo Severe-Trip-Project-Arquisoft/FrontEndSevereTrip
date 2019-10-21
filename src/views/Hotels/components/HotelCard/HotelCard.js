@@ -70,8 +70,8 @@ const HotelCard = props => {
         <Typography
           align="right"
           variant="h4"
-	  component={CustomRouterLink}
-          to="/hotelDetail" 
+	        component={CustomRouterLink}
+          to="/hotelDetail"
         >
           {hotel.name}
         </Typography>
@@ -121,7 +121,7 @@ const HotelCard = props => {
               display="inline"
               variant="body2"
             >
-              4.5 
+              {hotel.calification}
             </Typography>
           </Grid>
         </Grid>

@@ -13,6 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
+import { postAction } from 'actions';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -59,6 +60,92 @@ const InsertCar = props => {
   };
 
 
+  const handleSubmit = event => {
+        event.preventDefault();
+  var arraytags = new Array();
+  if(state.airConditioning){
+		var tag = {
+		description : "Air Conditioning",
+		name : "airConditioning"
+		}
+		arraytags.push(tag);
+	}
+	if(state.automaticGearbox){
+		tag = {
+		description : "Automatic Gearbox",
+		name : "automaticGearbox"
+		}
+		arraytags.push(tag);
+	}
+	if(state.cancellation){
+		tag = {
+		description : "cancellation",
+		name : "cancellation"
+		}
+		arraytags.push(tag);
+	}
+	if(state.theftProtection){
+		tag = {
+		description : "Theft Protection",
+		name : "theftProtection"
+		}
+		arraytags.push(tag);
+	}
+	if(state.airportCharge){
+		tag = {
+		description : "Airport Charge",
+		name : "airportCharge"
+		}
+		arraytags.push(tag);
+	}
+	if(state.yourRentalIncludesUnlimitedFreeKilometres){
+		tag = {
+		description : "Your Rental Includes Unlimited Free Kilometres",
+		name : "yourRentalIncludesUnlimitedFreeKilometres"
+		}
+		arraytags.push(tag);
+	}
+	if(state.amendments){
+		tag = {
+		description : "Amendments",
+		name : "amendments"
+		}
+		arraytags.push(tag);
+	}
+	if(state.collisionDamageWaiver){
+		tag = {
+		description : "Collision Damage Waiver",
+		name : "collisionDamageWaiver"
+		}
+		arraytags.push(tag);
+	}
+	if(state.localTaxes){
+		tag = {
+		description : "Local Taxes",
+		name : "localTaxes"
+		}
+		arraytags.push(tag);
+	}
+
+	var data = {
+		providerId: "232323",
+		name: values.carServiceName,
+		serviceType: "car",
+    licensePlateNumber: "huy234",
+		address: values.address,
+		email: values.email,
+    phone: values.phone,
+    price: values.price,
+    city: values.city,
+    country: values.country,
+		commentIds: [],
+		tags:arraytags
+	}
+
+  var dataPost = JSON.stringify(data);
+        console.log('form submission data',dataPost);
+	      postAction(dataPost);
+    }
 
   return (
     <Card
@@ -170,7 +257,7 @@ const InsertCar = props => {
             >
               <TextField
                 fullWidth
-                label="Price for room $"
+                label="Price for car $"
                 margin="dense"
                 name="price"
                 onChange={handleChange}
