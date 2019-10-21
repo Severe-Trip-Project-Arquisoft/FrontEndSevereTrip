@@ -31,8 +31,10 @@ const InsertHT = props => {
     address: '',
     postalCode:'',
     email: '',
-    phone: '',
+    phone: 1,
     price: 0.0,
+    latitude: 0.0,
+    longitude: 0.0,
     city: '',
     country: '',
     description: ''
@@ -182,12 +184,15 @@ const InsertHT = props => {
 		postalCode: values.postalCode,
 		city: values.city,
 		telephone: values.phone,
+		latitude: values.latitude,
+	        longitude: values.longitude,
 		commentIds: [],
 		price: values.price,
 		tags:arraytags
 	}
 
 //	var dataPost = JSON.stringify(data);
+        console.log('DATA I ',data.telephone);
         console.log('form submission data',data);
 	HTTPRequests().postProvider.createPost(data);
     }
@@ -244,6 +249,40 @@ const InsertHT = props => {
                 onChange={handleChange}
                 required
                 value={values.address}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+	      md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Latitude"
+                margin="dense"
+                name="latitude"
+                onChange={handleChange}
+                type="number"
+		required
+                value={values.latitude}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+	      md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Longitude"
+                margin="dense"
+                name="longitude"
+                onChange={handleChange}
+                type="number"
+		required
+                value={values.longitude}
                 variant="outlined"
               />
             </Grid>
