@@ -32,7 +32,7 @@ const InsertCar = props => {
     address: '',
     email: '',
     phone: '',
-    price: '',
+    price: 0.0,
     city: '',
     country: '',
     description: ''
@@ -41,7 +41,6 @@ const InsertCar = props => {
   const [state, setState] = React.useState({
     airConditioning:false,
     automaticGearbox:false,
-
     cancellation:false,
     theftProtection:false,
     airportCharge:false,
@@ -56,7 +55,7 @@ const InsertCar = props => {
       ...values,
       [event.target.name]: event.target.value
     });
-    setState({ ...state, [event.target.name]: event.target.value });
+    setState({ ...state, [event.target.name]: event.target.checked });
   };
 
 
