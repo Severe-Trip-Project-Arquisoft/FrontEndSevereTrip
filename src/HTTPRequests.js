@@ -1,12 +1,6 @@
 import axios from 'axios';
 export const HTTPRequests = () =>
 {
-  const base_url = 'http://52.5.42.71:8080';
-  const req = {
-    postProvider:{
-      //GET
-      getAll: async ()=>{
-
     const base_url = "http://52.5.42.71:8080"
     const req = {
         postProvider:{             

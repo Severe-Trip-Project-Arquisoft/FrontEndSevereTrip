@@ -14,7 +14,7 @@ export { default as RestaurantInsert } from './RestaurantInsert';
 export { default as Flights } from './Flights';
 export { default as FlightInsert } from './FlightInsert';
 export { default as NotFound } from './NotFound';
-export { default as ProductList } from './ProductList';
+export { default as PostList } from './PostList';
 export { default as SignIn } from './SignIn';
 export { default as SignUp } from './SignUp';
 export { default as UserList } from './UserList';
