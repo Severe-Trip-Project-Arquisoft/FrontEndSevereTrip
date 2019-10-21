@@ -69,7 +69,7 @@ const InsertHT = props => {
 
   const handleSubmit = event => {
         event.preventDefault();
-	var arraytags = new Array();
+	var arraytags =  [];
 	if(state.freeparking){
 		var tag = {
 		description : "Free parking",

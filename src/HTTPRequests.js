@@ -3,34 +3,29 @@ var resData = new Array();
 export const HTTPRequests = () =>
 {
 
-    const base_url = "http://52.5.42.71:8080"
-    const req = {
-        postProvider:{             
-            //GET
-            getAll: async ()=>{
-                const url = base_url + "/posts/"
-                console.log(url)
-                const response = await axios.get(
-                    url
-		).catch(e => console.log('Error: ', e) )
-                return response;
+        const url = base_url + '/posts/'
+        
+        const response = await axios.get(
+          url           
+        ).catch(e => console.log('Error: ', e) )
+        return response;
 
             }, 
             getById: async (id)=>{
 
-                const url = base_url + "/posts/" + id
-                console.log(url)
-                const response = await axios.get(
-                    url           
-                ).catch(e => console.log('Error: ', e))
-                return response;
+        const url = base_url + '/posts/' + id
+        
+        const response = await axios.get(
+          url           
+        ).catch(e => console.log('Error: ', e))
+        return response;
 
 
             },
             getByType: async (type)=>{
                 
         const url = base_url + '/posts/type/' + type
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -42,7 +37,7 @@ export const HTTPRequests = () =>
       getByProvider: async (providerId)=>{
 
         const url = base_url + '/posts/provider/' + providerId
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -56,7 +51,7 @@ export const HTTPRequests = () =>
         for (var id in ids){
           url+= ',' + id
         }
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -68,7 +63,7 @@ export const HTTPRequests = () =>
       createPost: async (postRequest)=>{
                 
         const url = base_url + '/posts/'
-        console.log(url)
+        
                 
         const response = await axios.post(
           url ,  {...postRequest}
@@ -81,7 +76,7 @@ export const HTTPRequests = () =>
       updatePost: async (postRequest)=>{
 
         const url = base_url + '/posts/'
-        console.log(url)
+        
                 
         const response = await axios.put(
           url ,  {...postRequest}
@@ -93,7 +88,7 @@ export const HTTPRequests = () =>
       deletePost: async (postId)=>{
                 
         const url = base_url + '/posts/' + postId
-        console.log(url)
+        
                 
         const response = await axios.delete(
           url
@@ -118,7 +113,7 @@ export const HTTPRequests = () =>
       getPostComments:  async (postId)=> {
 
         const url = base_url + '/comments/' + postId
-        console.log(url)
+        
                 
         const response = await axios.get(
           url
@@ -130,7 +125,7 @@ export const HTTPRequests = () =>
       createComment: async (postId,commentRequest)=> {
 
         const url = base_url + '/comments/' + postId
-        console.log(url)
+        
                 
         const response = await axios.put(
           url, {...commentRequest}
@@ -141,7 +136,7 @@ export const HTTPRequests = () =>
       deleteComment: async (postId, commentId)=> {
 
         let url = base_url + '/comments/?postId=' + postId + '&commentId=' + commentId
-        console.log(url)
+        
                 
         const response = await axios.delete(
           url
@@ -159,7 +154,7 @@ export const HTTPRequests = () =>
       getAll: async ()=> {
 
         let url = base_url + '/providers/allProviders'
-        console.log(url)
+        
                 
         const response = await axios.get(
           url
@@ -170,7 +165,7 @@ export const HTTPRequests = () =>
       getById: async (id)=>{
 
         const url = base_url + '/providers/provider/' + id
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -179,7 +174,7 @@ export const HTTPRequests = () =>
       getAvailability: async (username)=>{
 
         const url = base_url + '/providers/provider/available/' + username
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -188,7 +183,7 @@ export const HTTPRequests = () =>
       getByName: async (username)=>{
 
         const url = base_url + '/providers/provider/username/' + username
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -198,7 +193,7 @@ export const HTTPRequests = () =>
       deleteProvider: async (providerId)=> {
 
         let url = base_url + '/providers/deleteProvider/' + providerId
-        console.log(url)
+        
                 
         const response = await axios.delete(
           url
@@ -210,7 +205,7 @@ export const HTTPRequests = () =>
       insertProvider: async (providerBody)=> {
 
         let url = base_url + '/providers/insertProvider/'
-        console.log(url)
+        
             
         const response = await axios.post(
           url, {...providerBody}
@@ -223,7 +218,7 @@ export const HTTPRequests = () =>
 
         let url = base_url + '/providers/updateProvider/' + providerId
 
-        console.log(url)
+        
             
         const response = await axios.put(
           url, {...providerBody}
@@ -239,7 +234,7 @@ export const HTTPRequests = () =>
       getMSG: async ()=> {
 
         let url = base_url + '/clients'
-        console.log(url)
+        
                 
         const response = await axios.get(
           url
@@ -250,7 +245,7 @@ export const HTTPRequests = () =>
       getAll: async ()=> {
 
         let url = base_url + '/clients/allClients'
-        console.log(url)
+        
                 
         const response = await axios.get(
           url
@@ -261,7 +256,7 @@ export const HTTPRequests = () =>
       getById: async (id)=>{
 
         const url = base_url + '/clients/client/' + id
-        console.log(url)
+        
         const response = await axios.get(
           url
         ).catch(e => console.log('Error: ', e))
@@ -270,7 +265,7 @@ export const HTTPRequests = () =>
       getAvailability: async (username)=>{
 
         const url = base_url + '/clients/client/available/' + username
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -279,7 +274,7 @@ export const HTTPRequests = () =>
       getByName: async (username)=>{
 
         const url = base_url + '/clients/client/username/' + username
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -289,7 +284,7 @@ export const HTTPRequests = () =>
       deleteProvider: async (clientId)=> {
 
         let url = base_url + '/clients/deleteClient/' + clientId
-        console.log(url)
+        
                 
         const response = await axios.delete(
           url
@@ -301,7 +296,7 @@ export const HTTPRequests = () =>
       insertProvider: async (clientBody)=> {
 
         let url = base_url + '/clients/insertClient/'
-        console.log(url)                        
+                                
         const response = await axios.post(
           url, {...clientBody}
         ).catch(e => console.log('Error: ', e))
@@ -313,7 +308,7 @@ export const HTTPRequests = () =>
 
         let url = base_url + '/clients/updateClient/' + clientId
 
-        console.log(url)
+        
             
         const response = await axios.put(
           url, {...clientBody}
@@ -332,7 +327,7 @@ export const HTTPRequests = () =>
       getMSG: async ()=> {
 
         let url = base_url + '/favorites/'
-        console.log(url)
+        
 
         const response = await axios.get(
           url
@@ -344,7 +339,7 @@ export const HTTPRequests = () =>
       getById: async (id)=>{
 
         const url = base_url + '/favorites/' + id
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -354,7 +349,7 @@ export const HTTPRequests = () =>
       insertFavorite: async (favoriteBody)=> {
 
         let url = base_url + '/favorites/'
-        console.log(url)
+        
             
         const response = await axios.post(
           url, {...favoriteBody}
@@ -366,7 +361,7 @@ export const HTTPRequests = () =>
       deleteFavorite: async (id)=> {
 
         let url = base_url + '/favorites/' + id
-        console.log(url) 
+         
 
         const response = await axios.delete(
           url
@@ -380,7 +375,7 @@ export const HTTPRequests = () =>
       getById: async (id)=>{
             
         const url = base_url + '/messages/' + id
-        console.log(url)
+        
 
         const response = await axios.get(
           url
@@ -391,7 +386,7 @@ export const HTTPRequests = () =>
       createMessage: async (messageBody)=>{
             
         const url = base_url + '/messages/'
-        console.log(url)
+        
 
         const response = await axios.post(
           url, {...messageBody}
@@ -406,7 +401,7 @@ export const HTTPRequests = () =>
       getAllPayments: async ()=> {
 
         let url = base_url + '/payment/'
-        console.log(url)
+        
 
         const response = await axios.get(
           url
@@ -418,7 +413,7 @@ export const HTTPRequests = () =>
       getAll: async ()=> {
 
         let url = base_url + '/reservation/'
-        console.log(url)
+        
 
         const response = await axios.get(
           url
@@ -430,7 +425,7 @@ export const HTTPRequests = () =>
       getById: async (id)=>{
 
         const url = base_url + '/reservation/' + id
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -439,7 +434,7 @@ export const HTTPRequests = () =>
       getByPost: async (id)=>{
 
         const url = base_url + '/reservation/post' + id
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -448,7 +443,7 @@ export const HTTPRequests = () =>
       getByClient: async (id)=>{
 
         const url = base_url + '/reservation/client' + id
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -457,7 +452,7 @@ export const HTTPRequests = () =>
       getByProvider: async (id)=>{
 
         const url = base_url + '/reservation/provider' + id
-        console.log(url)
+        
         const response = await axios.get(
           url           
         ).catch(e => console.log('Error: ', e))
@@ -467,7 +462,7 @@ export const HTTPRequests = () =>
       deleteReservation: async (id)=> {
 
         let url = base_url + '/reservation/' + id
-        console.log(url)
+        
                 
         const response = await axios.delete(
           url
@@ -479,7 +474,7 @@ export const HTTPRequests = () =>
       insertReservation: async (reservationBody)=> {
 
         let url = base_url + '/reservation/'
-        console.log(url)
+        
             
         const response = await axios.post(
           url, {...reservationBody}
@@ -492,7 +487,7 @@ export const HTTPRequests = () =>
 
         let url = base_url + '/reservation/'
 
-        console.log(url)
+        
             
         const response = await axios.put(
           url, {...reservationBody}
