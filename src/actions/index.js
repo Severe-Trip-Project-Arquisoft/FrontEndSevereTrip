@@ -1,1 +1,0 @@
-export { postAction } from './postAction';

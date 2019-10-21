@@ -7,6 +7,31 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { HotelsToolbar, HotelCard } from './components';
 import mockData from './data';
 
+//import { HTTPRequests} from 'HTTPRequests';
+//import {test} from './test';
+//const req = HTTPRequests();
+//const datos = test(req);
+//console.log("DATOS",datos);
+
+import axios from 'axios';
+const base_url = "http://52.5.42.71:8080";
+var resData = new Array();
+
+const url = base_url + "/posts/"
+console.log(url)
+
+
+
+async function f2() {
+  const response = await axios.get(
+	url
+  ).then((response) => {
+	resData=response.data;
+	console.log("DATOS1",resData);
+  }).catch(e => console.log('Error: ', e) )
+}
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
@@ -25,7 +50,15 @@ const useStyles = makeStyles(theme => ({
 const HotelList = () => {
   const classes = useStyles();
 
-  const [hotels] = useState(mockData);
+  f2();
+
+  console.log("ESpera...??");
+
+  const [hotels] = useState(resData);
+
+  //const [datasRes] = useState(r1);
+//            console.log("HOTEL ...",hotels)
+
 
   return (
     <div className={classes.root}>

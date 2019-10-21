@@ -13,8 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-
-import { postAction } from 'actions';
+import { HTTPRequests} from 'HTTPRequests';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -35,7 +34,7 @@ const InsertHT = props => {
     longitude:0.0,
     email: '',
     phone: '',
-    price: '',
+    price: 0.0,
     city: '',
     country: '',
     description: ''
@@ -70,7 +69,7 @@ const InsertHT = props => {
 
   const handleSubmit = event => {
         event.preventDefault();
-	var arraytags = new Array();
+	var arraytags =  [];
 	if(state.freeparking){
 		var tag = {
 		description : "Free parking",
@@ -188,11 +187,13 @@ const InsertHT = props => {
 		city: values.city,
 		telephone: values.phone,
 		commentIds: [],
+		price: values.price,
 		tags:arraytags
 	}
-	var dataPost = JSON.stringify(data);
-        console.log('form submission data',dataPost);
-	postAction(dataPost);
+
+//	var dataPost = JSON.stringify(data);
+        console.log('form submission data',data);
+	HTTPRequests().postProvider.createPost(data);
     }
 
 
