@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { HotelsToolbar, HotelCard } from './components';
+import { CarsToolbar, CarCard } from './components';
 import { HTTPRequests }  from 'HTTPRequests';
 
 const styles = theme => ({
@@ -24,12 +24,12 @@ const styles = theme => ({
 
 
 
-class HotelList extends Component{
+class CarList extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            hotels : []
+            cars : []
         }
     };
 
@@ -37,11 +37,11 @@ class HotelList extends Component{
     async componentDidMount(){
 
         let req = HTTPRequests();
-        let res = await req.postProvider.getByType("hotel");
+        let res = await req.postProvider.getByType("car");
         console.log(res);
         this.setState(
             {
-                hotels: res.data
+                cars: res.data
             }
         )
 
@@ -51,21 +51,21 @@ class HotelList extends Component{
         const{classes} = this.props;
         return (
             <div className={classes.root}>
-              <HotelsToolbar />
+              <CarsToolbar />
               <div className={classes.content}>
                 <Grid
                   container
                   spacing={3}
                 >
-                  {this.state.hotels.map(hotel => (
+                  {this.state.cars.map(car => (
                     <Grid
                       item
-                      key={hotel.id}
+                      key={car.id}
                       lg={4}
                       md={6}
                       xs={12}
                     >
-                      <HotelCard hotel={hotel} />
+                      <CarCard hotel={car} />
                     </Grid>
                   ))}
                 </Grid>
@@ -87,9 +87,9 @@ class HotelList extends Component{
     }
 }
 
-HotelList.propTypes ={
+CarList.propTypes ={
     classes: PropTypes.object.isRequired
 };
 
 
-export default withStyles(styles)(HotelList);
+export default withStyles(styles)(CarList);

@@ -13,7 +13,7 @@ import {
   Divider
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -64,17 +64,16 @@ const CarCard = props => {
           <img
             alt="Car"
             className={classes.image}
-            src={car.imageUrl}
+            src={'images/cars/kia_sportage_blanco_03.png'}
           />
         </div>
         <Typography
           align="center"
-          gutterBottom
           variant="h4"
           component={CustomRouterLink}
           to="/carDetail"
         >
-          {car.title}
+          {car.name}
         </Typography>
         <Typography
           align="center"
@@ -105,12 +104,12 @@ const CarCard = props => {
             className={classes.statsItem}
             item
           >
-            <GetAppIcon className={classes.statsIcon} />
+            <StarIcon className={classes.statsIcon} />
             <Typography
               display="inline"
               variant="body2"
             >
-              {car.totalDownloads} Downloads
+              {car.calification}
             </Typography>
           </Grid>
         </Grid>
