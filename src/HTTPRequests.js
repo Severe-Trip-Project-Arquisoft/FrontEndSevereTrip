@@ -2,7 +2,6 @@ import axios from 'axios';
 var resData = new Array();
 export const HTTPRequests = () =>
 {
-
     const base_url = "http://52.5.42.71:8080"
     const req = {
         postProvider:{             
@@ -506,12 +505,8 @@ export const HTTPRequests = () =>
 
 
     }
-<<<<<<< HEAD
-    return req
-}
-=======
 
   }
   return req
 }
->>>>>>> 6f76b88dd3241b5ebf27c8b08bb3129bcb3f730a
+
