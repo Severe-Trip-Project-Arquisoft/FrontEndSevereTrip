@@ -10,7 +10,7 @@ export const HTTPRequests = () =>
                 console.log(url)
                 const response = await axios.get(
                     url
-		).catch(e => console.log('Error: ', e) )
+		            ).catch(e => console.log('Error: ', e) )
                 return response;
 
       }, 

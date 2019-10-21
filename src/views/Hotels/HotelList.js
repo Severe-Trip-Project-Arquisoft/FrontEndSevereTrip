@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react'
-import withStyles from '@material-ui/core/styles/withStyles';	
+import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { Link, withRouter } from 'react-router-dom';
@@ -13,7 +13,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 const base_url = "http://52.5.42.71:8080";
 const url = base_url + "/posts/"
-
 
 const styles = theme => ({
   root: {

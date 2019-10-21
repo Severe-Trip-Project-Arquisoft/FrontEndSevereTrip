@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState, Component } from 'react'
+import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import { Link, withRouter } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
+import { CarsToolbar, CarCard } from './components';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import { CarsToolbar, CarCard } from './components';
-import mockData from './data';
+const base_url = "http://52.5.42.71:8080";
+const url = base_url + "/posts/"
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     padding: theme.spacing(3)
   },
@@ -20,12 +27,40 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'flex-end'
   }
-}));
+});
 
-const CarList = () => {
-  const classes = useStyles();
+class CarList extends Component{
 
-  const [cars] = useState(mockData);
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isDataLoaded: false,
+      datosCarros: []
+    };
+  }
+
+  async componentDidMount(){
+    await this.setState( {isDataLoaded: true} );
+    this.cargarDatos();
+  }
+
+  async cargarDatos () {
+    await axios({
+	url
+    })
+      .then((response) => {
+        let data = response.data
+
+        this.setState({
+          datosCarros: data
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  render(){
+    const { classes } = this.props;
 
   return (
     <div className={classes.root}>
@@ -35,7 +70,7 @@ const CarList = () => {
           container
           spacing={3}
         >
-          {cars.map(car => (
+          {this.state.datosCarros.map(car => (
             <Grid
               item
               key={car.id}
@@ -59,6 +94,7 @@ const CarList = () => {
       </div>
     </div>
   );
+}
 };
 
-export default CarList;
+export default withRouter(withStyles(styles)(CarList));
