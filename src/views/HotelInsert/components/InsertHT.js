@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -13,7 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import { HTTPRequests} from 'HTTPRequests';
+import { API } from 'HTTPRequests';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -25,7 +25,6 @@ const InsertHT = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
-
   const [values, setValues] = useState({
     hotelName: '',
     address: '',
@@ -40,7 +39,10 @@ const InsertHT = props => {
     description: ''
   });
 
-  const [state, setState] = React.useState({
+  
+  
+
+  const [state, setState] = useState({
     freeparking:false,
     restaurant:false,
     businessCenterInternetAccess:false,
@@ -69,7 +71,7 @@ const InsertHT = props => {
 
   const handleSubmit = event => {
         event.preventDefault();
-	var arraytags =  [];
+	    var arraytags =  [];
 	if(state.freeparking){
 		var tag = {
 		description : "Free parking",
@@ -192,10 +194,10 @@ const InsertHT = props => {
 	}
 
 //	var dataPost = JSON.stringify(data);
-        console.log('DATA I ',data.telephone);
-        console.log('form submission data',data);
-	HTTPRequests().postProvider.createPost(data);
-    }
+      console.log('DATA I ',data.telephone);
+      console.log('form submission data',data);
+      API.postProvider.createPost(data);
+  }
 
   return (
     <Card
