@@ -1,12 +1,6 @@
 import axios from 'axios';
 export const HTTPRequests = () =>
 {
-  const base_url = 'http://52.5.42.71:8080';
-  const req = {
-    postProvider:{
-      //GET
-      getAll: async ()=>{
-
     const base_url = "http://52.5.42.71:8080"
     const req = {
         postProvider:{             
@@ -16,7 +10,7 @@ export const HTTPRequests = () =>
                 console.log(url)
                 const response = await axios.get(
                     url
-		).catch(e => console.log('Error: ', e) )
+		            ).catch(e => console.log('Error: ', e) )
                 return response;
 
       }, 
