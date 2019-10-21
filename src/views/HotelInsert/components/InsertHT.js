@@ -30,8 +30,6 @@ const InsertHT = props => {
     hotelName: '',
     address: '',
     postalCode:'',
-    latitude:0.0,
-    longitude:0.0,
     email: '',
     phone: '',
     price: 0.0,
@@ -180,8 +178,6 @@ const InsertHT = props => {
 		providerId: "0123558",
 		name: values.hotelName,
 		serviceType: "hotel",
-		latitude: values.latitude,
-		longitude: values.longitude,
 		address: values.address,
 		postalCode: values.postalCode,
 		city: values.city,
@@ -195,7 +191,6 @@ const InsertHT = props => {
         console.log('form submission data',data);
 	HTTPRequests().postProvider.createPost(data);
     }
-
 
   return (
     <Card
@@ -249,40 +244,6 @@ const InsertHT = props => {
                 onChange={handleChange}
                 required
                 value={values.address}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-	      md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Latitude"
-                margin="dense"
-                name="latitude"
-                onChange={handleChange}
-                type="number"
-                required
-                value={values.latitude}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-	      md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Longitude"
-                margin="dense"
-                name="longitude"
-                onChange={handleChange}
-                type="number"
-                required
-                value={values.longitude}
                 variant="outlined"
               />
             </Grid>

@@ -16,6 +16,8 @@ import {
   Favorites as FavoritesView,
   Cars as CarsView,
   CarInsert as CarInsertView,
+  CarDetail as CarDetailView,
+  DoingReservationCar as DoingReservationCarView,
   Restaurants as RestaurantsView,
   RestaurantInsert as RestaurantInsertView,
   Flights as FlightsView,
@@ -31,7 +33,7 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/products"
+        to="/Hotels"
       />
       <RouteWithLayout
         component={UserListView}
@@ -110,6 +112,18 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/carInsert"
+      />
+      <RouteWithLayout
+        component={CarDetailView}
+        exact
+        layout={MainLayout}
+        path="/carDetail"
+      />
+      <RouteWithLayout
+        component={DoingReservationCarView}
+        exact
+        layout={MainLayout}
+        path="/doingReservationsCar"
       />
       <RouteWithLayout
         component={RestaurantsView}
