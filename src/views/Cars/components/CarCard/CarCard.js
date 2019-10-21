@@ -64,7 +64,7 @@ const CarCard = props => {
           <img
             alt="Car"
             className={classes.image}
-            src={'images/cars/kia_sportage_blanco_03.png'}
+            src={'images/cars/car3.png'}
           />
         </div>
         <Typography

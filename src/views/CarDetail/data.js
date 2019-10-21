@@ -35,7 +35,7 @@ export default
     KILOMETRAJE
     Ilimitado
     Este alquiler incluye kilómetro ilimitado gratis.`,
-    imageUrl: '/images/cars/kia_sportage_blanco_03.png',
+    imageUrl: '/images/cars/car3.png',
     city:'Bogota',
     country:'Colombia',
     price:'366.855,89',

@@ -257,7 +257,7 @@ const InsertCar = props => {
             >
               <TextField
                 fullWidth
-                label="Price for car $"
+                label="Price for service car $"
                 margin="dense"
                 name="price"
                 onChange={handleChange}
