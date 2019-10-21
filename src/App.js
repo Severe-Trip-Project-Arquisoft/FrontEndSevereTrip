@@ -14,12 +14,10 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import './assets/scss/index.scss';
 
 import Routes from './Routes';
-import {HTTPRequests} from './HTTPRequests'
-import {test} from './testRequests'
-
-const req = HTTPRequests();
-
-test(req);
+//import {HTTPRequests} from './HTTPRequests'
+//import {test} from './testRequests'
+//const req = HTTPRequests();
+//test(req);
 
 
 

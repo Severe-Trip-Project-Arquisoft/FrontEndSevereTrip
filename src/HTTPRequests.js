@@ -1,4 +1,5 @@
 import axios from 'axios';
+var resData = new Array();
 export const HTTPRequests = () =>
 {
     const base_url = "http://52.5.42.71:8080"
@@ -6,12 +7,11 @@ export const HTTPRequests = () =>
         postProvider:{             
             //GET
             getAll: async ()=>{
-
                 const url = base_url + "/posts/"
                 console.log(url)
                 const response = await axios.get(
-                    url           
-                ).catch(e => console.log('Error: ', e) )
+                    url
+		).catch(e => console.log('Error: ', e) )
                 return response;
 
             }, 

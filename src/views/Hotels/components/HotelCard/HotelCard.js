@@ -64,22 +64,22 @@ const HotelCard = props => {
           <img
             alt="Hotel"
             className={classes.image}
-            src={hotel.imageUrl}
+            src={'/images/products/product_2.png'}
           />
         </div>
         <Typography
           align="rihth"
           variant="h4"
 	  component={CustomRouterLink}
-          to="/hotelDetail"
+          to="/hotelDetail" 
         >
-          {hotel.title}
+          {hotel.name}
         </Typography>
         <Typography
           align="center"
           variant="body1"
         >
-          {hotel.description}
+          {hotel.name}
         </Typography>
         <Typography
           align="center"
@@ -121,7 +121,7 @@ const HotelCard = props => {
               display="inline"
               variant="body2"
             >
-              {hotel.calification} 
+              4.5 
             </Typography>
           </Grid>
         </Grid>

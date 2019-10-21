@@ -3,7 +3,7 @@ export const test = async (req) =>
     console.log("TEST");
 
     //Post-Provider
-    console.log(req)
+    console.log("------------ttttttttt",req)
     const r1 = await req.postProvider.getAll();
     console.log(r1);
 

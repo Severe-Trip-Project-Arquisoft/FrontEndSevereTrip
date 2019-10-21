@@ -1,5 +1,8 @@
 import uuid from 'uuid/v1';
-
+//var resData = new Array();
+//                ).then((response) => {
+//		    resData=response.data;
+//		}).catch(e => console.log('Error: ', e) )
 export default [
   {
     id: uuid(),
