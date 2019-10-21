@@ -7,6 +7,8 @@ export { default as Favorites } from './Favorites';
 export { default as Reservations } from './Reservations';
 export { default as Cars } from './Cars';
 export { default as CarInsert } from './CarInsert';
+export { default as CarDetail } from './CarDetail';
+export { default as DoingReservationCar } from './DoingReservationCar';
 export { default as Restaurants } from './Restaurants';
 export { default as RestaurantInsert } from './RestaurantInsert';
 export { default as Flights } from './Flights';
