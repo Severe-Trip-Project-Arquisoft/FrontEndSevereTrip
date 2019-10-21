@@ -195,47 +195,7 @@ const SignUp = props => {
 
   return (
     <div className={classes.root}>
-      <Grid
-        className={classes.grid}
-        container
-      >
-        <Grid
-          className={classes.quoteContainer}
-          item
-          lg={5}
-        >
-          <div className={classes.quote}>
-            <div className={classes.quoteInner}>
-              <Typography
-                className={classes.quoteText}
-                variant="h1"
-              >
-                Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                they sold out High Life.
-              </Typography>
-              <div className={classes.person}>
-                <Typography
-                  className={classes.name}
-                  variant="body1"
-                >
-                  Takamaru Ayako
-                </Typography>
-                <Typography
-                  className={classes.bio}
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </div>
-            </div>
-          </div>
-        </Grid>
-        <Grid
-          className={classes.content}
-          item
-          lg={7}
-          xs={12}
-        >
+
           <div className={classes.content}>
             <div className={classes.contentHeader}>
               <IconButton onClick={handleBack}>
@@ -247,18 +207,34 @@ const SignUp = props => {
                 className={classes.form}
                 onSubmit={handleSignUp}
               >
-                <Typography
-                  className={classes.title}
-                  variant="h2"
-                >
-                  Create new account
-                </Typography>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Use your email to create new account
-                </Typography>
+	<Grid
+            container
+            spacing={3}
+          >
+
+	      <Grid
+	          item
+		  md={12}
+	          xs={12}
+	      >
+		        <Typography
+		          className={classes.title}
+		          variant="h2"
+		        >
+		          Create new account
+		        </Typography>
+		        <Typography
+		          color="textSecondary"
+		          gutterBottom
+	                >
+	                  Use your email to create new account
+	                </Typography>
+	      </Grid>
+	      <Grid
+	          item
+		  md={6}
+	          xs={12}
+	      >
                 <TextField
                   className={classes.textField}
                   error={hasError('firstName')}
@@ -273,6 +249,12 @@ const SignUp = props => {
                   value={formState.values.firstName || ''}
                   variant="outlined"
                 />
+	      </Grid>
+	      <Grid
+	          item
+		  md={6}
+	          xs={12}
+	      >
                 <TextField
                   className={classes.textField}
                   error={hasError('lastName')}
@@ -287,6 +269,12 @@ const SignUp = props => {
                   value={formState.values.lastName || ''}
                   variant="outlined"
                 />
+	      </Grid>
+	      <Grid
+	          item
+		  md={6}
+	          xs={12}
+	      >
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -301,6 +289,12 @@ const SignUp = props => {
                   value={formState.values.email || ''}
                   variant="outlined"
                 />
+	      </Grid>
+	      <Grid
+	          item
+		  md={6}
+	          xs={12}
+	      >
                 <TextField
                   className={classes.textField}
                   error={hasError('password')}
@@ -315,6 +309,7 @@ const SignUp = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+	      </Grid>
                 <div className={classes.policy}>
                   <Checkbox
                     checked={formState.values.policy || false}
@@ -369,11 +364,11 @@ const SignUp = props => {
                     Sign in
                   </Link>
                 </Typography>
+
+      </Grid>
               </form>
             </div>
           </div>
-        </Grid>
-      </Grid>
     </div>
   );
 };
