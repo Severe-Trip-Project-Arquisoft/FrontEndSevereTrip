@@ -15,13 +15,6 @@ import './assets/scss/index.scss';
 
 import Routes from './Routes';
 
-//import {HTTPRequests} from './HTTPRequests'
-//import {test} from './testRequests'
-//const req = HTTPRequests();
-//test(req);
-
-
-
 const browserHistory = createBrowserHistory();
 
 Chart.helpers.extend(Chart.elements.Rectangle.prototype, {

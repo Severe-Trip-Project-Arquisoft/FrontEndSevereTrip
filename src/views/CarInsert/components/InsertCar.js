@@ -13,7 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import {HTTPRequests}  from 'HTTPRequests';
+import {API}  from 'HTTPRequests';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -144,7 +144,7 @@ const InsertCar = props => {
 
   //	var dataPost = JSON.stringify(data);
           console.log('form submission data',data);
-  	HTTPRequests().postProvider.createPost(data);
+  	    API.postProvider.createPost(data);
   }
 
   return (

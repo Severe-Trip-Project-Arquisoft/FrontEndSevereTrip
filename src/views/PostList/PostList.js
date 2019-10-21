@@ -5,7 +5,7 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { PostCard } from './components';
-import { HTTPRequests }  from 'HTTPRequests';
+import { API }  from 'HTTPRequests';
 
 const styles = theme => ({
     root: {
@@ -36,8 +36,8 @@ class PostList extends Component{
 
     async componentDidMount(){
 
-        let req = HTTPRequests();
-        let res = await req.postProvider.getAll();
+        
+        let res = await API.postProvider.getAll();
         console.log(res);
         this.setState(
             {
