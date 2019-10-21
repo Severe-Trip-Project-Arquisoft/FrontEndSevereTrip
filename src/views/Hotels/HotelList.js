@@ -1,38 +1,21 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState, Component } from 'react'
+import withStyles from '@material-ui/core/styles/withStyles';	
 import { IconButton, Grid, Typography } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import { Link, withRouter } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
+import { HotelsToolbar, HotelCard } from './components';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import { HotelsToolbar, HotelCard } from './components';
-import mockData from './data';
-
-//import { HTTPRequests} from 'HTTPRequests';
-//import {test} from './test';
-//const req = HTTPRequests();
-//const datos = test(req);
-//console.log("DATOS",datos);
-
-import axios from 'axios';
 const base_url = "http://52.5.42.71:8080";
-var resData = new Array();
-
 const url = base_url + "/posts/"
-console.log(url)
 
 
-
-async function f2() {
-  const response = await axios.get(
-	url
-  ).then((response) => {
-	resData=response.data;
-	console.log("DATOS1",resData);
-  }).catch(e => console.log('Error: ', e) )
-}
-
-
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     padding: theme.spacing(3)
   },
@@ -45,20 +28,41 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'flex-end'
   }
-}));
+});
 
-const HotelList = () => {
-  const classes = useStyles();
 
-  f2();
+class HotelList extends Component{
 
-  console.log("ESpera...??");
+  constructor(props){
+    super(props);
 
-  const [hotels] = useState(resData);
+    this.state = {
+      isDataLoaded: false,
+      datosHoteles: []
+    };
+  }
 
-  //const [datasRes] = useState(r1);
-//            console.log("HOTEL ...",hotels)
+  async componentDidMount(){
+    await this.setState( {isDataLoaded: true} );
+    this.cargarDatos();
+  }
 
+  async cargarDatos () {
+    await axios({
+	url
+    })
+      .then((response) => {
+        let data = response.data
+
+        this.setState({
+          datosHoteles: data
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  render(){
+    const { classes } = this.props;
 
   return (
     <div className={classes.root}>
@@ -68,7 +72,7 @@ const HotelList = () => {
           container
           spacing={3}
         >
-          {hotels.map(hotel => (
+          {this.state.datosHoteles.map(hotel => (
             <Grid
               item
               key={hotel.id}
@@ -92,6 +96,7 @@ const HotelList = () => {
       </div>
     </div>
   );
-};
+  }
+}
 
-export default HotelList;
+export default withRouter(withStyles(styles)(HotelList));

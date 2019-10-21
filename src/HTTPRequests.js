@@ -7,12 +7,17 @@ export const HTTPRequests = () =>
       //GET
       getAll: async ()=>{
 
-        const url = base_url + '/posts/'
-        
-        const response = await axios.get(
-            url           
-        ).catch(e => console.log('Error: ', e) )
-        return response;
+    const base_url = "http://52.5.42.71:8080"
+    const req = {
+        postProvider:{             
+            //GET
+            getAll: async ()=>{
+                const url = base_url + "/posts/"
+                console.log(url)
+                const response = await axios.get(
+                    url
+		).catch(e => console.log('Error: ', e) )
+                return response;
 
       }, 
       getById: async (id)=>{
@@ -24,9 +29,8 @@ export const HTTPRequests = () =>
         ).catch(e => console.log('Error: ', e))
         return response;
 
-
-      },
-      getByType: async (type)=>{
+            },
+            getByType: async (type)=>{
                 
         const url = base_url + '/posts/type/' + type
         
@@ -509,3 +513,4 @@ export const HTTPRequests = () =>
   }
   return req
 }
+
