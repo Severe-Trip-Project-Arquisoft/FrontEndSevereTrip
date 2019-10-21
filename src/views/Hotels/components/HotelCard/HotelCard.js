@@ -68,7 +68,7 @@ const HotelCard = props => {
           />
         </div>
         <Typography
-          align="rihth"
+          align="right"
           variant="h4"
 	  component={CustomRouterLink}
           to="/hotelDetail" 
