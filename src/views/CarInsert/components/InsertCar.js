@@ -13,7 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import { postAction } from 'actions';
+import {HTTPRequests}  from 'HTTPRequests';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -60,9 +60,9 @@ const InsertCar = props => {
   };
 
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
         event.preventDefault();
-  var arraytags = new Array();
+  var arraytags = [];
   if(state.airConditioning){
 		var tag = {
 		description : "Air Conditioning",
@@ -142,10 +142,11 @@ const InsertCar = props => {
 		tags:arraytags
 	}
 
-  var dataPost = JSON.stringify(data);
-        console.log('form submission data',dataPost);
-	      postAction(dataPost);
-    }
+  
+    console.log('form submission data',data);
+    const res = await HTTPRequests().postProvider.createPost(data);
+    console.log(res)
+  }
 
   return (
     <Card
@@ -470,6 +471,7 @@ const InsertCar = props => {
           <Button
             color="primary"
             variant="contained"
+            onClick= {handleSubmit}
           >
             Save Car
           </Button>
