@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@material-ui/core';
+import { Grid, Typography, CardContent, Card, CardActions, Divider,Container } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 
@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-
+import CommentSection from '../../components/CommentSection';
 
 import { HotelDetailToolbar} from './components';
 import mockData from './data';
@@ -117,8 +117,8 @@ const HotelDetail = () => {
           <div className={classes.demo}>
 
 
-              {hotel.adiciones.map(add => (
-            <Grid item xs={12} md={6}>
+              {hotel.adiciones.map( (add, index) => (
+            <Grid key = {index} item xs={12} md={6}>
                 <ListItem>
                   <ListItemIcon>
                     <RadioButtonCheckedIcon />
@@ -176,6 +176,7 @@ const HotelDetail = () => {
 
 
       </div>
+      <CommentSection userId ="USER" providerId = "PROVIDER" postId = "5dae79db5d68100001394647"/>              
     </div>
   );
 };

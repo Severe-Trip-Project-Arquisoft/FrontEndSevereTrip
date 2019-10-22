@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
@@ -10,7 +10,8 @@ import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
+import CircularProgress from '@material-ui/core/CircularProgress'
+import {API} from 'HTTPRequests'
 const base_url = "http://52.5.42.71:8080";
 const url = base_url + "/posts/"
 
@@ -26,44 +27,45 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end'
+  },
+  progress: {
+    display: "block",
+    margin: theme.spacing(3),
+    marginLeft: "auto",
+    marginRight: "auto",
+
+   
   }
 });
 
 
-class HotelList extends Component{
+const HotelList = (props)=>{
 
-  constructor(props){
-    super(props);
+  const [state , setState] = useState({
+    isDataLoaded: false,
+    datosHoteles: []
+  });
 
-    this.state = {
-      isDataLoaded: false,
-      datosHoteles: []
-    };
-  }
-
-  async componentDidMount(){
-    await this.setState( {isDataLoaded: true} );
-    this.cargarDatos();
-  }
-
-  async cargarDatos () {
-    await axios({
-	url
-    })
-      .then((response) => {
-        let data = response.data
-
-        this.setState({
-          datosHoteles: data
-        })
+  useEffect( () => {   
+    async function cargarDatos () {
+      const rensponse = await API.postProvider.getByType("hotel")
+        .catch(err => console.log(err));
+      setState({
+        isDataLoaded: true,
+        datosHoteles: rensponse.data
       })
-      .catch(err => console.log(err))
-  }
 
-  render(){
-    const { classes } = this.props;
+    }
+    cargarDatos();
+    
+    //return () =>{} 
+  }  , [])
+  
+  
+  const { classes } = props;
 
   return (
+    state.isDataLoaded ?
     <div className={classes.root}>
       <HotelsToolbar />
       <div className={classes.content}>
@@ -71,7 +73,7 @@ class HotelList extends Component{
           container
           spacing={3}
         >
-          {this.state.datosHoteles.map(hotel => (
+          {state.datosHoteles.map(hotel => (
             <Grid
               item
               key={hotel.id}
@@ -94,8 +96,12 @@ class HotelList extends Component{
         </IconButton>
       </div>
     </div>
+    : <div>
+         <CircularProgress className={classes.progress} />
+    </div>
+
   );
-  }
+  
 }
 
 export default withRouter(withStyles(styles)(HotelList));
