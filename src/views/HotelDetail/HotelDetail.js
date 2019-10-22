@@ -53,12 +53,14 @@ const useStyles = makeStyles(theme => ({
 const HotelDetail = (props) => {
   const classes = useStyles();
   const [hotel,setHotel] = useState(mockData)
+  const [loaded,setLoaded] = useState(false);
   const {postId} = useParams();
 
   useEffect(()=>{
     const fetchPostData = async ()=>{
       let receivedPostData = await API.postProvider.getById(postId)
       setHotel(Object.assign({},hotel,receivedPostData.data))
+      setLoaded(true);
     }
     fetchPostData();    
   },[]);
@@ -187,7 +189,9 @@ const HotelDetail = (props) => {
 
 
       </div>
-      <CommentSection userId ="USER" providerId = "PROVIDER" postId = "5dae79db5d68100001394647"/>              
+      {loaded ?
+        <CommentSection userId ="USER" providerId = {hotel.providerId} postId = {hotel.id}/> : <div/>
+        }          
     </div>
   );
 };

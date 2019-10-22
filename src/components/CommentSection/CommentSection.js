@@ -38,7 +38,9 @@ const CommentSection = props =>{
     useEffect(() =>{
          const fetchComments = async () =>{
                 const res = await API.postProvider.getPostComments(postId)
-                setComments(res.data)
+                console.log(postId)
+                if(res.data.length>0)
+                    setComments(res.data)
                 setIsLoaded(true)
 
 

@@ -20,10 +20,10 @@ const styles = theme => ({
 const CommentForm = props =>{
 const {userId, username, postId} = props
 
-    const [hover, setHover] = React.useState(1);
-    const [rating, setRating] = React.useState(1);
-    const [title, setTitle] = React.useState("");
-    const [content, setContent] = React.useState("");
+    const [hover, setHover] = useState(1);
+    const [rating, setRating] = useState(1);
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
 
     const { classes } = props;
@@ -38,7 +38,6 @@ const {userId, username, postId} = props
                     title, content, rating, clientId: userId
                 }
             );
-
             console.log(res);
         }
 

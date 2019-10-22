@@ -121,9 +121,8 @@ const Routes = () => {
       />
       <RouteWithLayout
         component={CarDetailView}
-        exact
         layout={MainLayout}
-        path="/carDetail"
+        path="/carDetail/:postId"
       />
       <RouteWithLayout
         component={DoingReservationCarView}
