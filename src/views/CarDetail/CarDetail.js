@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-
+//import {CommentSection} from '../../components/CommentSection'
 
 import { CarDetailToolbar} from './components';
 import mockData from './data';
@@ -117,8 +117,8 @@ const CarDetail = () => {
           <div className={classes.demo}>
 
 
-              {car.adiciones.map(add => (
-            <Grid item xs={12} md={6}>
+              {car.adiciones.map( (add, index) => (
+            <Grid  key = {index} item xs={12} md={6}>
                 <ListItem>
                   <ListItemIcon>
                     <RadioButtonCheckedIcon />
@@ -165,7 +165,7 @@ const CarDetail = () => {
             <Typography
               display="inline"
               variant="body2"
-            >
+          >
               {car.calification}
             </Typography>
           </Grid>
