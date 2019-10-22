@@ -73,7 +73,7 @@ const PostCard = props => {
           align="right"
           variant="h4"
 	        component={CustomRouterLink}
-          to={ruta}
+          to={ruta+"/"+post.id}
         >
           {post.name}
         </Typography>

@@ -24,7 +24,8 @@ import {
   FlightInsert as FlightInsertView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  SignIn as SignIn
 } from './views';
 
 const Routes = () => {
@@ -34,6 +35,12 @@ const Routes = () => {
         exact
         from="/"
         to="/posts"
+      />
+      <RouteWithLayout
+        component={SignIn}
+        exact
+        layout={MainLayout}
+        path="/signin"
       />
       <RouteWithLayout
         component={UserListView}
@@ -79,9 +86,8 @@ const Routes = () => {
       />
       <RouteWithLayout
         component={HotelDetailView}
-        exact
         layout={MainLayout}
-        path="/hotelDetail"
+        path="/hotelDetail/:postId"
       />
       <RouteWithLayout
         component={ReservationsView}
@@ -155,7 +161,7 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/not-found"
       />
-      <Redirect to="/not-found" />
+      <Redirect to="/not-found"/>
     </Switch>
   );
 };

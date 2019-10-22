@@ -53,7 +53,6 @@ const HotelCard = props => {
   const { className, hotel, ...rest } = props;
 
   const classes = useStyles();
-
   return (
     <Card
       {...rest}
@@ -71,7 +70,7 @@ const HotelCard = props => {
           align="right"
           variant="h4"
 	        component={CustomRouterLink}
-          to="/hotelDetail"
+          to={"/hotelDetail/"+hotel.id}
         >
           {hotel.name}
         </Typography>
