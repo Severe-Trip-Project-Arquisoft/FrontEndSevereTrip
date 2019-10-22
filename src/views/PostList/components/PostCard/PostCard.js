@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -11,7 +13,7 @@ import {
   Divider
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -39,10 +41,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductCard = props => {
-  const { className, product, ...rest } = props;
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div
+    ref={ref}
+  >
+    <RouterLink {...props} />
+  </div>
+));
+
+const PostCard = props => {
+  const { className, post, ...rest } = props;
 
   const classes = useStyles();
+  const ruta = "/"+post.serviceType+"Detail";
+  console.log(ruta);
 
   return (
     <Card
@@ -52,23 +64,36 @@ const ProductCard = props => {
       <CardContent>
         <div className={classes.imageContainer}>
           <img
-            alt="Product"
+            alt="Post"
             className={classes.image}
-            src={product.imageUrl}
+            src={'/images/'+post.serviceType+'s/'+post.serviceType+'5.png'}
           />
         </div>
         <Typography
-          align="center"
-          gutterBottom
+          align="right"
           variant="h4"
+	        component={CustomRouterLink}
+          to={ruta+"/"+post.id}
         >
-          {product.title}
+          {post.name}
         </Typography>
         <Typography
           align="center"
           variant="body1"
         >
-          {product.description}
+          {post.name}
+        </Typography>
+        <Typography
+          align="center"
+          variant="h5"
+        >
+          {post.city}
+        </Typography>
+        <Typography
+          align="center"
+          variant="h5"
+        >
+          Precio por {post.serviceType} {post.price}
         </Typography>
       </CardContent>
       <Divider />
@@ -93,12 +118,12 @@ const ProductCard = props => {
             className={classes.statsItem}
             item
           >
-            <GetAppIcon className={classes.statsIcon} />
+            <StarIcon className={classes.statsIcon} />
             <Typography
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads} Downloads
+              {post.calification}
             </Typography>
           </Grid>
         </Grid>
@@ -107,9 +132,9 @@ const ProductCard = props => {
   );
 };
 
-ProductCard.propTypes = {
+PostCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired
 };
 
-export default ProductCard;
+export default PostCard;

@@ -65,11 +65,11 @@ const Topbar = props => {
           </IconButton>
 
           <IconButton
-	    activeClassName={classes.active}
+            activeclassname={classes.active}
             className={classes.signOutButton}
             color="inherit"
-	    component={CustomRouterLink}
-	    to={"/sign-in"}
+	          component={CustomRouterLink}
+	          to={"/sign-in"}
           >
             <InputIcon />
           </IconButton>

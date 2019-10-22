@@ -46,7 +46,7 @@ const Sidebar = props => {
   const pages = [
     {
       title: 'Post',
-      href: '/products',
+      href: '/posts',
       icon: <PublicIcon />
     },
     {

@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 import { forwardRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Reservation = '/reservations';
+const Reservation = '/doingReservations';
 const DeleteHotel = '/';
 
 const CustomRouterLink = forwardRef((props, ref) => (

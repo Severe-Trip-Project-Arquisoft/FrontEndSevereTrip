@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -13,6 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
+import { API } from 'HTTPRequests';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -24,19 +25,20 @@ const InsertHT = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
-
   const [values, setValues] = useState({
     hotelName: '',
     address: '',
+    postalCode:'',
     email: '',
-    phone: '',
-    price: '',
+    phone: 1,
+    price: 0.0,
+    latitude: 0.0,
+    longitude: 0.0,
     city: '',
     country: '',
     description: ''
   });
-
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     freeparking:false,
     restaurant:false,
     businessCenterInternetAccess:false,
@@ -59,10 +61,139 @@ const InsertHT = props => {
       ...values,
       [event.target.name]: event.target.value
     });
-    setState({ ...state, [event.target.name]: event.target.value });
+    setState({ ...state, [event.target.name]: event.target.checked });
   };
 
 
+  const handleSubmit = event => {
+        event.preventDefault();
+	    var arraytags =  [];
+	if(state.freeparking){
+		var tag = {
+		description : "Free parking",
+		name : "freeparking"
+		}
+		arraytags.push(tag);
+	}
+	if(state.restaurant){
+		tag = {
+		description : "Restaurant",
+		name : "restaurant"
+		}
+		arraytags.push(tag);
+	}
+	if(state.businessCenterInternetAccess){
+		tag = {
+		description : "Business Center Internet Access",
+		name : "businessCenterInternetAccess"
+		}
+		arraytags.push(tag);
+	}
+	if(state.breakfastAvailable){
+		tag = {
+		description : "Breakfast Available",
+		name : "breakfastAvailable"
+		}
+		arraytags.push(tag);
+	}
+	if(state.laundryService){
+		tag = {
+		description : "Laundry Service",
+		name : "laundryService"
+		}
+		arraytags.push(tag);
+	}
+	if(state.conferenceFacilities){
+		tag = {
+		description : "Conference Facilities",
+		name : "conferenceFacilities"
+		}
+		arraytags.push(tag);
+	}
+	if(state.meetingRooms){
+		tag = {
+		description : "Meeting Rooms",
+		name : "meetingRooms"
+		}
+		arraytags.push(tag);
+	}
+	if(state.internet){
+		tag = {
+		description : "Internet",
+		name : "internet"
+		}
+		arraytags.push(tag);
+	}
+	if(state.freeInternet){
+		tag = {
+		description : "Free Internet",
+		name : "freeInternet"
+		}
+		arraytags.push(tag);
+	}
+	if(state.nonSmokingRooms){
+		tag = {
+		description : "Non Smoking Rooms",
+		name : "nonSmokingRooms"
+		}
+		arraytags.push(tag);
+	}
+	if(state.suites){
+		tag = {
+		description : "Suites",
+		name : "suites"
+		}
+		arraytags.push(tag);
+	}
+	if(state.roomsFamilies){
+		tag = {
+		description : "Rooms Families",
+		name : "roomsFamilies"
+		}
+		arraytags.push(tag);
+	}
+	if(state.roomService){
+		tag = {
+		description : "Room Service",
+		name : "roomService"
+		}
+		arraytags.push(tag);
+	}
+	if(state.safeBox){
+		tag = {
+		description : "Safe Box",
+		name : "safeBox"
+		}
+		arraytags.push(tag);
+	}
+	if(state.flatScreenTV){
+		tag = {
+		description : "Flat Screen TV",
+		name : "flatScreenTV"
+		}
+		arraytags.push(tag);
+	}
+
+	var data = {
+		providerId: "0123558",
+		name: values.hotelName,
+		serviceType: "hotel",
+		address: values.address,
+		postalCode: values.postalCode,
+		city: values.city,
+		telephone: values.phone,
+		latitude: values.latitude,
+	        longitude: values.longitude,
+		commentIds: [],
+		price: values.price,
+		tags:arraytags
+	}
+
+//	var dataPost = JSON.stringify(data);
+      console.log('DATA I ',data.telephone);
+      console.log('form submission data',data);
+      API.postProvider.createPost(data);
+  }
 
   return (
     <Card
@@ -116,6 +247,56 @@ const InsertHT = props => {
                 onChange={handleChange}
                 required
                 value={values.address}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+	      md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Latitude"
+                margin="dense"
+                name="latitude"
+                onChange={handleChange}
+                type="number"
+		required
+                value={values.latitude}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+	      md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Longitude"
+                margin="dense"
+                name="longitude"
+                onChange={handleChange}
+                type="number"
+		required
+                value={values.longitude}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+	      md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Postal Code"
+                margin="dense"
+                name="postalCode"
+                onChange={handleChange}
+                required
+                value={values.postalCode}
                 variant="outlined"
               />
             </Grid>
@@ -453,8 +634,10 @@ const InsertHT = props => {
         <Divider />
         <CardActions>
           <Button
+	    type="submit"
             color="primary"
             variant="contained"
+	    onClick={handleSubmit}
           >
             Save Hotel
           </Button>

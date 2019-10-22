@@ -4,7 +4,7 @@ export default
     title: 'Hilton',
     description:
       'Hilton Garden Inn Bogota Airport es una magnífica elección para los viajeros que visiten Bogotá, ya que ofrece un ambiente con encanto, además de numerosos servicios diseñados para mejorar tu estancia. Como está cerca de la mayoría de los puntos de referencia de Bogotá, como BotaniK (0,9 km) y Catedral de Fontibon (2,9 km), Hilton Garden Inn Bogota Airport es un fantástico destino para turistas.',
-    imageUrl: '/images/products/product_2.png',
+    imageUrl: '/images/hotels/hotel1.png',
     city:'Bogota',
     country:'Colombia',
     price:'100.000',

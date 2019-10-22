@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@material-ui/core';
+import { Grid, Typography, CardContent, Card, CardActions, Divider,Container } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
+import {useParams } from 'react-router-dom';
 
 
 import ListItem from '@material-ui/core/ListItem';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-
+import CommentSection from '../../components/CommentSection';
 
 import { HotelDetailToolbar} from './components';
 import mockData from './data';
+import { API }  from 'HTTPRequests';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,10 +50,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const HotelDetail = () => {
+const HotelDetail = (props) => {
   const classes = useStyles();
-  const [hotel] = useState(mockData);
+  const [hotel,setHotel] = useState(mockData)
+  const [loaded,setLoaded] = useState(false);
+  const {postId} = useParams();
 
+  useEffect(()=>{
+    const fetchPostData = async ()=>{
+      let receivedPostData = await API.postProvider.getById(postId)
+      setHotel(Object.assign({},hotel,receivedPostData.data))
+      setLoaded(true);
+    }
+    fetchPostData();    
+  },[]);
+  console.log(hotel);
   return (
     <div className={classes.root}>
       <HotelDetailToolbar />
@@ -65,14 +78,14 @@ const HotelDetail = () => {
           <img
             alt="Hotel"
             className={classes.image}
-            src={hotel.imageUrl}
+            src={'/images/hotels/hotel1.png'}
           />
         </div>
         <Typography
           align="center"
           variant="h4"
         >
-          {hotel.title}
+          {hotel.name}
         </Typography>
         <Typography
           align="center"
@@ -117,8 +130,8 @@ const HotelDetail = () => {
           <div className={classes.demo}>
 
 
-              {hotel.adiciones.map(add => (
-            <Grid item xs={12} md={6}>
+              {hotel.adiciones.map( (add, index) => (
+            <Grid key = {index} item xs={12} md={6}>
                 <ListItem>
                   <ListItemIcon>
                     <RadioButtonCheckedIcon />
@@ -176,6 +189,9 @@ const HotelDetail = () => {
 
 
       </div>
+      {loaded ?
+        <CommentSection userId ="USER" providerId = {hotel.providerId} postId = {hotel.id}/> : <div/>
+        }          
     </div>
   );
 };
