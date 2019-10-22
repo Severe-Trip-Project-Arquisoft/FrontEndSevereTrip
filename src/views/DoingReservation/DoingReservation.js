@@ -1,9 +1,14 @@
 import 'date-fns';
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { API } from 'HTTPRequests';
+
 import {
+  IconButton,
   Card,
   CardHeader,
   CardContent,
@@ -22,46 +27,122 @@ import {
 } from '@material-ui/pickers';
 
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     padding: theme.spacing(4)
   }
-}));
-
-const DoingReservation = props => {
-  const { className, ...rest } = props;
-  const classes = useStyles();
-
-  const [values, setValues] = useState({
-    serviceName: 'El virrey',
-    serviceType: 'hotel',
-    clientName: 'pepito',
-    serviceNumber: '2',
-    priceReservation: '245432',
-    serviceState: 'waiting for your answer'
   });
 
- const [selectedDateCheckIn, setSelectedDateCheckIn] = React.useState(new Date('2019-09-19T06:00:00'));
- const [selectedDateCheckOut, setSelectedDateCheckOut] = React.useState(new Date('2019-09-19T06:00:00'));
 
+
+
+
+class DoingReservation extends Component{
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            post : [],
+            client : [],
+	    serviceName: 'El virrey',
+	    serviceType: 'hotel',
+	    clientName: 'pepito',
+	    serviceNumber: '2',
+	    priceReservation: '245432',
+	    serviceStatePaid: 'false',
+	    serviceStateApproved: 'false',
+	    selectedDateCheckIn: new Date('2019-09-19T06:00:00'),
+	    selectedDateCheckOut: new Date('2019-09-19T06:00:00')
+        }
+    };
+    
+
+    async componentDidMount(){
+
+        
+        let res = await API.postProvider.getById('5dae79db5d68100001394647');
+        console.log(res.data);
+        this.setState(
+            {
+                post: res.data
+            }
+        );
+	let res1 = await API.client.getById('5dacf583a0c08b00014acd1c');
+        console.log(res1.data);
+        this.setState(
+            {
+                client: res1.data
+            }
+        );
+        console.log(this.state.client.firstName);
+	this.setState(
+            {
+		serviceName: this.state.post.name,
+		serviceType: this.state.post.serviceType,
+		clientName: this.state.client.firstName+' '+this.state.client.secondName,
+		priceReservation: this.state.post.price,
+            }
+        );
+    }
+
+render(){
+  const {classes, className, ...rest } = this.props;
   const handleDateChangeCheckIn = date => {
-    setSelectedDateCheckIn(date);
+        this.setState(
+            {
+                selectedDateCheckIn: date
+            }
+        )
   };
 
   const handleDateChangeCheckOut = date => {
-    setSelectedDateCheckOut(date);
+        this.setState(
+            {
+                selectedDateCheckOut: date
+            }
+        )
   };
 
   const handleChange = event => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+    this.setState(
+            {
+	      [event.target.name]: event.target.value
+            }
+        )
   };
 
-  return (
-    <div className={classes.root}>
-      <div className={classes.content}>
+  const handleSubmit = event => {
+        event.preventDefault();
+	var data = {
+		clientId: this.state.client.clientId,
+		providerId: this.state.post.providerId,
+		postId: this.state.post.id,
+		startTime: this.state.selectedDateCheckIn,
+		endTime: this.state.selectedDateCheckOut,
+		amount: this.state.serviceNumber,
+		prizePerHead: this.state.priceReservation,
+		paid: false,
+	        approved: false
+	}
+
+      console.log('DATA',data);
+      console.log('DATE',data.startTime);
+      API.reservation.insertReservation(data);
+  };
+
+
+  
+
+        return (
+            <div className={classes.root}>
+              <div className={classes.content}>
+                <Grid
+                  container
+                  spacing={3}
+                >
+        
+
+
 
 
     <Card
@@ -95,7 +176,7 @@ const DoingReservation = props => {
        			align="center"
 		        variant="h4"
 	        >
-	          {values.serviceName}
+	          {this.state.serviceName}
 	        </Typography>
 
 
@@ -109,7 +190,7 @@ const DoingReservation = props => {
        			align="center"
 		        variant="h4"
 	        >
-	          {values.clientName}
+	          {this.state.clientName}
 	        </Typography>
 
 
@@ -128,7 +209,7 @@ const DoingReservation = props => {
 			  id="date-Check-in"
 			  label="Date Check-in"
 			  format="MM/dd/yyyy"
-			  value={selectedDateCheckIn}
+			  value={this.state.selectedDateCheckIn}
 			  onChange={handleDateChangeCheckIn}
 			  KeyboardButtonProps={{
 			    'aria-label': 'change date',
@@ -138,7 +219,7 @@ const DoingReservation = props => {
 			  margin="normal"
 			  id="time-Check-in"
 			  label="Time Check-in"
-			  value={selectedDateCheckIn}
+			  value={this.state.selectedDateCheckIn}
 			  onChange={handleDateChangeCheckIn}
 			  KeyboardButtonProps={{
 			    'aria-label': 'change time',
@@ -160,7 +241,7 @@ const DoingReservation = props => {
 			  id="date-Check-out"
 			  label="Date Check-out"
 			  format="MM/dd/yyyy"
-			  value={selectedDateCheckOut}
+			  value={this.state.selectedDateCheckOut}
 			  onChange={handleDateChangeCheckOut}
 			  KeyboardButtonProps={{
 			    'aria-label': 'change date',
@@ -170,7 +251,7 @@ const DoingReservation = props => {
 			  margin="normal"
 			  id="time-Check-out"
 			  label="Time Check-out"
-			  value={selectedDateCheckOut}
+			  value={this.state.selectedDateCheckOut}
 			  onChange={handleDateChangeCheckOut}
 			  KeyboardButtonProps={{
 			    'aria-label': 'change time',
@@ -189,7 +270,7 @@ const DoingReservation = props => {
        			align="center"
 		        variant="h4"
 	        >
-	         Service type: {values.serviceType}
+	         Service type: {this.state.serviceType}
 	        </Typography>
             </Grid>
 
@@ -205,7 +286,7 @@ const DoingReservation = props => {
                 name="serviceNumber"
                 onChange={handleChange}
                 type="number"
-                value={values.serviceNumber}
+                value={this.state.serviceNumber}
                 variant="outlined"
               />
             </Grid>
@@ -218,7 +299,7 @@ const DoingReservation = props => {
        			align="center"
 		        variant="h4"
 	        >
-	         Price Reservation $ {values.priceReservation}
+	         Price Reservation $ {this.state.priceReservation}
 	        </Typography>
             </Grid>
 	    <Grid
@@ -230,7 +311,20 @@ const DoingReservation = props => {
        			align="center"
 		        variant="h4"
 	        >
-	         State: {values.serviceState}
+	         State Paid: {this.state.serviceStatePaid}
+	        </Typography>
+            </Grid>
+
+	    <Grid
+              item
+	      md={6}
+              xs={12}
+            >
+		<Typography
+       			align="center"
+		        variant="h4"
+	        >
+	         State Approved: {this.state.serviceStateApproved}
 	        </Typography>
             </Grid>
 
@@ -239,39 +333,45 @@ const DoingReservation = props => {
         <Divider />
         <CardActions>
           <Button
+	    type="submit"
             color="primary"
             variant="contained"
+	    onClick={handleSubmit}
           >
             Save Reservation
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Cancel Reservation
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Approve Reservation
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Pay Hotel
           </Button>
         </CardActions>
       </form>
     </Card>
-      </div>
-    </div>
-  );
+
+
+
+          
+
+
+
+                </Grid>
+              </div>
+              <div className={classes.pagination}>
+                <Typography variant="caption">1-6 of 20</Typography>
+                <IconButton>
+                  <ChevronLeftIcon />
+                </IconButton>
+                <IconButton>
+                  <ChevronRightIcon />
+                </IconButton>
+              </div>
+            </div>
+          );
+
+
+    }
+}
+
+DoingReservation.propTypes ={
+    classes: PropTypes.object.isRequired
 };
 
-DoingReservation.propTypes = {
-  className: PropTypes.string
-};
 
-export default DoingReservation;
+export default withStyles(styles)(DoingReservation);
+
