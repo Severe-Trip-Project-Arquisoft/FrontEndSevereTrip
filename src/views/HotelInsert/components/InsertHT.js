@@ -38,10 +38,6 @@ const InsertHT = props => {
     country: '',
     description: ''
   });
-
-  
-  
-
   const [state, setState] = useState({
     freeparking:false,
     restaurant:false,
