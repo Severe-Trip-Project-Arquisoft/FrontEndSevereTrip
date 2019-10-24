@@ -9,19 +9,15 @@ import {
   UserList as UserListView,
   Account as AccountView,
   Hotels as HotelsView,
-  HotelInsert as HotelInsertView,
+  PostInsert as PostInsertView,
   HotelDetail as HotelDetailView,
   DoingReservation as DoingReservationView,
   Reservations as ReservationsView,
   Favorites as FavoritesView,
   Cars as CarsView,
-  CarInsert as CarInsertView,
   CarDetail as CarDetailView,
-  DoingReservationCar as DoingReservationCarView,
   Restaurants as RestaurantsView,
-  RestaurantInsert as RestaurantInsertView,
   Flights as FlightsView,
-  FlightInsert as FlightInsertView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
@@ -79,10 +75,10 @@ const Routes = () => {
         path="/hotels"
       />
       <RouteWithLayout
-        component={HotelInsertView}
+        component={PostInsertView}
         exact
         layout={MainLayout}
-        path="/hotelInsert"
+        path="/postInsert/:postType"
       />
       <RouteWithLayout
         component={HotelDetailView}
@@ -114,21 +110,9 @@ const Routes = () => {
         path="/cars"
       />
       <RouteWithLayout
-        component={CarInsertView}
-        exact
-        layout={MainLayout}
-        path="/carInsert"
-      />
-      <RouteWithLayout
         component={CarDetailView}
         layout={MainLayout}
         path="/carDetail/:postId"
-      />
-      <RouteWithLayout
-        component={DoingReservationCarView}
-        exact
-        layout={MainLayout}
-        path="/doingReservationsCar"
       />
       <RouteWithLayout
         component={RestaurantsView}
@@ -137,22 +121,10 @@ const Routes = () => {
         path="/restaurants"
       />
       <RouteWithLayout
-        component={RestaurantInsertView}
-        exact
-        layout={MainLayout}
-        path="/restaurantInsert"
-      />
-      <RouteWithLayout
         component={FlightsView}
         exact
         layout={MainLayout}
         path="/flights"
-      />
-      <RouteWithLayout
-        component={FlightInsertView}
-        exact
-        layout={MainLayout}
-        path="/flightInsert"
       />
       <RouteWithLayout
         component={NotFoundView}

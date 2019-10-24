@@ -27,15 +27,12 @@ import {
 } from '@material-ui/pickers';
 
 
+
 const styles = theme => ({
   root: {
     padding: theme.spacing(4)
   }
   });
-
-
-
-
 
 class DoingReservation extends Component{
     
@@ -60,7 +57,7 @@ class DoingReservation extends Component{
     async componentDidMount(){
 
         
-        let res = await API.postProvider.getById('5dae79db5d68100001394647');
+        let res = await API.postProvider.getById('5db09a8eb24da600017a3cff');
         console.log(res.data);
         this.setState(
             {
@@ -117,8 +114,8 @@ render(){
 		clientId: this.state.client.clientId,
 		providerId: this.state.post.providerId,
 		postId: this.state.post.id,
-		startTime: this.state.selectedDateCheckIn,
-		endTime: this.state.selectedDateCheckOut,
+		startTime: this.state.selectedDateCheckIn.toJSON(),
+		endTime: this.state.selectedDateCheckOut.toJSON(),
 		amount: this.state.serviceNumber,
 		prizePerHead: this.state.priceReservation,
 		paid: false,

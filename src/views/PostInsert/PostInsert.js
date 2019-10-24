@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 
-import { InsertRestaurant} from './components';
+import { InsertPT} from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,14 +10,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RestaurantInsert = () => {
+const PostInsert = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <InsertRestaurant />
+      <InsertPT />
     </div>
   );
 };
 
-export default RestaurantInsert;
+export default PostInsert;

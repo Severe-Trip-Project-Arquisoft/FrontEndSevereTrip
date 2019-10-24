@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
-import { Link, withRouter } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 import { HotelsToolbar, HotelCard } from './components';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import axios from 'axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import {API} from 'HTTPRequests'
-const base_url = "http://52.5.42.71:8080";
-const url = base_url + "/posts/"
+
 
 const styles = theme => ({
   root: {
