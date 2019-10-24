@@ -12,6 +12,7 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { API } from 'HTTPRequests';
 
 const schema = {
   userName: {
@@ -168,7 +169,24 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    history.push('/');
+    const allUser = API.client.getAll();
+    allUser.then(function(result) { 
+      result.data.forEach(element => {
+        try {
+          if (element.firstName === formState.values.userName) {
+            history.push('/posts')
+            console.log('login: ' + formState.values.userName)
+          } else {
+            console.log("no log")
+            history.push('/sign-up')
+          }
+        } catch (error) {
+          
+        }
+        console.log(element.firstName)
+      });
+    });
+    // history.push('/');
   };
 
   const hasError = field =>

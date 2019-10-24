@@ -11,9 +11,12 @@ import {
   Link,
   FormHelperText,
   Checkbox,
-  Typography
+  Typography,
+  MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { async } from 'q';
+import { API } from 'HTTPRequests';
 
 const schema = {
   firstName: {
@@ -23,6 +26,18 @@ const schema = {
     }
   },
   lastName: {
+    presence: { allowEmpty: false, message: 'is required' },
+    length: {
+      maximum: 32
+    }
+  },
+  address: {
+    presence: { allowEmpty: false, message: 'is required' },
+    length: {
+      maximum: 32
+    }
+  },
+  country: {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
       maximum: 32
@@ -41,11 +56,27 @@ const schema = {
       maximum: 128
     }
   },
+  cellphone: {
+    presence: { allowEmpty: false, message: 'is required' },
+    length: {
+      maximum: 12
+    }
+  },
   policy: {
     presence: { allowEmpty: false, message: 'is required' },
     checked: true
   }
 };
+const currencies = [
+  {
+    value: 'provider',
+    label: 'provider',
+  },
+  {
+    value: 'client',
+    label: 'client',
+  },
+];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -125,7 +156,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3)
   },
   textField: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   policy: {
     marginTop: theme.spacing(1),
@@ -149,7 +180,11 @@ const SignUp = props => {
     isValid: false,
     values: {},
     touched: {},
-    errors: {}
+    errors: {},
+  });
+
+  const [values2, setValues] = useState({
+    currency: 'client',
   });
 
   useEffect(() => {
@@ -158,7 +193,7 @@ const SignUp = props => {
     setFormState(formState => ({
       ...formState,
       isValid: errors ? false : true,
-      errors: errors || {}
+      errors: errors || {},
     }));
   }, [formState.values]);
 
@@ -172,13 +207,17 @@ const SignUp = props => {
         [event.target.name]:
           event.target.type === 'checkbox'
             ? event.target.checked
-            : event.target.value
+            : event.target.value,
       },
       touched: {
         ...formState.touched,
         [event.target.name]: true
-      }
+      },
     }));
+  };
+
+  const handleChange2 = name => event => {
+    setValues({ ...values2, [name]: event.target.value });
   };
 
   const handleBack = () => {
@@ -187,7 +226,24 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
-    history.push('/');
+    var id = Math.floor(Math.random() * 1999) + 1000;
+    var data = {
+        "clientId": id,
+        "firstName": formState.values.firstName,
+        "secondName": formState.values.lastName,
+        "localAirport": "Aeropuerto internacional Jonathan Brando",
+        "email": formState.values.email,
+        "address": formState.values.address,
+        "city": "Bogota",
+        "stateProvinceRegion": "Cundinamarca",
+        "postalCode": "11001",
+        "country": formState.values.country,
+        "cellphone": formState.values.cellphone
+    }
+    console.log("envio..." + data)
+    API.client.insertProvider(data);    
+    history.push('/sign-in');
+
   };
 
   const hasError = field =>
@@ -196,45 +252,45 @@ const SignUp = props => {
   return (
     <div className={classes.root}>
 
-          <div className={classes.content}>
-            <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton>
-            </div>
-            <div className={classes.contentBody}>
-              <form
-                className={classes.form}
-                onSubmit={handleSignUp}
-              >
-	<Grid
-            container
-            spacing={3}
+      <div className={classes.content}>
+        <div className={classes.contentHeader}>
+          <IconButton onClick={handleBack}>
+            <ArrowBackIcon />
+          </IconButton>
+        </div>
+        <div className={classes.contentBody}>
+          <form
+            className={classes.form}
+            onSubmit={handleSignUp}
           >
+            <Grid
+              container
+              spacing={3}
+            >
 
-	      <Grid
-	          item
-		  md={12}
-	          xs={12}
-	      >
-		        <Typography
-		          className={classes.title}
-		          variant="h2"
-		        >
-		          Create new account
+              <Grid
+                item
+                md={12}
+                xs={12}
+              >
+                <Typography
+                  className={classes.title}
+                  variant="h2"
+                >
+                  Create new account
 		        </Typography>
-		        <Typography
-		          color="textSecondary"
-		          gutterBottom
-	                >
-	                  Use your email to create new account
+                <Typography
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  Use your email to create new account
 	                </Typography>
-	      </Grid>
-	      <Grid
-	          item
-		  md={6}
-	          xs={12}
-	      >
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
                 <TextField
                   className={classes.textField}
                   error={hasError('firstName')}
@@ -249,12 +305,12 @@ const SignUp = props => {
                   value={formState.values.firstName || ''}
                   variant="outlined"
                 />
-	      </Grid>
-	      <Grid
-	          item
-		  md={6}
-	          xs={12}
-	      >
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
                 <TextField
                   className={classes.textField}
                   error={hasError('lastName')}
@@ -269,12 +325,52 @@ const SignUp = props => {
                   value={formState.values.lastName || ''}
                   variant="outlined"
                 />
-	      </Grid>
-	      <Grid
-	          item
-		  md={6}
-	          xs={12}
-	      >
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
+                <TextField
+                  className={classes.textField}
+                  error={hasError('address')}
+                  fullWidth
+                  helperText={
+                    hasError('address') ? formState.errors.address[0] : null
+                  }
+                  label="Address"
+                  name="address"
+                  onChange={handleChange}
+                  type="text"
+                  value={formState.values.address || ''}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
+                <TextField
+                  className={classes.textField}
+                  error={hasError('country')}
+                  fullWidth
+                  helperText={
+                    hasError('country') ? formState.errors.country[0] : null
+                  }
+                  label="Country"
+                  name="country"
+                  onChange={handleChange}
+                  type="text"
+                  value={formState.values.country || ''}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -289,12 +385,12 @@ const SignUp = props => {
                   value={formState.values.email || ''}
                   variant="outlined"
                 />
-	      </Grid>
-	      <Grid
-	          item
-		  md={6}
-	          xs={12}
-	      >
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
                 <TextField
                   className={classes.textField}
                   error={hasError('password')}
@@ -309,66 +405,112 @@ const SignUp = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
-	      </Grid>
-                <div className={classes.policy}>
-                  <Checkbox
-                    checked={formState.values.policy || false}
-                    className={classes.policyCheckbox}
-                    color="primary"
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    className={classes.policyText}
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the{' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </div>
-                {hasError('policy') && (
-                  <FormHelperText error>
-                    {formState.errors.policy[0]}
-                  </FormHelperText>
-                )}
-                <Button
-                  className={classes.signUpButton}
-                  color="primary"
-                  disabled={!formState.isValid}
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
+                <TextField
+                  className={classes.textField}
+                  error={hasError('cellphone')}
                   fullWidth
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                >
-                  Sign up now
-                </Button>
+                  helperText={
+                    hasError('cellphone') ? formState.errors.cellphone[0] : null
+                  }
+                  label="Cellphone"
+                  name="cellphone"
+                  onChange={handleChange}
+                  type="number"
+                  value={formState.values.cellphone || ''}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >                
+              <TextField
+                className={classes.textField}
+                error={hasError('rol')}
+                fullWidth
+                helperText={
+                  hasError('rol') ? formState.errors.rol[0] : null
+                }
+                label="Select your rol"
+                name="rol"
+                onChange={handleChange2('currency')}
+                value={values2.currency}
+                variant="outlined"
+                select
+              >
+                {currencies.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              </Grid>
+              <div className={classes.policy}>
+                <Checkbox
+                  checked={formState.values.policy || false}
+                  className={classes.policyCheckbox}
+                  color="primary"
+                  name="policy"
+                  onChange={handleChange}
+                />
                 <Typography
+                  className={classes.policyText}
                   color="textSecondary"
                   variant="body1"
                 >
-                  Have an account?{' '}
+                  I have read the{' '}
                   <Link
+                    color="primary"
                     component={RouterLink}
-                    to="/sign-in"
+                    to="#"
+                    underline="always"
                     variant="h6"
                   >
-                    Sign in
-                  </Link>
+                    Terms and Conditions
+                    </Link>
                 </Typography>
+              </div>
+              {hasError('policy') && (
+                <FormHelperText error>
+                  {formState.errors.policy[0]}
+                </FormHelperText>
+              )}
+              <Button
+                className={classes.signUpButton}
+                color="primary"
+                disabled={!formState.isValid}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Sign up now
+                </Button>
+              <Typography
+                color="textSecondary"
+                variant="body1"
+              >
+                Have an account?{' '}
+                <Link
+                  component={RouterLink}
+                  to="/sign-in"
+                  variant="h6"
+                >
+                  Sign in
+                  </Link>
+              </Typography>
 
-      </Grid>
-              </form>
-            </div>
-          </div>
+            </Grid>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
