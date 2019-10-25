@@ -1,12 +1,8 @@
-import React, { useState, Component } from 'react'
+import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
-import { Link, withRouter } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 import { CarsToolbar, CarCard } from './components';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';

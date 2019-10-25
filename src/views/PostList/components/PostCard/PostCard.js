@@ -54,7 +54,6 @@ const PostCard = props => {
 
   const classes = useStyles();
   const ruta = "/"+post.serviceType+"Detail";
-  console.log(ruta);
 
   return (
     <Card

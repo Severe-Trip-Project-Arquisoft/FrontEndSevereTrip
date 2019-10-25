@@ -59,8 +59,8 @@ const SidebarNav = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      {pages.map( (page, index) => (
-        <ListItem key = {index}
+      {pages.map( (page) => (
+        <ListItem
           className={classes.item}
           disableGutters
           key={page.title}

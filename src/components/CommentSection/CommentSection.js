@@ -27,7 +27,7 @@ const styles = theme => ({
   });
 
 const CommentSection = props =>{
-    const { userId, providerId, postId, classes } = props;
+    const { userId, postId, classes } = props;
     
 
     const [ comments, setComments ] = useState([
@@ -49,7 +49,7 @@ const CommentSection = props =>{
 
 
 
-    }, [ ])
+    });
 
     return (
         

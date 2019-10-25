@@ -38,7 +38,6 @@ class PostList extends Component{
 
         
         let res = await API.postProvider.getAll();
-        console.log(res);
         this.setState(
             {
                 posts: res.data

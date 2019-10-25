@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
-import {API} from 'HTTPRequests'
+import {API} from 'HTTPRequests';
 
 const styles = theme => ({
     content: {
@@ -17,8 +17,8 @@ const styles = theme => ({
     }  
   });
 
-const CommentForm = props =>{
-const {userId, username, postId} = props
+const CommentForm =  ({userId, username, postId,classes}) =>{
+
 
     const [hover, setHover] = useState(1);
     const [rating, setRating] = useState(1);
@@ -26,19 +26,16 @@ const {userId, username, postId} = props
     const [content, setContent] = useState("");
 
 
-    const { classes } = props;
     const submitComment = async ()=>{
 
-        console.log({title, content, rating})
-
-        if( title && content && rating && title != "", content!= "" ){
-            const res = await API.postProvider.createComment(
+            if( title && content && rating && title !== "" && content !== "" ){
+            await API.postProvider.createComment(
                 postId,
                 {
                     title, content, rating, clientId: userId
                 }
             );
-            console.log(res);
+            
         }
 
     }
@@ -50,12 +47,12 @@ const {userId, username, postId} = props
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" > 
-                        {username!= undefined && username!= null && username.length > 0 ? username[0] : 'A' }
+                        {username!== undefined && username!== null && username.length > 0 ? username[0] : 'A' }
                     </Avatar>
                 }           
                 title ={
                     <Typography variant = "h2" > 
-                        {username!= undefined && username!= null && username.length > 0 ? username : 'Anónimo' }
+                        {username!== undefined && username!== null && username.length > 0 ? username : 'Anónimo' }
                     </Typography>                                
                 }         
             >

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CardContent, Card, CardActions, Divider,Container } from '@material-ui/core';
+import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import {useParams } from 'react-router-dom';
@@ -63,7 +63,7 @@ const HotelDetail = (props) => {
       setLoaded(true);
     }
     fetchPostData();    
-  },[]);
+  });
   console.log(hotel);
   return (
     <div className={classes.root}>

@@ -38,7 +38,6 @@ class CarList extends Component{
 
         let req = HTTPRequests();
         let res = await req.postProvider.getByType("car");
-        console.log(res);
         this.setState(
             {
                 cars: res.data

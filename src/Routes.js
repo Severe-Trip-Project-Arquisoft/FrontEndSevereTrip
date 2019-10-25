@@ -20,8 +20,7 @@ import {
   Flights as FlightsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView,
-  SignIn as SignIn
+  NotFound as NotFoundView  
 } from './views';
 
 const Routes = () => {
@@ -33,7 +32,7 @@ const Routes = () => {
         to="/signin"
       />
       <RouteWithLayout
-        component={SignIn}
+        component={SignInView}
         exact
         layout={MainLayout}
         path="/signin"

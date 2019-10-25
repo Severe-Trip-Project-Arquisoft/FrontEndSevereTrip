@@ -37,7 +37,6 @@ class HotelList extends Component{
     async componentDidMount(){
 
         let res = await API.postProvider.getByType("hotel");
-        console.log(res);
         this.setState(
             {
                 hotels: res.data

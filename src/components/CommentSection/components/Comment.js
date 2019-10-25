@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -17,9 +16,7 @@ const styles = theme => ({
   });
 
 const Comment = props =>{
-    
-    const username = undefined
-    
+       
     const { classes, comment } = props;  
 
     
@@ -38,7 +35,7 @@ const Comment = props =>{
 <Grid item xs={1}>
 
     <Avatar aria-label="recipe" > 
-        {comment.username!= undefined && comment.username!= null && comment.username.length > 0 ? comment.username[0].toUpperCase() : 'A' }
+        {comment.username!== undefined && comment.username!== null && comment.username.length > 0 ? comment.username[0].toUpperCase() : 'A' }   
                 
     </Avatar>
 
@@ -46,19 +43,19 @@ const Comment = props =>{
                 </Grid>
                 <Grid item xs={2}>   
                 <Typography variant = "h3" > 
-                        {comment.username!= undefined && comment.username!= null && comment.username.length > 0 ? comment.username : 'Anónimo' }
+                    {comment.username!== undefined && comment.username!== null && comment.username.length > 0 ? comment.username : 'Anónimo' }
                 </Typography>
                 <Typography variant = "body1" > 
-                        {comment.date!= undefined && comment.date!= null && comment.date.length > 0 ? comment.date : 'Anónimo' }
+                    {comment.username!== undefined && comment.username!== null && comment.username.length > 0 ? comment.username : 'Anónimo' }
                 </Typography>
 
                 </Grid>
                 <Grid item xs={6}>   
                 <Typography variant = "h4" > 
-                        {comment.title!= undefined && comment.title!= null && comment.title.length > 0 ? comment.title : '' }
-                        </Typography>
+                    {comment.title!== undefined && comment.title!== null && comment.title.length > 0 ? comment.title : '' }
+                </Typography>
                 <Typography variant = "body1" > 
-                        {comment.content!= undefined && comment.content!= null && comment.content.length > 0 ? comment.content : '' }
+                    {comment.content!== undefined && comment.content!== null && comment.content.length > 0 ? comment.content : '' }
                 </Typography>
                         
 
