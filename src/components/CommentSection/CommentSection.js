@@ -27,7 +27,7 @@ const styles = theme => ({
   });
 
 const CommentSection = props =>{
-    const { userId, postId, classes } = props;
+    const {  postId, classes } = props;
     
 
     const [ comments, setComments ] = useState([
@@ -35,21 +35,22 @@ const CommentSection = props =>{
     ])
     const [ isLoaded, setIsLoaded ] = useState(false)
 
+
+    const fetchComments = async () =>{
+      const res = await API.postProvider.getPostComments(postId)
+            if(res.data.length>0)
+        setComments(res.data)
+      setIsLoaded(true)
+
+
+    }
     useEffect(() =>{
-         const fetchComments = async () =>{
-                const res = await API.postProvider.getPostComments(postId)
-                console.log(postId)
-                if(res.data.length>0)
-                    setComments(res.data)
-                setIsLoaded(true)
 
-
-        }
         fetchComments();
 
 
 
-    });
+    }, []);
 
     return (
         
@@ -74,7 +75,7 @@ const CommentSection = props =>{
                 )
         )}
         </React.Fragment> : <CircularProgress className={classes.progress} />}
-        <CommentForm userId = {userId} postId = {postId}/>
+        <CommentForm  reload = {fetchComments} postId = {postId}/>
         </React.Fragment> 
     )}
 
@@ -84,4 +85,3 @@ CommentSection.propTypes = {
 };
   
 export default withStyles(styles)(CommentSection);
-  

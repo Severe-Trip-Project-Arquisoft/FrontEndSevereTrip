@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -6,6 +6,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import {FavoriteCard } from './components';
 import mockData from './data';
+import {API} from "../../HTTPRequests";
+import {UserContext} from "../../contexts/UserContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,8 +26,25 @@ const useStyles = makeStyles(theme => ({
 
 const FavoriteList = () => {
   const classes = useStyles();
+  const {user } = useContext(UserContext);
+  const [favorites, setFavorites] = useState([]);
 
-  const [favorites] = useState(mockData);
+  const fetchFav = async  ()=>{
+
+    const res = await API.favorites.getById(user.id);
+
+
+    console.log(res);
+    if(res.status === 200) setFavorites(res.data);
+
+  }
+
+  useEffect( () => {
+
+    fetchFav();
+
+
+  },[])
 
   return (
     <div className={classes.root}>

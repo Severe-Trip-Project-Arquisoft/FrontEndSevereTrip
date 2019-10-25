@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { forwardRef } from 'react';
@@ -14,9 +14,13 @@ import {
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
+import IconButton from '@material-ui/core/IconButton';
+import {UserContext} from "../../../../contexts/UserContext";
+import {API} from "../../../../HTTPRequests";
 
 const useStyles = makeStyles(theme => ({
   root: {},
+  button: {},
   imageContainer: {
     height: 64,
     width: 64,
@@ -50,14 +54,47 @@ const CustomRouterLink = forwardRef((props, ref) => (
 ));
 
 const PostCard = props => {
-  const { className, post, ...rest } = props;
-
+  const { className, post, favorite } = props;
+  const { user } =  useContext(UserContext)
   const classes = useStyles();
+  const [fav, setFav] = useState(favorite);
+  const [favId, setFavId] = useState(null);
   const ruta = "/"+post.serviceType+"Detail";
+  const handleFavorite = async() =>{
 
+
+    if(!fav){
+      const res = await API.favorites.insertFavorite(
+        {
+          clientId: user.id,
+          postId: post.id,
+          stateFavorite : true,
+        }
+      )
+      setFavId(res.data);
+      setFav(true);
+
+      console.log("FAV", res);
+    console.log(fav);
+
+
+    }else{
+      const res = await API.favorites.deleteFavorite(
+        favId
+      );
+      setFavId("");
+      setFav(false);
+
+      console.log("NO FAV", res);
+      console.log(fav);
+    }
+
+
+
+
+  }
   return (
     <Card
-      {...rest}
       className={clsx(classes.root, className)}
     >
       <CardContent>
@@ -117,7 +154,13 @@ const PostCard = props => {
             className={classes.statsItem}
             item
           >
-            <StarIcon className={classes.statsIcon} />
+            {(user.logged) ?
+              <IconButton
+                className={classes.button}
+                onClick={handleFavorite}
+              >
+              <StarIcon className={classes.statsIcon} color = {fav ? 'primary' : 'error'} />
+            </IconButton>: <React.Fragment/>}
             <Typography
               display="inline"
               variant="body2"

@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { UserContext }  from "../../contexts/UserContext";
 import { PostCard } from './components';
 import { API }  from 'HTTPRequests';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     root: {
       padding: theme.spacing(3),
     },
@@ -20,42 +21,60 @@ const styles = theme => ({
       alignItems: 'center',
       justifyContent: 'flex-end'
     }
-  });
+  }));
 
 
 
-class PostList extends Component{
-    
-    constructor(props){
-        super(props);
-        this.state = {
-            posts : []
-        }
-    };
+const PostList = (props) => {
     
 
-    async componentDidMount(){
+         const [state, setState] = useState ({
+            posts : [],
+            favorites: {}
+        });
 
-        
+  const {user} = useContext(UserContext);
+    useEffect( ()=>{
+
+
+      const fetchData = async ()=>{
         let res = await API.postProvider.getAll();
-        this.setState(
-            {
-                posts: res.data
-            }
+        let favorites = {}
+        //TO-DO: Esta verificación no sería necesaria si en el micro de favoritos se creara una petición para determinar si se es favorito o no.
+
+        for(let postId in res.data){
+          favorites[postId] = false;
+        }
+
+        let resF = await API.favorites.getById(user.id);
+        for(let fav in resF.data){
+          favorites[fav.postId] = true;
+        }
+
+        setState(
+          {
+            posts: res.data,
+            favorites
+          }
         )
 
-    }
+      }
+      fetchData();
 
-    render(){
-        const{classes} = this.props;
+    }, []);
+
+
+  const classes = useStyles();
+
         return (
+
             <div className={classes.root}>
               <div className={classes.content}>
                 <Grid
                   container
                   spacing={3}
                 >
-                  {this.state.posts.map(post => (
+                  {state.posts.map(post => (
                     <Grid
                       item
                       key={post.id}
@@ -63,7 +82,7 @@ class PostList extends Component{
                       md={6}
                       xs={12}
                     >
-                      <PostCard post={post} />
+                      <PostCard post={post} favorite = {user.logged ? state.favorites[post.id] : false} />
                     </Grid>
                   ))}
                 </Grid>
@@ -82,12 +101,7 @@ class PostList extends Component{
 
 
 
-    }
 }
 
-PostList.propTypes ={
-    classes: PropTypes.object.isRequired
-};
 
-
-export default withStyles(styles)(PostList);
+export default (PostList);

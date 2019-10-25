@@ -56,15 +56,17 @@ const HotelDetail = (props) => {
   const [loaded,setLoaded] = useState(false);
   const {postId} = useParams();
 
+  const fetchPostData = async ()=>{
+    let receivedPostData = await API.postProvider.getById(postId)
+    setHotel(Object.assign({},hotel,receivedPostData.data))
+    setLoaded(true);
+  }
+
   useEffect(()=>{
-    const fetchPostData = async ()=>{
-      let receivedPostData = await API.postProvider.getById(postId)
-      setHotel(Object.assign({},hotel,receivedPostData.data))
-      setLoaded(true);
-    }
     fetchPostData();    
-  });
-  console.log(hotel);
+  },[]);
+
+
   return (
     <div className={classes.root}>
       <HotelDetailToolbar />
@@ -190,8 +192,8 @@ const HotelDetail = (props) => {
 
       </div>
       {loaded ?
-        <CommentSection userId ="USER" providerId = {hotel.providerId} postId = {hotel.id}/> : <div/>
-        }          
+        <CommentSection providerId = {hotel.providerId} postId = {hotel.id}/> : <div/>
+      }
     </div>
   );
 };

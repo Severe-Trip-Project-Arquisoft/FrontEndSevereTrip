@@ -20,7 +20,8 @@ import {
   Flights as FlightsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView  
+  NotFound as NotFoundView
+
 } from './views';
 
 const Routes = () => {
@@ -29,13 +30,13 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/signin"
+        to="/sign-in"
       />
       <RouteWithLayout
         component={SignInView}
         exact
         layout={MainLayout}
-        path="/signin"
+        path="/sign-in"
       />
       <RouteWithLayout
         component={UserListView}

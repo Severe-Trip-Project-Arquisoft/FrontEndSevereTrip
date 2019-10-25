@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'HTTPRequests';
+import {UserContext} from "../../contexts/UserContext";
 
 const schema = {
   userName: {
@@ -123,9 +124,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const SignIn = props => {
   const { history } = props;
-
+  const {user, setUser} = useContext(UserContext);
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
@@ -136,10 +138,10 @@ const SignIn = props => {
   });
 
   useEffect(() => {
-    const errors = validate(formState.values, schema);    
+    const errors = validate(formState.values, schema);
     setFormState(formState => ({
       ...formState,
-      isValid: errors ? false : true,
+      isValid: !errors,
       errors: errors || {}
     }));
   }, [formState.values]);
@@ -167,26 +169,32 @@ const SignIn = props => {
     }));
   };
 
-  const handleSignIn = event => {
+  const handleSignIn = async event => {
     event.preventDefault();
-    const allUser = API.client.getAll();
-    allUser.then(function(result) { 
-      result.data.forEach(element => {
-        try {
-          if (element.firstName === formState.values.userName) {
-            history.push('/posts')
-            console.log('login: ' + formState.values.userName)
-          } else {
-            console.log("no log");
-            history.push('/sign-up');
-          }
-        } catch (error) {
-          
+    /*
+
+     */
+    try{
+      const res = await API.client.getByName(formState.values.userName);
+      console.log(res);
+      if (res.status === 200){
+
+        history.push('/posts');
+        if(!user.logged) {
+          await setUser({
+            ...user,
+            ...res.data,
+            logged: true
+          });
         }
-        console.log(element.firstName)
-      });
-    });
-    // history.push('/');
+      }else if( res.status === 204){
+
+        history.push('/sign-up');
+
+      }
+    } catch(e){
+      console.error(e);
+    }
   };
 
   const hasError = field =>
@@ -226,7 +234,7 @@ const SignIn = props => {
                   variant="h2"
                 >
                   Sign in
-                </Typography>                
+                </Typography>
                 <TextField
                   className={classes.textField}
                   error={hasError('userName')}

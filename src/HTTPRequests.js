@@ -166,7 +166,7 @@ export const API =
       },
       getAll: async ()=> {
 
-        let url = base_url + '/clients/allClients';
+        let url = base_url + '/clients/allClients/';
         return await axios.get(
           url
         ).catch(e => console.log('Error: ', e));
@@ -189,12 +189,13 @@ export const API =
       getByName: async (username)=>{
 
         const url = base_url + '/clients/client/username/' + username;
-        return await axios.get(
-          url
-        ).catch(e => console.log('Error: ', e));
+         let res;
+        res = await axios.get(url).catch( e=> {res = e.response});
+        return res;
+
       },
       //DELETE
-      deleteProvider: async (clientId)=> {
+      deleteClient: async (clientId)=> {
 
         let url = base_url + '/clients/deleteClient/' + clientId;
         return await axios.delete(
@@ -203,7 +204,7 @@ export const API =
 
       },
       //POST
-      insertProvider: async (clientBody)=> {
+      insertClient: async (clientBody)=> {
 
         let url = base_url + '/clients/insertClient/';
         return await axios.post(
@@ -212,7 +213,7 @@ export const API =
 
       },
       //PUT
-      updateProvider: async (clientId, clientBody)=> {
+      updateClient: async (clientId, clientBody)=> {
 
         let url = base_url + '/clients/updateClient/' + clientId;
         return await axios.put(
@@ -304,21 +305,21 @@ export const API =
       },
       getByPost: async (id)=>{
 
-        const url = base_url + '/reservation/post' + id;
+        const url = base_url + '/reservation/post/' + id;
         return await axios.get(
           url
         ).catch(e => console.log('Error: ', e));
       },
       getByClient: async (id)=>{
 
-        const url = base_url + '/reservation/client' + id;
+        const url = base_url + '/reservation/client/' + id;
         return await axios.get(
           url
         ).catch(e => console.log('Error: ', e));
       },
       getByProvider: async (id)=>{
 
-        const url = base_url + '/reservation/provider' + id;
+        const url = base_url + '/reservation/provider/' + id;
         return await axios.get(
           url
         ).catch(e => console.log('Error: ', e));

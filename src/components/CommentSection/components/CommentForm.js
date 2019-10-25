@@ -17,7 +17,7 @@ const styles = theme => ({
     }  
   });
 
-const CommentForm =  ({userId, username, postId,classes}) =>{
+const CommentForm =  ({userId, username, postId,classes, reload}) =>{
 
 
     const [hover, setHover] = useState(1);
@@ -35,6 +35,8 @@ const CommentForm =  ({userId, username, postId,classes}) =>{
                     title, content, rating, clientId: userId
                 }
             );
+
+            reload();
             
         }
 
@@ -114,4 +116,3 @@ CommentForm.propTypes = {
 };
   
 export default withStyles(styles)(CommentForm);
-  

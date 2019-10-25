@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'HTTPRequests';
+import {UserContext} from "../../contexts/UserContext";
 
 const schema = {
   firstName: {
@@ -175,6 +176,8 @@ const SignUp = props => {
 
   const classes = useStyles();
 
+  const {user, setUser} = useContext(UserContext);
+
   const [formState, setFormState] = useState({
     isValid: false,
     values: {},
@@ -223,11 +226,10 @@ const SignUp = props => {
     history.goBack();
   };
 
-  const handleSignUp = event => {
+  const handleSignUp = async event => {
     event.preventDefault();
-    var id = Math.floor(Math.random() * 1999) + 1000;
     var data = {
-        "clientId": id,
+        "clientId": formState.values.userName,
         "firstName": formState.values.firstName,
         "secondName": formState.values.lastName,
         "localAirport": "Aeropuerto internacional Jonathan Brando",
@@ -240,13 +242,23 @@ const SignUp = props => {
         "cellphone": formState.values.cellphone
     }
     console.log("envio..." + data)
-    API.client.insertProvider(data);    
-    history.push('/sign-in');
+    const res = await API.client.insertClient(data);
+    console.log(res);
+    if(res.status === 200){
+      setUser(
+        ...user,
+        data
+      )
+      history.push('/sign-in');
+
+
+    }
+
 
   };
 
   const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+    !!(formState.touched[field] && formState.errors[field]);
 
   return (
     <div className={classes.root}>
@@ -284,6 +296,66 @@ const SignUp = props => {
                 >
                   Use your email to create new account
 	                </Typography>
+              </Grid>
+              <Grid
+                item
+                md={12}
+                xs={12}
+              >
+                <TextField
+                  className={classes.textField}
+                  error={hasError('username')}
+                  fullWidth
+                  helperText={
+                    hasError('username') ? formState.errors.username[0] : null
+                  }
+                  label="Username"
+                  name="userName"
+                  onChange={handleChange}
+                  type="text"
+                  value={formState.values.userName || ''}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid
+                item
+                md={12}
+                xs={12}
+              >
+                <TextField
+                  className={classes.textField}
+                  error={hasError('email')}
+                  fullWidth
+                  helperText={
+                    hasError('email') ? formState.errors.email[0] : null
+                  }
+                  label="Email address"
+                  name="email"
+                  onChange={handleChange}
+                  type="text"
+                  value={formState.values.email || ''}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid
+                item
+                md={12}
+                xs={12}
+              >
+                <TextField
+                  className={classes.textField}
+                  error={hasError('password')}
+                  fullWidth
+                  helperText={
+                    hasError('password') ? formState.errors.password[0] : null
+                  }
+                  label="Password"
+                  name="password"
+                  onChange={handleChange}
+                  type="password"
+                  value={formState.values.password || ''}
+                  variant="outlined"
+                />
               </Grid>
               <Grid
                 item
@@ -365,46 +437,8 @@ const SignUp = props => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
-                <TextField
-                  className={classes.textField}
-                  error={hasError('email')}
-                  fullWidth
-                  helperText={
-                    hasError('email') ? formState.errors.email[0] : null
-                  }
-                  label="Email address"
-                  name="email"
-                  onChange={handleChange}
-                  type="text"
-                  value={formState.values.email || ''}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
-                <TextField
-                  className={classes.textField}
-                  error={hasError('password')}
-                  fullWidth
-                  helperText={
-                    hasError('password') ? formState.errors.password[0] : null
-                  }
-                  label="Password"
-                  name="password"
-                  onChange={handleChange}
-                  type="password"
-                  value={formState.values.password || ''}
-                  variant="outlined"
-                />
-              </Grid>
+
+
               <Grid
                 item
                 md={6}
@@ -429,7 +463,7 @@ const SignUp = props => {
                 item
                 md={6}
                 xs={12}
-              >                
+              >
               <TextField
                 className={classes.textField}
                 error={hasError('rol')}
