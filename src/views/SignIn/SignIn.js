@@ -177,8 +177,8 @@ const SignIn = props => {
             history.push('/posts')
             console.log('login: ' + formState.values.userName)
           } else {
-            console.log("no log")
-            history.push('/sign-up')
+            console.log("no log");
+            history.push('/sign-up');
           }
         } catch (error) {
           

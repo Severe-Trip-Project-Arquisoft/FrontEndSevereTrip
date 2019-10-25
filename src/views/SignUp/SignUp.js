@@ -15,7 +15,6 @@ import {
   MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { async } from 'q';
 import { API } from 'HTTPRequests';
 
 const schema = {
