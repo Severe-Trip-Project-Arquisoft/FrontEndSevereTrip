@@ -64,15 +64,18 @@ const schema = {
   policy: {
     presence: { allowEmpty: false, message: 'is required' },
     checked: true
+  },
+  rol: {
+    presence: { allowEmpty: false, message: 'is required' },
   }
 };
 const currencies = [
   {
-    value: 'provider',
+    value: "provider",
     label: 'provider',
   },
   {
-    value: 'client',
+    value: "client",
     label: 'client',
   },
 ];
@@ -182,10 +185,6 @@ const SignUp = props => {
     errors: {},
   });
 
-  const [values2, setValues] = useState({
-    currency: 'client',
-  });
-
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
@@ -215,19 +214,23 @@ const SignUp = props => {
     }));
   };
 
-  const handleChange2 = name => event => {
-    setValues({ ...values2, [name]: event.target.value });
-  };
-
   const handleBack = () => {
     history.goBack();
   };
 
+  function numeroAleatorio(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  console.log()
+
+
   const handleSignUp = event => {
     event.preventDefault();
-    var id = Math.floor(Math.random() * 1999) + 1000;
-    var data = {
-        "clientId": id,
+    var data;
+      if(formState.values.rol === "client"){
+        data = {
+        "clientId": numeroAleatorio(1000, 1999),
         "firstName": formState.values.firstName,
         "secondName": formState.values.lastName,
         "localAirport": "Aeropuerto internacional Jonathan Brando",
@@ -238,9 +241,30 @@ const SignUp = props => {
         "postalCode": "11001",
         "country": formState.values.country,
         "cellphone": formState.values.cellphone
+      }
+      API.client.insertProvider(data);
     }
+      if(formState.values.rol === "provider"){
+        data = {
+        "providerId": numeroAleatorio(2000, 2999),
+        "firstName": formState.values.firstName,
+        "secondName": formState.values.lastName,
+        "localAirport": "Aeropuerto internacional Jonathan Brando",
+        "bankAccount": numeroAleatorio(45000000, 60000000),
+        "yearsExperience": numeroAleatorio(1, 20),
+        "updateDate": new Date(),
+        "email": formState.values.email,
+        "address": formState.values.address,
+        "city": "Bogota",
+        "stateProvinceRegion": "Cundinamarca",
+        "postalCode": "11001",
+        "country": formState.values.country,
+        "cellphone": formState.values.cellphone
+      }
+      API.provider.insertProvider(data);
+    }
+
     console.log("envio..." + data)
-    API.client.insertProvider(data);    
     history.push('/sign-in');
 
   };
@@ -439,8 +463,8 @@ const SignUp = props => {
                 }
                 label="Select your rol"
                 name="rol"
-                onChange={handleChange2('currency')}
-                value={values2.currency}
+                onChange={handleChange}
+                value={formState.values.rol || ''}
                 variant="outlined"
                 select
               >

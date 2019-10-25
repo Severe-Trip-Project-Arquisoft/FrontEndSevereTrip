@@ -30,7 +30,7 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/signin"
+        to="/sign-in"
       />
       <RouteWithLayout
         component={SignIn}
