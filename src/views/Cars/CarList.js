@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import withStyles from '@material-ui/core/styles/withStyles';
+import React, { useState, Component, useEffect } from 'react'
+import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { CarsToolbar, CarCard } from './components';
@@ -7,10 +7,11 @@ import axios from 'axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-const base_url = "http://52.5.42.71:8080";
-const url = base_url + "/posts/"
+import {API} from 'HTTPRequests'
+import {PostCard} from '../PostList/components';
 
-const styles = theme => ({
+
+const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
   },
@@ -23,40 +24,30 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'flex-end'
   }
-});
+}));
 
-class CarList extends Component{
+const CarList = () => {
+  const classes = useStyles();
 
-  constructor(props){
-    super(props);
+  const [state , setState] = useState({
+    isDataLoaded: false,
+    datosCarros: []
+  });
 
-    this.state = {
-      isDataLoaded: false,
-      datosCarros: []
-    };
-  }
-
-  async componentDidMount(){
-    await this.setState( {isDataLoaded: true} );
-    this.cargarDatos();
-  }
-
-  async cargarDatos () {
-    await axios({
-	url
-    })
-      .then((response) => {
-        let data = response.data
-
-        this.setState({
-          datosCarros: data
-        })
+  useEffect( () => {   
+    async function cargarDatos () {
+      const rensponse = await API.postProvider.getByType("rentCar")
+        .catch(err => console.log(err));
+      setState({
+        isDataLoaded: true,
+        datosCarros: rensponse.data
       })
-      .catch(err => console.log(err))
-  }
 
-  render(){
-    const { classes } = this.props;
+    }
+    cargarDatos();
+    
+    //return () =>{} 
+  }  , [])
 
   return (
     <div className={classes.root}>
@@ -66,7 +57,7 @@ class CarList extends Component{
           container
           spacing={3}
         >
-          {this.state.datosCarros.map(car => (
+          {state.datosCarros.map(car => (
             <Grid
               item
               key={car.id}
@@ -74,7 +65,7 @@ class CarList extends Component{
               md={6}
               xs={12}
             >
-              <CarCard car={car} />
+              <PostCard post={car} />
             </Grid>
           ))}
         </Grid>
@@ -90,7 +81,6 @@ class CarList extends Component{
       </div>
     </div>
   );
-}
 };
 
-export default withRouter(withStyles(styles)(CarList));
+export default CarList;

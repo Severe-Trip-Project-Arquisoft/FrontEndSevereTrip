@@ -7,6 +7,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import {API} from 'HTTPRequests'
+import {PostCard} from '../PostList/components';
 
 
 const styles = theme => ({
@@ -75,7 +76,7 @@ const HotelList = (props)=>{
               md={6}
               xs={12}
             >
-              <HotelCard hotel={hotel} />
+              <PostCard post={hotel} />
             </Grid>
           ))}
         </Grid>

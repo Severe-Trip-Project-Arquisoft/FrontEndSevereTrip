@@ -39,7 +39,7 @@ export const API =
 
         let url = base_url + '/posts/reservation/?ids=';
         for (let id in ids){
-          url+= ',' + id
+          url+= ',' + ids[id]
         }
         return await axios.get(
           url

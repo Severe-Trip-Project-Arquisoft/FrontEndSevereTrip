@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -6,6 +6,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import { RestaurantsToolbar, RestaurantCard } from './components';
 import mockData from './data';
+import {PostCard} from '../PostList/components';
+import {API} from 'HTTPRequests'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +27,25 @@ const useStyles = makeStyles(theme => ({
 const RestaurantList = () => {
   const classes = useStyles();
 
-  const [restaurants] = useState(mockData);
+  const [state , setState] = useState({
+    isDataLoaded: false,
+    datosRestaurantes: []
+  });
+
+  useEffect( () => {   
+    async function cargarDatos () {
+      const rensponse = await API.postProvider.getByType("restaurant")
+        .catch(err => console.log(err));
+      setState({
+        isDataLoaded: true,
+        datosRestaurantes: rensponse.data
+      })
+
+    }
+    cargarDatos();
+    
+    //return () =>{} 
+  }  , [])
 
   return (
     <div className={classes.root}>
@@ -35,7 +55,7 @@ const RestaurantList = () => {
           container
           spacing={3}
         >
-          {restaurants.map(restaurant => (
+          {state.datosRestaurantes.map(restaurant => (
             <Grid
               item
               key={restaurant.id}
@@ -43,7 +63,7 @@ const RestaurantList = () => {
               md={6}
               xs={12}
             >
-              <RestaurantCard restaurant={restaurant} />
+              <PostCard post={restaurant} />
             </Grid>
           ))}
         </Grid>

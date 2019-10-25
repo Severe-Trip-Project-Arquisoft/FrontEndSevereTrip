@@ -8,6 +8,7 @@ import {FavoriteCard } from './components';
 import mockData from './data';
 import {API} from "../../HTTPRequests";
 import {UserContext} from "../../contexts/UserContext";
+import {PostCard} from '../PostList/components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,16 +28,17 @@ const useStyles = makeStyles(theme => ({
 const FavoriteList = () => {
   const classes = useStyles();
   const {user } = useContext(UserContext);
-  const [favorites, setFavorites] = useState([]);
+  const [pairs, setPairs] = useState({set:[],loaded:false});
 
   const fetchFav = async  ()=>{
 
     const res = await API.favorites.getById(user.id);
-
-
-    console.log(res);
-    if(res.status === 200) setFavorites(res.data);
-
+    let pairs = [];
+    for(let element of res.data) {
+      let tmp = await API.postProvider.getById(element.postId);
+      pairs.push({post: tmp,favorite: element});
+    };
+    setPairs({set:pairs,loaded:true});
   }
 
   useEffect( () => {
@@ -48,24 +50,24 @@ const FavoriteList = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.content}>
+      {pairs.loaded ?<div className={classes.content}>
         <Grid
           container
           spacing={3}
         >
-          {favorites.map(favorite => (
+          {pairs.set.map(pair => (
             <Grid
               item
-              key={favorite.id}
+              key={pair.favorite.id}
               lg={4}
               md={6}
               xs={12}
             >
-              <FavoriteCard favorite={favorite} />
+              <PostCard post={pair.post} favorite={pair.favorite}/>
             </Grid>
           ))}
         </Grid>
-      </div>
+      </div>:<div/>}
       <div className={classes.pagination}>
         <Typography variant="caption">1-6 of 20</Typography>
         <IconButton>

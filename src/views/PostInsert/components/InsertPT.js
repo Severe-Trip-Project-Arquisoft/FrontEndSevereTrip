@@ -16,7 +16,7 @@ import {
 import { API } from 'HTTPRequests';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {useParams } from 'react-router-dom';
+import {useParams, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -30,7 +30,7 @@ const InsertPT = props => {
   const {postType} = useParams();
   var titleCard ="Insert a new "+postType.toString();
 
-console.log({titleCard});
+  let history = useHistory();
 
   const classes = useStyles();
   const [values, setValues] = useState({
@@ -274,10 +274,11 @@ console.log({titleCard});
 		tags:arraytags
 	}
 
-//	var dataPost = JSON.stringify(data);
-      console.log('DATA I ',data.telephone);
-      console.log('form submission data',data);
+//	    var dataPost = JSON.stringify(data);
+//      console.log('DATA I ',data.telephone);
+//      console.log('form submission data',data);
       API.postProvider.createPost(data);
+      history.push("/posts");
   }
 
   return (

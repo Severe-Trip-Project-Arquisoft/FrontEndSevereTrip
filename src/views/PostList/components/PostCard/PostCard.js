@@ -18,6 +18,23 @@ import IconButton from '@material-ui/core/IconButton';
 import {UserContext} from "../../../../contexts/UserContext";
 import {API} from "../../../../HTTPRequests";
 
+const mapServiceTypeUnit = (type) =>{
+  switch(type){
+    case 'restaurant':
+      return 'plato (aprox)';
+    case 'hotel':
+      return 'noche por persona';
+    case 'rentCar':
+      return 'día de alquiler';
+    case 'flight':
+      return 'pasaje';
+  }
+}
+
+const firstLetterUppercase = (str) =>{
+  return (str[0].toUpperCase() + str.slice(1));
+}
+
 const useStyles = makeStyles(theme => ({
   root: {},
   button: {},
@@ -61,6 +78,7 @@ const PostCard = props => {
   const [favId, setFavId] = useState(null);
   const ruta = "/"+post.serviceType+"Detail";
   const handleFavorite = async() =>{
+  const ruta = "/postDetail";
 
 
     if(!fav){
@@ -106,7 +124,7 @@ const PostCard = props => {
           />
         </div>
         <Typography
-          align="right"
+          align="center"
           variant="h4"
 	        component={CustomRouterLink}
           to={ruta+"/"+post.id}
@@ -117,19 +135,19 @@ const PostCard = props => {
           align="center"
           variant="body1"
         >
-          {post.name}
+          {post.description}
+        </Typography>
+        <Typography
+          align="center"
+          variant="h6"
+        >
+          Ubicado en: {post.city}
         </Typography>
         <Typography
           align="center"
           variant="h5"
         >
-          {post.city}
-        </Typography>
-        <Typography
-          align="center"
-          variant="h5"
-        >
-          Precio por {post.serviceType} {post.price}
+          Precio por {mapServiceTypeUnit(post.serviceType)}: ${post.price}
         </Typography>
       </CardContent>
       <Divider />
