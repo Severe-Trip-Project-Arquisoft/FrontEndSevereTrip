@@ -130,7 +130,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(5),
-    paddingBottom: theme.spacing(2),
+    paddingBototm: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
@@ -174,10 +174,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = ({history }) => {
+const SignUp = props => {
+  const { history } = props;
 
   const classes = useStyles();
-  const {user, setUser} = useContext(UserContext);
+
+  const { user, setUser } = useContext(UserContext);
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -186,25 +188,18 @@ const SignUp = ({history }) => {
     errors: {},
   });
 
-  const [values2, setValues] = useState({
-    currency: 'client',
-  });
-
   useEffect(() => {
     const errors = validate(formState.values, schema);
-
     setFormState(formState => ({
       ...formState,
-      isValid: !errors,
+      isValid: errors ? false : true,
       errors: errors || {},
     }));
   }, [formState.values]);
 
   const handleChange = event => {
-    event.persist();
+    event.persist();    
 
-    
-    
     setFormState(formState => ({
       ...formState,
       values: {
@@ -221,17 +216,32 @@ const SignUp = ({history }) => {
     }));
   };
 
-  console.log(formState.values.userName);
+// Modificar en backend client
+  // const handleChangeUserName = async event => {
+  //   event.persist();
+  //   if(event.target.name === "userName"){
+  //     setFormState(formState => ({
+  //       ...formState,
+  //       values: {
+  //         ...formState.values,
+  //         [event.target.name]:
+  //             event.target.value,
+  //       },
+  //       touched: {
+  //         ...formState.touched,
+  //         [event.target.name]: true
+  //       },
+  //     }));
+  //   }
+  //   await API.client.getAvailability(formState.values.name)
+  //   .then((res)=>{
+  //     console.log(res.data);
+      
 
-  const checkUserName = async event => {
-    // event.persist();
-    // var existHere = await API.client.getAvailability(formState.values.userName)
-    // console.log(existHere);
-    
-    // (existHere) ? console.log("ya existe"):console.log("No existe");
-    ;
-    
-  }
+  //   })
+  // }
+
+  console.log(formState.values);
 
   const handleBack = () => {
     history.goBack();
@@ -243,24 +253,6 @@ const SignUp = ({history }) => {
 
   const handleSignUp = async event => {
     event.preventDefault();
-    let data;
-    let res;
-    console.log(formState.values.rol);
-    if(formState.values.rol === 'client'){
-      data = {
-        'clientId': formState.values.userName,
-        'firstName': formState.values.firstName,
-        'secondName': formState.values.lastName,
-        'localAirport': 'Aeropuerto internacional Jonathan Brando',
-        'email': formState.values.email,
-        'address': formState.values.address,
-        'city': 'Bogota',
-        'stateProvinceRegion': 'Cundinamarca',
-        'postalCode': '11001',
-        'country': formState.values.country,
-        'cellphone': formState.values.cellphone
-      }
-      res = await API.client.insertClient(data);
     var data;
     if (formState.values.rol === "client") {
       data = {
@@ -293,33 +285,6 @@ const SignUp = ({history }) => {
       console.log("envio..." + data)
       await API.client.insertClient(data);
     }
-    if(formState.values.rol === 'provider'){
-      data = {
-        'providerId': formState.values.userName,
-        'firstName': formState.values.firstName,
-        'secondName': formState.values.lastName,
-        'localAirport': 'Aeropuerto internacional Jonathan Brando',
-        'bankAccount': numeroAleatorio(45000000, 60000000),
-        'yearsExperience': numeroAleatorio(1, 20),
-        'updateDate': new Date(),
-        'email': formState.values.email,
-        'address': formState.values.address,
-        'city': 'Bogota',
-        'stateProvinceRegion': 'Cundinamarca',
-        'postalCode': '11001',
-        'country': formState.values.country,
-        'cellphone': formState.values.cellphone
-      }
-      res = await API.provider.insertProvider(data);
-    }
-    if(res && res.status === 200){
-      setUser(
-        {...user,
-          data,
-          rol: formState.values.rol
-        })
-      console.log('envio...' + data)
-      history.push('/sign-in');
     if (formState.values.rol === "provider") {
       data = {
         // datos de prueba.................
@@ -357,10 +322,15 @@ const SignUp = ({history }) => {
       console.log("envio..." + data)
       const res = await API.provider.insertProvider(data);
     }
+    history.push('/sign-in');
   };
-  const hasError = field => (!!(formState.touched[field] && formState.errors[field]));
+
+  const hasError = field =>
+    !!(formState.touched[field] && formState.errors[field]);
+
   return (
     <div className={classes.root}>
+
       <div className={classes.content}>
         <div className={classes.contentHeader}>
           <IconButton onClick={handleBack}>
@@ -386,14 +356,14 @@ const SignUp = ({history }) => {
                   className={classes.title}
                   variant="h2"
                 >
-                    Create new account
-                </Typography>
+                  Create new account
+		        </Typography>
                 <Typography
                   color="textSecondary"
                   gutterBottom
                 >
-                    Use your email to create new account
-                </Typography>
+                  Use your email to create new account
+	                </Typography>
               </Grid>
               <Grid
                 item
@@ -569,29 +539,6 @@ const SignUp = ({history }) => {
                   }
                   label="Select your rol"
                   name="rol"
-                  onChange={handleChange2('currency')}
-                  select
-                  value={values2.currency}
-                  variant="outlined"
-                >
-                  {currencies.map(option => (
-                    <MenuItem
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  className={classes.textField}
-                  error={hasError('rol')}
-                  fullWidth
-                  helperText={
-                    hasError('rol') ? formState.errors.rol[0] : null
-                  }
-                  label="Select your rol"
-                  name="rol"
                   onChange={handleChange}
                   value={formState.values.rol || ''}
                   variant="outlined"
@@ -617,7 +564,7 @@ const SignUp = ({history }) => {
                   color="textSecondary"
                   variant="body1"
                 >
-                    I have read the{' '}
+                  I have read the{' '}
                   <Link
                     color="primary"
                     component={RouterLink}
@@ -625,8 +572,8 @@ const SignUp = ({history }) => {
                     underline="always"
                     variant="h6"
                   >
-                        Terms and Conditions
-                  </Link>
+                    Terms and Conditions
+                    </Link>
                 </Typography>
               </div>
               {hasError('policy') && (
@@ -643,20 +590,20 @@ const SignUp = ({history }) => {
                 type="submit"
                 variant="contained"
               >
-                    Sign up now
-              </Button>
+                Sign up now
+                </Button>
               <Typography
                 color="textSecondary"
                 variant="body1"
               >
-                    Have an account?{' '}
+                Have an account?{' '}
                 <Link
                   component={RouterLink}
                   to="/sign-in"
                   variant="h6"
                 >
-                    Sign in
-                </Link>
+                  Sign in
+                  </Link>
               </Typography>
 
             </Grid>
@@ -665,8 +612,7 @@ const SignUp = ({history }) => {
       </div>
     </div>
   );
-
-}
+};
 
 SignUp.propTypes = {
   history: PropTypes.object

@@ -9,7 +9,8 @@ import {
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'HTTPRequests';
@@ -21,8 +22,22 @@ const schema = {
     length: {
       maximum: 64
     }
-  }
+  },
+  rol: {
+    presence: { allowEmpty: false, message: 'is required' },
+  },
 };
+
+const currencies = [
+  {
+    value: 'provider',
+    label: 'provider',
+  },
+  {
+    value: 'client',
+    label: 'client',
+  },
+];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -118,7 +133,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const SignIn = props => {
   const { history } = props;
   const {user, setUser} = useContext(UserContext);
@@ -152,9 +166,7 @@ const SignIn = props => {
       values: {
         ...formState.values,
         [event.target.name]:
-          event.target.type === 'checkbox'
-            ? event.target.checked
-            : event.target.value
+            event.target.value
       },
       touched: {
         ...formState.touched,
@@ -166,10 +178,17 @@ const SignIn = props => {
   const handleSignIn = async event => {
     event.preventDefault();
     try{
-      const res = await API.client.getByName(formState.values.userName);
-      console.log(res);
+      var res;
+      if(formState.values.rol === "client"){
+        res = await API.client.getByName(formState.values.userName);
+        console.log(res);
+      }
+      if(formState.values.rol === "provider"){
+        res = await API.provider.getByName(formState.values.userName);
+        console.log(res);
+      }
+      
       if (res.status === 200){
-
         history.push('/posts');
         if(!user.logged) {
           setUser({
@@ -218,6 +237,26 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
+                <TextField
+                  className={classes.textField}
+                  error={hasError('rol')}
+                  fullWidth
+                  helperText={
+                    hasError('rol') ? formState.errors.rol[0] : null
+                  }
+                  label="Select your rol"
+                  name="rol"
+                  onChange={handleChange}
+                  value={formState.values.rol || ''}
+                  variant="outlined"
+                  select
+                >
+                  {currencies.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
                 <TextField
                   className={classes.textField}
                   error={hasError('userName')}
