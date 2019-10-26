@@ -195,7 +195,7 @@ const SignIn = props => {
             ...user,
             ...res.data,
             logged: true,
-            rol: 'client'
+            rol: formState.values.rol[0].toUpperCase() + formState.values.rol.slice(1)
           });
         }
       }else if( res.status === 204){
