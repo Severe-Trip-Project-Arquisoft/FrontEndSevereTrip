@@ -70,6 +70,7 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
+const ruta = "/postDetail";
 const PostCard = props => {
   const { className, post, favorite } = props;
   const { user } =  useContext(UserContext)
