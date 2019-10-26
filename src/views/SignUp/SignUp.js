@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'HTTPRequests';
-import {UserContext} from '../../contexts/UserContext';
+import { UserContext } from "../../contexts/UserContext";
 
 const schema = {
   firstName: {
@@ -61,6 +61,9 @@ const schema = {
     length: {
       maximum: 12
     }
+  },
+  rol: {
+    presence: { allowEmpty: false, message: 'is required' },
   },
   policy: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -186,9 +189,7 @@ const SignUp = ({history }) => {
   const [values2, setValues] = useState({
     currency: 'client',
   });
-  const numeroAleatorio = (min, max) => {
-    return Math.round(Math.random() * (max - min) + min);
-  }
+
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
@@ -202,6 +203,8 @@ const SignUp = ({history }) => {
   const handleChange = event => {
     event.persist();
 
+    
+    
     setFormState(formState => ({
       ...formState,
       values: {
@@ -218,13 +221,26 @@ const SignUp = ({history }) => {
     }));
   };
 
-  const handleChange2 = name => event => {
-    setValues({ ...values2, [name]: event.target.value });
-  };
+  console.log(formState.values.userName);
+
+  const checkUserName = async event => {
+    // event.persist();
+    // var existHere = await API.client.getAvailability(formState.values.userName)
+    // console.log(existHere);
+    
+    // (existHere) ? console.log("ya existe"):console.log("No existe");
+    ;
+    
+  }
 
   const handleBack = () => {
     history.goBack();
   };
+
+  function numeroAleatorio(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
   const handleSignUp = async event => {
     event.preventDefault();
     let data;
@@ -245,6 +261,37 @@ const SignUp = ({history }) => {
         'cellphone': formState.values.cellphone
       }
       res = await API.client.insertClient(data);
+    var data;
+    if (formState.values.rol === "client") {
+      data = {
+        // datos de prueba.................
+        // "clientId": "Soy cliente",
+        // "firstName": "Jonathan",
+        // "secondName": "Castel",
+        // "localAirport": "Aeropuerto internacional Jonathan Brando",
+        // "email": "prov@funciona.com",
+        // "address": "Cll del cielo",
+        // "city": "Bogota",
+        // "stateProvinceRegion": "Cundinamarca",
+        // "postalCode": numeroAleatorio(10000, 99000),
+        // "country": "Colombinisimo",
+        // "cellphone": "3112983636"
+
+        "clientId": formState.values.userName,
+        "firstName": formState.values.firstName,
+        "secondName": formState.values.lastName,
+        "localAirport": "Aeropuerto internacional Jonathan Brando",
+        "email": formState.values.email,
+        "address": formState.values.address,
+        "city": "Bogota",
+        "stateProvinceRegion": "Cundinamarca",
+        "postalCode": "11001",
+        "country": formState.values.country,
+        "cellphone": formState.values.cellphone
+      }
+      
+      console.log("envio..." + data)
+      await API.client.insertClient(data);
     }
     if(formState.values.rol === 'provider'){
       data = {
@@ -273,7 +320,42 @@ const SignUp = ({history }) => {
         })
       console.log('envio...' + data)
       history.push('/sign-in');
+    if (formState.values.rol === "provider") {
+      data = {
+        // datos de prueba.................
+        // "providerId": "Soy proveedor",
+        // "firstName": "Jonathan",
+        // "secondName": "Castel",
+        // "localAirport": "Aeropuerto internacional Jonathan Brando",
+        // "bankAccount": numeroAleatorio(45000000, 60000000),
+        // "yearsExperience": numeroAleatorio(1, 20),
+        // "updateDate": new Date(),
+        // "email": "prov@funciona.com",
+        // "address": "Cll del cielo",
+        // "city": "Bogota",
+        // "stateProvinceRegion": "Cundinamarca",
+        // "postalCode": numeroAleatorio(10000, 99000),
+        // "country": "Colombinisimo",
+        // "cellphone": "3112983636"
 
+        "providerId": formState.values.userName,
+        "firstName": formState.values.firstName,
+        "secondName": formState.values.lastName,
+        "localAirport": "Aeropuerto internacional Jonathan Brando",
+        "bankAccount": numeroAleatorio(45000000, 60000000),
+        "yearsExperience": numeroAleatorio(1, 20),
+        "updateDate": new Date(),
+        "email": formState.values.email,
+        "address": formState.values.address,
+        "city": "Bogota",
+        "stateProvinceRegion": "Cundinamarca",
+        "postalCode": numeroAleatorio(10000,99000),
+        "country": formState.values.country,
+        "cellphone": formState.values.cellphone
+      }
+ 
+      console.log("envio..." + data)
+      const res = await API.provider.insertProvider(data);
     }
   };
   const hasError = field => (!!(formState.touched[field] && formState.errors[field]));
@@ -320,10 +402,10 @@ const SignUp = ({history }) => {
               >
                 <TextField
                   className={classes.textField}
-                  error={hasError('username')}
+                  error={hasError('userName')}
                   fullWidth
                   helperText={
-                    hasError('username') ? formState.errors.username[0] : null
+                    hasError('userName') ? formState.errors.userName[0] : null
                   }
                   label="Username"
                   name="userName"
@@ -453,8 +535,6 @@ const SignUp = ({history }) => {
                   variant="outlined"
                 />
               </Grid>
-
-
               <Grid
                 item
                 md={6}
@@ -499,6 +579,26 @@ const SignUp = ({history }) => {
                       key={option.value}
                       value={option.value}
                     >
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  className={classes.textField}
+                  error={hasError('rol')}
+                  fullWidth
+                  helperText={
+                    hasError('rol') ? formState.errors.rol[0] : null
+                  }
+                  label="Select your rol"
+                  name="rol"
+                  onChange={handleChange}
+                  value={formState.values.rol || ''}
+                  variant="outlined"
+                  select
+                >
+                  {currencies.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
                   ))}
