@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
+import {API} from 'HTTPRequests';
 
 
 const styles = theme => ({
@@ -16,15 +17,39 @@ const styles = theme => ({
   });
 
 const Comment = props =>{
+
        
     const { classes, comment } = props;  
 
-    
+    const [user, setUser] = useState( {
+        loaded: false,
+        username: "Anónimo"
+    });
 
-    return (
-        <Card className = {classes.comment}>  
+
+    useEffect(
+        () =>{
+            const fetchData = async ()=>{
+                const res = await API.client.getById(comment.clientId);
+                console.log(res);
+                if(res.status === 200){
+                    setUser( 
+                        {   username : res.data.clientId , loaded: true } 
+                    );
+                }
+                
+            }   
+            fetchData();
+
+
+        }
+
+    );
+
+    return (   
+        
+         <Card className = {classes.comment}>  
             <CardContent>
-
             <Grid
                 container
                 direction="row"
@@ -35,18 +60,18 @@ const Comment = props =>{
 <Grid item xs={1}>
 
     <Avatar aria-label="recipe" > 
-        {comment.username!== undefined && comment.username!== null && comment.username.length > 0 ? comment.username[0].toUpperCase() : 'A' }   
+        {user !== null && user !== undefined &&user.username!== undefined && user.username!== null && user.username.length > 0 ? user.username[0].toUpperCase() : 'A' }   
                 
     </Avatar>
 
 
                 </Grid>
-                <Grid item xs={2}>   
+                <Grid item xs={3}>   
                 <Typography variant = "h3" > 
-                    {comment.username!== undefined && comment.username!== null && comment.username.length > 0 ? comment.username : 'Anónimo' }
+                    {user !== null && user !== undefined && user.username!== undefined && user.username!== null && user.username.length > 0 ? user.username : 'Anónimo' }
                 </Typography>
                 <Typography variant = "body1" > 
-                    {comment.username!== undefined && comment.username!== null && comment.username.length > 0 ? comment.username : 'Anónimo' }
+                    {user !== null && user !== undefined && user.username!== undefined && user.username!== null && user.username.length > 0 ? comment.username : 'Anónimo' }
                 </Typography>
 
                 </Grid>
@@ -70,12 +95,11 @@ const Comment = props =>{
                     />
                 </Grid>
    
-                </Grid>
+                </Grid> 
             </CardContent>
-        </Card>
-    )}
-
-
+    </Card>
+    )
+}
 Comment.propTypes = {
     className: PropTypes.string
 };

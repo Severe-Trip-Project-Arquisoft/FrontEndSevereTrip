@@ -17,22 +17,23 @@ const styles = theme => ({
     }  
   });
 
-const CommentForm =  ({userId, username, postId,classes, reload}) =>{
-
+const CommentForm =  ({user, postId,classes, reload}) =>{
+    
+    
 
     const [hover, setHover] = useState(1);
     const [rating, setRating] = useState(1);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
-
+    const username = user.firstName;
     const submitComment = async ()=>{
 
             if( title && content && rating && title !== "" && content !== "" ){
             await API.postProvider.createComment(
                 postId,
                 {
-                    title, content, rating, clientId: userId
+                    title, content, rating, clientId: user.id
                 }
             );
 

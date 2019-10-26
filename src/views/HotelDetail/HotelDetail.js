@@ -4,8 +4,6 @@ import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@mate
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import {useParams } from 'react-router-dom';
-
-
 import ListItem from '@material-ui/core/ListItem';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
@@ -72,127 +70,135 @@ const HotelDetail = (props) => {
       <HotelDetailToolbar />
       <div className={classes.content}>
 
-    <Card
-      className={classes.root}
-    >
-      <CardContent>
-	<div className={classes.imageContainer}>
-          <img
-            alt="Hotel"
-            className={classes.image}
-            src={'/images/hotels/hotel1.png'}
-          />
-        </div>
-        <Typography
-          align="center"
-          variant="h4"
+        <Card
+          className={classes.root}
         >
-          {hotel.name}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {hotel.description}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {hotel.city} - {hotel.country}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {hotel.address}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {hotel.email}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {hotel.phone}
-        </Typography>
-        <Typography
-          align="center"
-          variant="h5"
-        >
+          <CardContent>
+            <div className={classes.imageContainer}>
+              <img
+                alt="Hotel"
+                className={classes.image}
+                src={'/images/hotels/hotel1.png'}
+              />
+            </div>
+            <Typography
+              align="center"
+              variant="h4"
+            >
+              {hotel.name}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {hotel.description}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {hotel.city} - {hotel.country}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {hotel.address}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {hotel.email}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {hotel.phone}
+            </Typography>
+            <Typography
+              align="center"
+              variant="h5"
+            >
           Precio por habitacion {hotel.price}
-        </Typography>
-      </CardContent>
+            </Typography>
+          </CardContent>
 
 
 
           <div className={classes.demo}>
 
 
-              {hotel.adiciones.map( (add, index) => (
-            <Grid key = {index} item xs={12} md={6}>
+            {hotel.adiciones.map( (add, index) => (
+              <Grid
+                item
+                key = {index}
+                md={6}
+                xs={12}
+              >
                 <ListItem>
                   <ListItemIcon>
                     <RadioButtonCheckedIcon />
                   </ListItemIcon>
-			<Typography
-          			align="center"
-			        variant="body1"
-		        >
+                  <Typography
+                    align="center"
+                    variant="body1"
+                  >
 		          {add.tx}
 		        </Typography>
 
                 </ListItem>
-            </Grid>
-              ))}
+              </Grid>
+            ))}
 
           </div>
 
 
 
 
-      <Divider />
-	<CardActions>
-        <Grid
-          container
-          justify="space-between"
-        >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <AccessTimeIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
+          <Divider />
+          <CardActions>
+            <Grid
+              container
+              justify="space-between"
             >
+              <Grid
+                className={classes.statsItem}
+                item
+              >
+                <AccessTimeIcon className={classes.statsIcon} />
+                <Typography
+                  display="inline"
+                  variant="body2"
+                >
               Updated 2hr ago
-            </Typography>
-          </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <StarIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              {hotel.calification} 
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardActions>
-    </Card>
+                </Typography>
+              </Grid>
+              <Grid
+                className={classes.statsItem}
+                item
+              >
+                <StarIcon className={classes.statsIcon} />
+                <Typography
+                  display="inline"
+                  variant="body2"
+                >
+                  {hotel.calification} 
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardActions>
+        </Card>
 
 
 
       </div>
       {loaded ?
-        <CommentSection providerId = {hotel.providerId} postId = {hotel.id}/> : <div/>
+        <CommentSection
+          postId = {hotel.id}
+          providerId = {hotel.providerId}
+        /> : <div/>
       }
     </div>
   );

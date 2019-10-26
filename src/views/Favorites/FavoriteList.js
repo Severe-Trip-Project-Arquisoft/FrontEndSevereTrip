@@ -3,11 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import {FavoriteCard } from './components';
-import mockData from './data';
-import {API} from "../../HTTPRequests";
-import {UserContext} from "../../contexts/UserContext";
+import {API} from '../../HTTPRequests';
+import {UserContext} from '../../contexts/UserContext';
 import {PostCard} from '../PostList/components';
 
 const useStyles = makeStyles(theme => ({
@@ -36,8 +33,8 @@ const FavoriteList = () => {
     let pairs = [];
     for(let element of res.data) {
       let tmp = await API.postProvider.getById(element.postId);
-      pairs.push({post: tmp,favorite: element});
-    };
+      pairs.push({post: tmp.data,favorite: element});
+    }
     setPairs({set:pairs,loaded:true});
   }
 
@@ -63,7 +60,10 @@ const FavoriteList = () => {
               md={6}
               xs={12}
             >
-              <PostCard post={pair.post} favorite={pair.favorite}/>
+              <PostCard
+                favorite={pair.favorite}
+                post={pair.post}
+              />
             </Grid>
           ))}
         </Grid>

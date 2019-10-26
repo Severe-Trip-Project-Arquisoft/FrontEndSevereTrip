@@ -76,9 +76,9 @@ const PostCard = props => {
   const classes = useStyles();
   const [fav, setFav] = useState(favorite);
   const [favId, setFavId] = useState(null);
-  const ruta = "/"+post.serviceType+"Detail";
-  const handleFavorite = async() =>{
   const ruta = "/postDetail";
+  const handleFavorite = async() =>{
+  
 
 
     if(!fav){

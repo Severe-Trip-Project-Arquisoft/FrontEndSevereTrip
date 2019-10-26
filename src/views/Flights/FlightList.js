@@ -4,8 +4,7 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import { FlightsToolbar, FlightCard } from './components';
-import mockData from './data';
+import { FlightsToolbar } from './components';
 
 import {API} from 'HTTPRequests'
 import {PostCard} from '../PostList/components';
@@ -35,7 +34,7 @@ const FlightList = () => {
 
   useEffect( () => {   
     async function cargarDatos () {
-      const rensponse = await API.postProvider.getByType("flight")
+      const rensponse = await API.postProvider.getByType('flight')
         .catch(err => console.log(err));
       setFlights({
         isDataLoaded: true,

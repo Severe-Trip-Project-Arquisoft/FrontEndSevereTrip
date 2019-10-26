@@ -1,7 +1,6 @@
 import 'date-fns';
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';

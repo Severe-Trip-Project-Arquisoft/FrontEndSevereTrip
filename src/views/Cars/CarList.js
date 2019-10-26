@@ -1,12 +1,9 @@
-import React, { useState, Component, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
-import { CarsToolbar, CarCard } from './components';
-import axios from 'axios'
+import { CarsToolbar } from './components';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
 import {API} from 'HTTPRequests'
 import {PostCard} from '../PostList/components';
 

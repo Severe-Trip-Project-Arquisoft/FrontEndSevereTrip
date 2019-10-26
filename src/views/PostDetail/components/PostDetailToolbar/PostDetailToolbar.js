@@ -37,13 +37,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PostDetailToolbar = props => {
-  const { className, ...rest } = props;
+  const { className } = props;
 
   const classes = useStyles();
 
   return (
     <div
-      {...rest}
+      
       className={clsx(classes.root, className)}
     >
       <div className={classes.row}>

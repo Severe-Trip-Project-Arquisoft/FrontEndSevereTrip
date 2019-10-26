@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CardContent, Card, CardActions, Divider,Container } from '@material-ui/core';
+import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import {useParams } from 'react-router-dom';
@@ -60,10 +60,12 @@ const mapServiceTypeUnit = (type) =>{
       return 'día de alquiler';
     case 'flight':
       return 'pasaje';
+    default:
+      return ''
   }
 }
 
-const PostDetail = (props) => {
+const PostDetail = () => {
   const classes = useStyles();
   const [Post,setPost] = useState(mockData)
   const [loaded,setLoaded] = useState(false);
@@ -72,8 +74,9 @@ const PostDetail = (props) => {
   useEffect(()=>{
     const fetchPostData = async ()=>{
       let receivedPostData = await API.postProvider.getById(postId)
-      setPost(Object.assign({},Post,receivedPostData.data))
-      setLoaded(true);
+      if(receivedPostData && receivedPostData.status === 200)
+      {setPost(Object.assign({},Post,receivedPostData.data))
+        setLoaded(true);}
     }
     fetchPostData();    
   },[]);
@@ -82,129 +85,137 @@ const PostDetail = (props) => {
       <PostDetailToolbar postId = {Post.id}/>
       <div className={classes.content}>
 
-    <Card
-      className={classes.root}
-    >
-      <CardContent>
-	<div className={classes.imageContainer}>
-          <img
-            alt="Post"
-            className={classes.image}
-            src={'/images/'+Post.serviceType+'s/'+Post.serviceType+'5.png'}
-          />
-        </div>
-        <Typography
-          align="center"
-          variant="h4"
+        <Card
+          className={classes.root}
         >
-          {Post.name}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {Post.description}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {Post.city} - {Post.country}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {Post.address}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {Post.email}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {Post.phone}
-        </Typography>
-        <Typography
-          align="center"
-          variant="h5"
-        >
+          <CardContent>
+            <div className={classes.imageContainer}>
+              <img
+                alt="Post"
+                className={classes.image}
+                src={'/images/'+Post.serviceType+'s/'+Post.serviceType+'5.png'}
+              />
+            </div>
+            <Typography
+              align="center"
+              variant="h4"
+            >
+              {Post.name}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {Post.description}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {Post.city} - {Post.country}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {Post.address}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {Post.email}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {Post.phone}
+            </Typography>
+            <Typography
+              align="center"
+              variant="h5"
+            >
           Precio por {mapServiceTypeUnit(Post.serviceType)}: ${Post.price}
-        </Typography>
-      </CardContent>
+            </Typography>
+          </CardContent>
 
 
-        { loaded ?
-          <div className={classes.demo}>
+          { loaded ?
+            <div className={classes.demo}>
 
 
               {Post.tags.map( (add, index) => (
-            <Grid key = {index} item xs={12} md={6}>
-                <ListItem>
-                  <ListItemIcon>
-                    <RadioButtonCheckedIcon />
-                  </ListItemIcon>
-			      <Typography
-          			align="center"
-			        variant="body1"
-		        >
-		          {add.description}
-		        </Typography>
+                <Grid
+                  item
+                  key = {index}
+                  md={6}
+                  xs={12}
+                >
+                  <ListItem>
+                    <ListItemIcon>
+                      <RadioButtonCheckedIcon />
+                    </ListItemIcon>
+                    <Typography
+                      align="center"
+                      variant="body1"
+                    >
+                      {add.description}
+                    </Typography>
 
-                </ListItem>
-            </Grid>
+                  </ListItem>
+                </Grid>
               ))}
 
-          </div>
+            </div>
           
-          : <div/>}
+            : <div/>}
 
 
 
-      <Divider />
-	<CardActions>
-        <Grid
-          container
-          justify="space-between"
-        >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <AccessTimeIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
+          <Divider />
+          <CardActions>
+            <Grid
+              container
+              justify="space-between"
             >
+              <Grid
+                className={classes.statsItem}
+                item
+              >
+                <AccessTimeIcon className={classes.statsIcon} />
+                <Typography
+                  display="inline"
+                  variant="body2"
+                >
               Updated 2hr ago
-            </Typography>
-          </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <StarIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              {Post.calification} 
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardActions>
-    </Card>
+                </Typography>
+              </Grid>
+              <Grid
+                className={classes.statsItem}
+                item
+              >
+                <StarIcon className={classes.statsIcon} />
+                <Typography
+                  display="inline"
+                  variant="body2"
+                >
+                  {Post.calification} 
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardActions>
+        </Card>
 
 
 
       </div>
       {loaded ?
-        <CommentSection userId ="USER" providerId = {Post.providerId} postId = {Post.id}/> : <div/>
-        }          
+        <CommentSection
+          postId = {Post.id}
+          providerId = {Post.providerId}
+        /> : <div/>
+      }          
     </div>
   );
 };

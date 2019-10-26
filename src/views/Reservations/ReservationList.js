@@ -4,9 +4,8 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ReservationsToolbar, ReservationCard } from './components';
-import mockData from './data';
-import {UserContext} from "../../contexts/UserContext";
-import {API} from "../../HTTPRequests";
+import {UserContext} from '../../contexts/UserContext';
+import {API} from '../../HTTPRequests';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,20 +22,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ReservationList = ({history}) => {
+const ReservationList = () => {
   const classes = useStyles();
-  const {user, setUser} = useContext(UserContext);
+  const {user} = useContext(UserContext);
 
-  const [reservations , setReservations ] = useState([]);
+  const [reservations] = useState([]);
   useEffect( ()=>{
-        const fetchReservations = async ()=>{
-            const res = await API.reservation.getByClient( user.id );
-            console.log(res);
-            //setReservations()
+    const fetchReservations = async ()=>{
+      const res = await API.reservation.getByClient( user.id );
+      console.log(res);
+      //setReservations()
 
-        }
-        if(user.logged) fetchReservations().then(r => console.log(r));
     }
+    if(user.logged) fetchReservations().then(r => console.log(r));
+  }
   );
 
 
@@ -50,20 +49,20 @@ const ReservationList = ({history}) => {
         >
           {
             reservations.length <= 0 ?
-            <Typography variant= "h3" >
+              <Typography variant= "h3" >
               Aún no tienes reservaciones.
-            </Typography>
-            :reservations.map(reservation => (
-            <Grid
-              item
-              key={reservation.id}
-              lg={4}
-              md={6}
-              xs={12}
-            >
-            <ReservationCard reservation={reservation} />
-            </Grid>
-          ))}
+              </Typography>
+              :reservations.map(reservation => (
+                <Grid
+                  item
+                  key={reservation.id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                >
+                  <ReservationCard reservation={reservation} />
+                </Grid>
+              ))}
         </Grid>
       </div>
       <div className={classes.pagination}>

@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'HTTPRequests';
-import {UserContext} from "../../contexts/UserContext";
+import {UserContext} from '../../contexts/UserContext';
 
 const schema = {
   firstName: {
@@ -127,7 +127,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingTop: theme.spacing(5),
-    paddingBototm: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
@@ -171,11 +171,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = props => {
-  const { history } = props;
+const SignUp = ({history }) => {
 
   const classes = useStyles();
-
   const {user, setUser} = useContext(UserContext);
 
   const [formState, setFormState] = useState({
@@ -188,13 +186,15 @@ const SignUp = props => {
   const [values2, setValues] = useState({
     currency: 'client',
   });
-
+  const numeroAleatorio = (min, max) => {
+    return Math.round(Math.random() * (max - min) + min);
+  }
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
     setFormState(formState => ({
       ...formState,
-      isValid: errors ? false : true,
+      isValid: !errors,
       errors: errors || {},
     }));
   }, [formState.values]);
@@ -225,44 +225,60 @@ const SignUp = props => {
   const handleBack = () => {
     history.goBack();
   };
-
   const handleSignUp = async event => {
     event.preventDefault();
-    var data = {
-        "clientId": formState.values.userName,
-        "firstName": formState.values.firstName,
-        "secondName": formState.values.lastName,
-        "localAirport": "Aeropuerto internacional Jonathan Brando",
-        "email": formState.values.email,
-        "address": formState.values.address,
-        "city": "Bogota",
-        "stateProvinceRegion": "Cundinamarca",
-        "postalCode": "11001",
-        "country": formState.values.country,
-        "cellphone": formState.values.cellphone
+    let data;
+    let res;
+    console.log(formState.values.rol);
+    if(formState.values.rol === 'client'){
+      data = {
+        'clientId': formState.values.userName,
+        'firstName': formState.values.firstName,
+        'secondName': formState.values.lastName,
+        'localAirport': 'Aeropuerto internacional Jonathan Brando',
+        'email': formState.values.email,
+        'address': formState.values.address,
+        'city': 'Bogota',
+        'stateProvinceRegion': 'Cundinamarca',
+        'postalCode': '11001',
+        'country': formState.values.country,
+        'cellphone': formState.values.cellphone
+      }
+      res = await API.client.insertClient(data);
     }
-    console.log("envio..." + data)
-    const res = await API.client.insertClient(data);
-    console.log(res);
-    if(res.status === 200){
+    if(formState.values.rol === 'provider'){
+      data = {
+        'providerId': formState.values.userName,
+        'firstName': formState.values.firstName,
+        'secondName': formState.values.lastName,
+        'localAirport': 'Aeropuerto internacional Jonathan Brando',
+        'bankAccount': numeroAleatorio(45000000, 60000000),
+        'yearsExperience': numeroAleatorio(1, 20),
+        'updateDate': new Date(),
+        'email': formState.values.email,
+        'address': formState.values.address,
+        'city': 'Bogota',
+        'stateProvinceRegion': 'Cundinamarca',
+        'postalCode': '11001',
+        'country': formState.values.country,
+        'cellphone': formState.values.cellphone
+      }
+      res = await API.provider.insertProvider(data);
+    }
+    if(res && res.status === 200){
       setUser(
-        ...user,
-        data
-      )
+        {...user,
+          data,
+          rol: formState.values.rol
+        })
+      console.log('envio...' + data)
       history.push('/sign-in');
 
-
     }
-
-
   };
-
-  const hasError = field =>
-    !!(formState.touched[field] && formState.errors[field]);
-
+  const hasError = field => (!!(formState.touched[field] && formState.errors[field]));
   return (
     <div className={classes.root}>
-
       <div className={classes.content}>
         <div className={classes.contentHeader}>
           <IconButton onClick={handleBack}>
@@ -288,14 +304,14 @@ const SignUp = props => {
                   className={classes.title}
                   variant="h2"
                 >
-                  Create new account
-		        </Typography>
+                    Create new account
+                </Typography>
                 <Typography
                   color="textSecondary"
                   gutterBottom
                 >
-                  Use your email to create new account
-	                </Typography>
+                    Use your email to create new account
+                </Typography>
               </Grid>
               <Grid
                 item
@@ -464,26 +480,29 @@ const SignUp = props => {
                 md={6}
                 xs={12}
               >
-              <TextField
-                className={classes.textField}
-                error={hasError('rol')}
-                fullWidth
-                helperText={
-                  hasError('rol') ? formState.errors.rol[0] : null
-                }
-                label="Select your rol"
-                name="rol"
-                onChange={handleChange2('currency')}
-                value={values2.currency}
-                variant="outlined"
-                select
-              >
-                {currencies.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+                <TextField
+                  className={classes.textField}
+                  error={hasError('rol')}
+                  fullWidth
+                  helperText={
+                    hasError('rol') ? formState.errors.rol[0] : null
+                  }
+                  label="Select your rol"
+                  name="rol"
+                  onChange={handleChange2('currency')}
+                  select
+                  value={values2.currency}
+                  variant="outlined"
+                >
+                  {currencies.map(option => (
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <div className={classes.policy}>
                 <Checkbox
@@ -498,7 +517,7 @@ const SignUp = props => {
                   color="textSecondary"
                   variant="body1"
                 >
-                  I have read the{' '}
+                    I have read the{' '}
                   <Link
                     color="primary"
                     component={RouterLink}
@@ -506,8 +525,8 @@ const SignUp = props => {
                     underline="always"
                     variant="h6"
                   >
-                    Terms and Conditions
-                    </Link>
+                        Terms and Conditions
+                  </Link>
                 </Typography>
               </div>
               {hasError('policy') && (
@@ -524,20 +543,20 @@ const SignUp = props => {
                 type="submit"
                 variant="contained"
               >
-                Sign up now
-                </Button>
+                    Sign up now
+              </Button>
               <Typography
                 color="textSecondary"
                 variant="body1"
               >
-                Have an account?{' '}
+                    Have an account?{' '}
                 <Link
                   component={RouterLink}
                   to="/sign-in"
                   variant="h6"
                 >
-                  Sign in
-                  </Link>
+                    Sign in
+                </Link>
               </Typography>
 
             </Grid>
@@ -546,7 +565,8 @@ const SignUp = props => {
       </div>
     </div>
   );
-};
+
+}
 
 SignUp.propTypes = {
   history: PropTypes.object

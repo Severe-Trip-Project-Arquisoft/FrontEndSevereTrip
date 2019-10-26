@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -12,7 +12,6 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
-import {UserContext} from "../../../../contexts/UserContext";
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -20,40 +19,17 @@ const useStyles = makeStyles(() => ({
 
 
 const AccountDetails = props => {
-  const { className, ...rest } = props;
+  const { className,  ...rest } = props;
 
   const classes = useStyles();
 
-  /*const [values, setValues] = useState({
-    firstName: 'Shen',
-    lastName: 'Zhi',
-    email: 'shen.zhi@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });*/
-  const {values, setValues} = useContext(UserContext);
+  const [ user, setUser] = useState(props.user);
   const handleChange = event => {
-    setValues({
-      ...values,
+    setUser({
+      ...user,
       [event.target.name]: event.target.value
     });
   };
-
-  const states = [
-    {
-      value: 'alabama',
-      label: 'Alabama'
-    },
-    {
-      value: 'new-york',
-      label: 'New York'
-    },
-    {
-      value: 'san-francisco',
-      label: 'San Francisco'
-    }
-  ];
 
   return (
     <Card
@@ -87,7 +63,7 @@ const AccountDetails = props => {
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={user.firstName}
                 variant="outlined"
               />
             </Grid>
@@ -103,7 +79,7 @@ const AccountDetails = props => {
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={user.secondName}
                 variant="outlined"
               />
             </Grid>
@@ -119,7 +95,7 @@ const AccountDetails = props => {
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={user.email}
                 variant="outlined"
               />
             </Grid>
@@ -135,7 +111,7 @@ const AccountDetails = props => {
                 name="phone"
                 onChange={handleChange}
                 type="number"
-                value={values.phone}
+                value={user.cellphone}
                 variant="outlined"
               />
             </Grid>
@@ -144,28 +120,6 @@ const AccountDetails = props => {
               md={6}
               xs={12}
             >
-              <TextField
-                fullWidth
-                label="Select State"
-                margin="dense"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                // eslint-disable-next-line react/jsx-sort-props
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
             </Grid>
             <Grid
               item
@@ -179,7 +133,7 @@ const AccountDetails = props => {
                 name="country"
                 onChange={handleChange}
                 required
-                value={values.country}
+                value={user.country}
                 variant="outlined"
               />
             </Grid>

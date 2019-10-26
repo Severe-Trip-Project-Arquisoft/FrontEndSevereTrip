@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
-import { HotelsToolbar, HotelCard } from './components';
+import { HotelsToolbar } from './components';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -24,10 +24,10 @@ const styles = theme => ({
     justifyContent: 'flex-end'
   },
   progress: {
-    display: "block",
+    display: 'block',
     margin: theme.spacing(3),
-    marginLeft: "auto",
-    marginRight: "auto",
+    marginLeft: 'auto',
+    marginRight: 'auto',
 
    
   }
@@ -43,7 +43,7 @@ const HotelList = (props)=>{
 
   useEffect( () => {   
     async function cargarDatos () {
-      const rensponse = await API.postProvider.getByType("hotel")
+      const rensponse = await API.postProvider.getByType('hotel')
         .catch(err => console.log(err));
       setState({
         isDataLoaded: true,
@@ -61,39 +61,39 @@ const HotelList = (props)=>{
 
   return (
     state.isDataLoaded ?
-    <div className={classes.root}>
-      <HotelsToolbar />
-      <div className={classes.content}>
-        <Grid
-          container
-          spacing={3}
-        >
-          {state.datosHoteles.map(hotel => (
-            <Grid
-              item
-              key={hotel.id}
-              lg={4}
-              md={6}
-              xs={12}
-            >
-              <PostCard post={hotel} />
-            </Grid>
-          ))}
-        </Grid>
+      <div className={classes.root}>
+        <HotelsToolbar />
+        <div className={classes.content}>
+          <Grid
+            container
+            spacing={3}
+          >
+            {state.datosHoteles.map(hotel => (
+              <Grid
+                item
+                key={hotel.id}
+                lg={4}
+                md={6}
+                xs={12}
+              >
+                <PostCard post={hotel} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        <div className={classes.pagination}>
+          <Typography variant="caption">1-6 of 20</Typography>
+          <IconButton>
+            <ChevronLeftIcon />
+          </IconButton>
+          <IconButton>
+            <ChevronRightIcon />
+          </IconButton>
+        </div>
       </div>
-      <div className={classes.pagination}>
-        <Typography variant="caption">1-6 of 20</Typography>
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton>
-          <ChevronRightIcon />
-        </IconButton>
+      : <div>
+        <CircularProgress className={classes.progress} />
       </div>
-    </div>
-    : <div>
-         <CircularProgress className={classes.progress} />
-    </div>
 
   );
   

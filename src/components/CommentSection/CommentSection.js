@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -7,6 +7,7 @@ import {Comment, CommentForm} from './components'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import {API} from 'HTTPRequests'
+import { UserContext } from 'contexts/UserContext';
 
 const styles = theme => ({
     progress: {
@@ -28,6 +29,7 @@ const styles = theme => ({
 
 const CommentSection = props =>{
     const {  postId, classes } = props;
+    const { user } = useContext(UserContext);
     
 
     const [ comments, setComments ] = useState([
@@ -75,7 +77,7 @@ const CommentSection = props =>{
                 )
         )}
         </React.Fragment> : <CircularProgress className={classes.progress} />}
-        <CommentForm  reload = {fetchComments} postId = {postId}/>
+        {user.logged ? <CommentForm  user = {user} reload = {fetchComments} postId = {postId}/> : <div/>}
         </React.Fragment> 
     )}
 

@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'HTTPRequests';
-import {UserContext} from "../../contexts/UserContext";
+import {UserContext} from '../../contexts/UserContext';
 
 const schema = {
   userName: {
@@ -21,13 +21,7 @@ const schema = {
     length: {
       maximum: 64
     }
-  }/*,
-  password: {
-    presence: { allowEmpty: true, message: 'is required' },
-    length: {
-      maximum: 128
-    }
-  }*/
+  }
 };
 
 const useStyles = makeStyles(theme => ({
@@ -171,9 +165,6 @@ const SignIn = props => {
 
   const handleSignIn = async event => {
     event.preventDefault();
-    /*
-
-     */
     try{
       const res = await API.client.getByName(formState.values.userName);
       console.log(res);
@@ -181,22 +172,20 @@ const SignIn = props => {
 
         history.push('/posts');
         if(!user.logged) {
-          await setUser({
+          setUser({
             ...user,
             ...res.data,
-            logged: true
+            logged: true,
+            rol: 'client'
           });
         }
       }else if( res.status === 204){
-
         history.push('/sign-up');
-
       }
     } catch(e){
       console.error(e);
     }
   };
-
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -206,12 +195,6 @@ const SignIn = props => {
         className={classes.grid}
         container
       >
-        <Grid
-          className={classes.quoteContainer}
-          item
-          lg={2}
-        >
-        </Grid>
         <Grid
           className={classes.content}
           item
@@ -249,20 +232,6 @@ const SignIn = props => {
                   value={formState.values.userName || ''}
                   variant="outlined"
                 />
-                {/*<TextField
-                  className={classes.textField}
-                  error={hasError('password')}
-                  fullWidth
-                  helperText={
-                    hasError('password') ? formState.errors.password[0] : null
-                  }
-                  label="Password"
-                  name="password"
-                  onChange={handleChange}
-                  type="password"
-                  value={formState.values.password || ''}
-                  variant="outlined"
-                />*/}
                 <Button
                   className={classes.signInButton}
                   color="primary"
