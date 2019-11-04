@@ -5,7 +5,7 @@ export default [
     id: uuid(),
     title: 'Kathmandu',
     description:
-      `Es una hermosa propuesta para salir a comer en pareja o con amigos. Está totalmente ambientado con estilos orientales, su decoración ha sido traído de Nepal y alrededores. El ambiente es tranquilo y se puede disfrutar de los excelentes platos orientales de su carta. En Kathmandu tienes la posibilidad de probar el nasi Goreng, un plato típico de Malasia que combina verduras, calamar, pescado y arroz. Está perfectamente condimentado y es un plato con sabores equilibrados. Algo que no puedo resistir es el hummus wa tahina (una pasta de garbanzos), el tahine de berenjenas, arroz con almendras que puedes acompañar con pan árabe.`,
+      'Es una hermosa propuesta para salir a comer en pareja o con amigos. Está totalmente ambientado con estilos orientales, su decoración ha sido traído de Nepal y alrededores. El ambiente es tranquilo y se puede disfrutar de los excelentes platos orientales de su carta. En Kathmandu tienes la posibilidad de probar el nasi Goreng, un plato típico de Malasia que combina verduras, calamar, pescado y arroz. Está perfectamente condimentado y es un plato con sabores equilibrados. Algo que no puedo resistir es el hummus wa tahina (una pasta de garbanzos), el tahine de berenjenas, arroz con almendras que puedes acompañar con pan árabe.',
     imageUrl: '/images/restaurants/restaurant1.png',
     totalDownloads: '406',
     createdAt: '04/04/2019'
@@ -36,7 +36,7 @@ export default [
     id: uuid(),
     title: 'Full 80’s',
     description:
-      `Es una gran propuesta si como yo son fan de esta época de personajes icónicos, ropa de colores llamativos y peinados que no deberían volver jajaja. ¡Si! Full 80’s es un lugar divertido ideal para juntarse con amigos, escuchar buena música y pasar un buen rato. Como no podría ser de otra manera sus tragos tienen nombres como “Baywatch” que es un mojito de frutos rojos, “Terminator” que es un New York Iced tea y la lista sigue así. Si vas a Full 80’s te recomiendo que pruebes la hamburguesa insignia de la casa, la Full 80’s burger: 250grs de carne de res, cerdo y tocineta con mantequilla de finas hierbas, fondue de queso holandés, champiñones, cebolla caramelizada y ¡más tocineta! Acompañada con papas cajún.`,
+      'Es una gran propuesta si como yo son fan de esta época de personajes icónicos, ropa de colores llamativos y peinados que no deberían volver jajaja. ¡Si! Full 80’s es un lugar divertido ideal para juntarse con amigos, escuchar buena música y pasar un buen rato. Como no podría ser de otra manera sus tragos tienen nombres como “Baywatch” que es un mojito de frutos rojos, “Terminator” que es un New York Iced tea y la lista sigue así. Si vas a Full 80’s te recomiendo que pruebes la hamburguesa insignia de la casa, la Full 80’s burger: 250grs de carne de res, cerdo y tocineta con mantequilla de finas hierbas, fondue de queso holandés, champiñones, cebolla caramelizada y ¡más tocineta! Acompañada con papas cajún.',
     imageUrl: '/images/restaurants/restaurant4.png',
     totalDownloads: '835',
     createdAt: '04/04/2019'

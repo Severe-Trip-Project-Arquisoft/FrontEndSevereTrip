@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import { FlightsToolbar } from './components';
 
-import {API} from 'HTTPRequests'
+import {API} from 'API'
 import {PostCard} from '../PostList/components';
 
 const useStyles = makeStyles(theme => ({

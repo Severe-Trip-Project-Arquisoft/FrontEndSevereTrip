@@ -15,8 +15,8 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
-import {UserContext} from "../../../../contexts/UserContext";
-import {API} from "../../../../HTTPRequests";
+import {UserContext} from '../../../../contexts/UserContext';
+import {API} from '../../../../API';
 
 const mapServiceTypeUnit = (type) =>{
   switch(type){
@@ -70,41 +70,33 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
-const ruta = "/postDetail";
+const ruta = '/postDetail';
 const PostCard = props => {
   const { className, post, favorite } = props;
   const { user } =  useContext(UserContext)
   const classes = useStyles();
   const [fav, setFav] = useState(favorite);
   const [favId, setFavId] = useState(null);
-  const ruta = "/postDetail";
+  const ruta = '/postDetail';
   const handleFavorite = async() =>{
   
 
 
     if(!fav){
-      const res = await API.favorites.insertFavorite(
-        {
-          clientId: user.id,
-          postId: post.id,
-          stateFavorite : true,
-        }
-      )
+      const res = await API.favorites.insertFavorite(user.id,post.id);
       setFavId(res.data);
       setFav(true);
 
-      console.log("FAV", res);
-    console.log(fav);
+      console.log('FAV', res);
+      console.log(fav);
 
 
     }else{
-      const res = await API.favorites.deleteFavorite(
-        favId
-      );
-      setFavId("");
+      const res = await API.favorites.deleteFavorite(user.id,post.id);
+      setFavId('');
       setFav(false);
 
-      console.log("NO FAV", res);
+      console.log('NO FAV', res);
       console.log(fav);
     }
 
@@ -126,9 +118,9 @@ const PostCard = props => {
         </div>
         <Typography
           align="center"
+          component={CustomRouterLink}
+          to={ruta+'/'+post.id}
           variant="h4"
-	        component={CustomRouterLink}
-          to={ruta+"/"+post.id}
         >
           {post.name}
         </Typography>
@@ -178,8 +170,11 @@ const PostCard = props => {
                 className={classes.button}
                 onClick={handleFavorite}
               >
-              <StarIcon className={classes.statsIcon} color = {fav ? 'primary' : 'error'} />
-            </IconButton>: <React.Fragment/>}
+                <StarIcon
+                  className={classes.statsIcon}
+                  color = {fav ? 'primary' : 'error'}
+                />
+              </IconButton>: <React.Fragment/>}
             <Typography
               display="inline"
               variant="body2"

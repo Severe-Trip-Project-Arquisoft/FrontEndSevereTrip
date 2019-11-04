@@ -50,17 +50,17 @@ const HotelsToolbar = props => {
         <span className={classes.spacer} />
         <Button
           color="primary"
-          variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={DeleteHotel}
+          variant="contained"
         >
           Delete hotel
         </Button>
-	<Button
+        <Button
           color="primary"
-          variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={Reservation}
+          variant="contained"
         >
           Reserve
         </Button>

@@ -15,8 +15,8 @@ import {
   MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { API } from 'HTTPRequests';
-import { UserContext } from "../../contexts/UserContext";
+import { API } from 'API';
+import { UserContext } from '../../contexts/UserContext';
 
 const schema = {
   firstName: {
@@ -179,7 +179,7 @@ const SignUp = props => {
 
   const classes = useStyles();
 
-  const { user, setUser } = useContext(UserContext);
+  //const { user, setUser } = useContext(UserContext);
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -216,7 +216,7 @@ const SignUp = props => {
     }));
   };
 
-// Modificar en backend client
+  // Modificar en backend client
   // const handleChangeUserName = async event => {
   //   event.persist();
   //   if(event.target.name === "userName"){
@@ -233,7 +233,7 @@ const SignUp = props => {
   //       },
   //     }));
   //   }
-  //   await API.client.getAvailability(formState.values.name)
+  //   await API.users.getAvailability(formState.values.name)
   //   .then((res)=>{
   //     console.log(res.data);
       
@@ -254,7 +254,7 @@ const SignUp = props => {
   const handleSignUp = async event => {
     event.preventDefault();
     var data;
-    if (formState.values.rol === "client") {
+    if (formState.values.rol === 'client') {
       data = {
         // datos de prueba.................
         // "clientId": "Soy cliente",
@@ -269,23 +269,23 @@ const SignUp = props => {
         // "country": "Colombinisimo",
         // "cellphone": "3112983636"
 
-        "clientId": formState.values.userName,
-        "firstName": formState.values.firstName,
-        "secondName": formState.values.lastName,
-        "localAirport": "Aeropuerto internacional Jonathan Brando",
-        "email": formState.values.email,
-        "address": formState.values.address,
-        "city": "Bogota",
-        "stateProvinceRegion": "Cundinamarca",
-        "postalCode": "11001",
-        "country": formState.values.country,
-        "cellphone": formState.values.cellphone
+        'clientId': formState.values.userName,
+        'firstName': formState.values.firstName,
+        'secondName': formState.values.lastName,
+        'localAirport': 'Aeropuerto internacional Jonathan Brando',
+        'email': formState.values.email,
+        'address': formState.values.address,
+        'city': 'Bogota',
+        'stateProvinceRegion': 'Cundinamarca',
+        'postalCode': '11001',
+        'country': formState.values.country,
+        'cellphone': formState.values.cellphone
       }
       
-      console.log("envio..." + data)
-      await API.client.insertClient(data);
+      console.log('envio...' + data)
+      await API.users.createClient(data);
     }
-    if (formState.values.rol === "provider") {
+    if (formState.values.rol === 'provider') {
       data = {
         // datos de prueba.................
         // "providerId": "Soy proveedor",
@@ -303,24 +303,24 @@ const SignUp = props => {
         // "country": "Colombinisimo",
         // "cellphone": "3112983636"
 
-        "providerId": formState.values.userName,
-        "firstName": formState.values.firstName,
-        "secondName": formState.values.lastName,
-        "localAirport": "Aeropuerto internacional Jonathan Brando",
-        "bankAccount": numeroAleatorio(45000000, 60000000),
-        "yearsExperience": numeroAleatorio(1, 20),
-        "updateDate": new Date(),
-        "email": formState.values.email,
-        "address": formState.values.address,
-        "city": "Bogota",
-        "stateProvinceRegion": "Cundinamarca",
-        "postalCode": numeroAleatorio(10000,99000),
-        "country": formState.values.country,
-        "cellphone": formState.values.cellphone
+        'providerId': formState.values.userName,
+        'firstName': formState.values.firstName,
+        'secondName': formState.values.lastName,
+        'localAirport': 'Aeropuerto internacional Jonathan Brando',
+        'bankAccount': numeroAleatorio(45000000, 60000000),
+        'yearsExperience': numeroAleatorio(1, 20),
+        'updateDate': new Date(),
+        'email': formState.values.email,
+        'address': formState.values.address,
+        'city': 'Bogota',
+        'stateProvinceRegion': 'Cundinamarca',
+        'postalCode': numeroAleatorio(10000,99000),
+        'country': formState.values.country,
+        'cellphone': formState.values.cellphone
       }
  
-      console.log("envio..." + data)
-      const res = await API.provider.insertProvider(data);
+      console.log('envio...' + data)
+      const res = await API.users.createProvider(data);
     }
     history.push('/sign-in');
   };
@@ -357,13 +357,13 @@ const SignUp = props => {
                   variant="h2"
                 >
                   Create new account
-		        </Typography>
+  		          </Typography>
                 <Typography
                   color="textSecondary"
                   gutterBottom
                 >
                   Use your email to create new account
-	                </Typography>
+	              </Typography>
               </Grid>
               <Grid
                 item
@@ -540,12 +540,15 @@ const SignUp = props => {
                   label="Select your rol"
                   name="rol"
                   onChange={handleChange}
+                  select
                   value={formState.values.rol || ''}
                   variant="outlined"
-                  select
                 >
                   {currencies.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.label}
                     </MenuItem>
                   ))}
@@ -573,7 +576,7 @@ const SignUp = props => {
                     variant="h6"
                   >
                     Terms and Conditions
-                    </Link>
+                  </Link>
                 </Typography>
               </div>
               {hasError('policy') && (
@@ -591,7 +594,7 @@ const SignUp = props => {
                 variant="contained"
               >
                 Sign up now
-                </Button>
+              </Button>
               <Typography
                 color="textSecondary"
                 variant="body1"
@@ -603,7 +606,7 @@ const SignUp = props => {
                   variant="h6"
                 >
                   Sign in
-                  </Link>
+                </Link>
               </Typography>
 
             </Grid>

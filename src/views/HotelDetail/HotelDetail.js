@@ -12,7 +12,7 @@ import CommentSection from '../../components/CommentSection';
 
 import { HotelDetailToolbar} from './components';
 import mockData from './data';
-import { API }  from 'HTTPRequests';
+import { API }  from 'API';
 
 const useStyles = makeStyles(theme => ({
   root: {

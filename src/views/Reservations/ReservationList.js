@@ -5,7 +5,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ReservationsToolbar, ReservationCard } from './components';
 import {UserContext} from '../../contexts/UserContext';
-import {API} from '../../HTTPRequests';
+import {API} from '../../API';
 
 const useStyles = makeStyles(theme => ({
   root: {

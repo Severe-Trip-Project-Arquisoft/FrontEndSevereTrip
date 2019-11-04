@@ -69,9 +69,9 @@ const CarCard = props => {
         </div>
         <Typography
           align="center"
-          variant="h4"
           component={CustomRouterLink}
           to="/carDetail"
+          variant="h4"
         >
           {car.name}
         </Typography>
@@ -119,8 +119,8 @@ const CarCard = props => {
 };
 
 CarCard.propTypes = {
-  className: PropTypes.string,
-  car: PropTypes.object.isRequired
+  car: PropTypes.object.isRequired,
+  className: PropTypes.string
 };
 
 export default CarCard;

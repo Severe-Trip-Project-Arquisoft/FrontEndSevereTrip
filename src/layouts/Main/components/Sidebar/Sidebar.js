@@ -11,7 +11,7 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublicIcon from '@material-ui/icons/Public';
 import { Profile, SidebarNav } from './components';
-import {UserContext} from "../../../../contexts/UserContext";
+import {UserContext} from '../../../../contexts/UserContext';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -70,17 +70,17 @@ const Sidebar = props => {
     }
   ];
 
-if(user.logged)
-  pages.push({
-    title: 'Favorites',
+  if(user.logged)
+    pages.push({
+      title: 'Favorites',
       href: '/favorites',
-    icon: <FavoriteIcon />
-  },
-  {
-    title: 'Reservations',
+      icon: <FavoriteIcon />
+    },
+    {
+      title: 'Reservations',
       href: '/reservations',
-    icon: <LibraryBooksIcon />
-  });
+      icon: <LibraryBooksIcon />
+    });
 
   return (
     <Drawer

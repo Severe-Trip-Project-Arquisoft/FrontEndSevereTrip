@@ -49,9 +49,9 @@ const RestaurantsToolbar = props => {
         <span className={classes.spacer} />
         <Button
           color="primary"
-          variant="contained"
           component={CustomRouterLink}
           to={RestaurantInsert}
+          variant="contained"
         >
           Add restaurant
         </Button>

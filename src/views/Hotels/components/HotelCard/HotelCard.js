@@ -68,9 +68,9 @@ const HotelCard = props => {
         </div>
         <Typography
           align="right"
+          component={CustomRouterLink}
+          to={'/hotelDetail/'+hotel.id}
           variant="h4"
-	        component={CustomRouterLink}
-          to={"/hotelDetail/"+hotel.id}
         >
           {hotel.name}
         </Typography>

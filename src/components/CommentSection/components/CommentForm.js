@@ -9,111 +9,109 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
-import {API} from 'HTTPRequests';
+import {API} from 'API';
 
 const styles = theme => ({
-    content: {
-      marginTop: theme.spacing(2)
-    }  
-  });
+  content: {
+    marginTop: theme.spacing(2)
+  }  
+});
 
 const CommentForm =  ({user, postId,classes, reload}) =>{
     
     
 
-    const [hover, setHover] = useState(1);
-    const [rating, setRating] = useState(1);
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+  const [hover, setHover] = useState(1);
+  const [rating, setRating] = useState(1);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
-    const username = user.firstName;
-    const submitComment = async ()=>{
+  const username = user.firstName;
+  const submitComment = async ()=>{
 
-            if( title && content && rating && title !== "" && content !== "" ){
-            await API.postProvider.createComment(
-                postId,
-                {
-                    title, content, rating, clientId: user.id
-                }
-            );
-
-            reload();
-            
+    if( title && content && rating && title !== '' && content !== '' ){
+      await API.postProvider.createComment(
+        postId,
+        {
+          title, content, rating, clientId: user.id
         }
+      );
 
+      reload();
+            
     }
 
+  }
 
-    return (
+
+  return (
         
-        <Card> 
-            <CardHeader
-                avatar={
-                    <Avatar aria-label="recipe" > 
-                        {username!== undefined && username!== null && username.length > 0 ? username[0] : 'A' }
-                    </Avatar>
-                }           
-                title ={
-                    <Typography variant = "h2" > 
-                        {username!== undefined && username!== null && username.length > 0 ? username : 'Anónimo' }
-                    </Typography>                                
-                }         
-            >
-    
-            </CardHeader>
-            <CardContent>
+    <Card> 
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" > 
+            {username!== undefined && username!== null && username.length > 0 ? username[0] : 'A' }
+          </Avatar>
+        }           
+        title ={
+          <Typography variant = "h2" > 
+            {username!== undefined && username!== null && username.length > 0 ? username : 'Anónimo' }
+          </Typography>                                
+        }
+      />
+      <CardContent>
   
-            <TextField
-                required
-                id="standard-required"
-                label="Requerido"
-                placeholder="Titulo"
-                className={classes.textField}
-                margin="normal"                
-                onChange= {(e)=> {  setTitle(e.target.value)  }   }
-            />
+        <TextField
+          className={classes.textField}
+          id="standard-required"
+          label="Requerido"
+          margin="normal"
+          onChange= {(e)=> {  setTitle(e.target.value)  }}
+          placeholder="Titulo"                
+          required
+        />
                   
-            <Rating
-            name="hover-side"
-            value={rating}            
-            onChangeActive={(event, newHover) => {
-              setHover(newHover);
-            }}
-            onClick = {  ()=>
-                {setRating(hover);}
-            }
-          />
+        <Rating
+          name="hover-side"
+          onChangeActive={(event, newHover) => {
+            setHover(newHover);
+          }}            
+          onClick = {()=>
+          {setRating(hover);}
+          }
+          value={rating}
+        />
         
-            <TextField
-                name = "content"
-                id="outlined-textarea"
-                label="Escribe un comentario..."
-                placeholder="Placeholder"
-                multiline
-                className={classes.textField}
-                margin="normal"
-                variant="outlined"
-                fullWidth                
-                onChange= {(e)=> {  setContent(e.target.value)  }   }
-            />  
+        <TextField
+          className={classes.textField}
+          fullWidth
+          id="outlined-textarea"
+          label="Escribe un comentario..."
+          margin="normal"
+          multiline
+          name = "content"
+          onChange= {(e)=> {  setContent(e.target.value)  }}
+          placeholder="Placeholder"                
+          variant="outlined"
+        />  
 
 
-             <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}        
-            onClick = {submitComment }    
-          >
+        <Button
+          className={classes.button}
+          color="primary"
+          onClick = {submitComment}        
+          variant="contained"
+        >
             Send
-          </Button>
+        </Button>
 
-            </CardContent>
-        </Card>
-    )
+      </CardContent>
+    </Card>
+  )
 }
 
 CommentForm.propTypes = {
-    className: PropTypes.string
+  className: PropTypes.string
 };
   
 export default withStyles(styles)(CommentForm);

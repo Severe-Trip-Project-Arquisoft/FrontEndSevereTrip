@@ -13,7 +13,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { API } from 'HTTPRequests';
+import { API } from 'API';
 import {UserContext} from '../../contexts/UserContext';
 
 const schema = {
@@ -179,12 +179,12 @@ const SignIn = props => {
     event.preventDefault();
     try{
       var res;
-      if(formState.values.rol === "client"){
-        res = await API.client.getByName(formState.values.userName);
+      if(formState.values.rol === 'client'){
+        res = await API.users.getByName(formState.values.userName);
         console.log(res);
       }
-      if(formState.values.rol === "provider"){
-        res = await API.provider.getByName(formState.values.userName);
+      if(formState.values.rol === 'provider'){
+        res = await API.users.getByName(formState.values.userName);
         console.log(res);
       }
       
@@ -247,12 +247,15 @@ const SignIn = props => {
                   label="Select your rol"
                   name="rol"
                   onChange={handleChange}
+                  select
                   value={formState.values.rol || ''}
                   variant="outlined"
-                  select
                 >
                   {currencies.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.label}
                     </MenuItem>
                   ))}

@@ -119,8 +119,7 @@ const AccountDetails = props => {
               item
               md={6}
               xs={12}
-            >
-            </Grid>
+            />
             <Grid
               item
               md={6}

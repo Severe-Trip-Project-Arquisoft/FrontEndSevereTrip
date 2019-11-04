@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { API } from 'HTTPRequests';
+import { API } from 'API';
 
 import {
   IconButton,
@@ -42,9 +42,9 @@ const useStyles = makeStyles(theme => ({
 
 const DoingReservation = (props)=>{
   const classes = useStyles();
-    const [state, setState] = useState({
-            post : [],
-            client : [],
+  const [state, setState] = useState({
+    post : [],
+    client : [],
 	    serviceName: 'El virrey',
 	    serviceType: 'hotel',
 	    clientName: 'pepito',
@@ -54,7 +54,7 @@ const DoingReservation = (props)=>{
 	    serviceStateApproved: 'false',
 	    selectedDateCheckIn: new Date('2019-09-19T06:00:00'),
 	    selectedDateCheckOut: new Date('2019-09-19T06:00:00')
-    });
+  });
 
     
   useEffect( () =>{
@@ -67,7 +67,7 @@ const DoingReservation = (props)=>{
           post: res.data
         }
       );
-      let res1 = await API.client.getById('5dacf583a0c08b00014acd1c');
+      let res1 = await API.users.getById('5dacf583a0c08b00014acd1c');
       console.log(res1.data);
       setState(
         {
@@ -86,52 +86,52 @@ const DoingReservation = (props)=>{
     }
 
     fetchReservation().then(r => console.log(r));
-    },[]
+  },[]
   );
 
 
   const {className } = props;
   const handleDateChangeCheckIn = date => {
-        setState(
-            {
-                selectedDateCheckIn: date
-            }
-        )
+    setState(
+      {
+        selectedDateCheckIn: date
+      }
+    )
   };
 
   const handleDateChangeCheckOut = date => {
-        setState(
-            {
-                selectedDateCheckOut: date
-            }
-        )
+    setState(
+      {
+        selectedDateCheckOut: date
+      }
+    )
   };
 
   const handleChange = event => {
-      setState(
-            {
+    setState(
+      {
 	      [event.target.name]: event.target.value
-            }
-        )
+      }
+    )
   };
 
   const handleSubmit = event => {
-      event.preventDefault();
-      const data = {
-        clientId: state.client.clientId,
-        providerId: state.post.providerId,
-        postId: state.post.id,
-        startTime: state.selectedDateCheckIn.toJSON(),
-        endTime: state.selectedDateCheckOut.toJSON(),
-        amount: state.serviceNumber,
-        prizePerHead: state.priceReservation,
-        paid: false,
-              approved: false
-      }
+    event.preventDefault();
+    const data = {
+      clientId: state.client.clientId,
+      providerId: state.post.providerId,
+      postId: state.post.id,
+      startTime: state.selectedDateCheckIn.toJSON(),
+      endTime: state.selectedDateCheckOut.toJSON(),
+      amount: state.serviceNumber,
+      prizePerHead: state.priceReservation,
+      paid: false,
+      approved: false
+    }
 
-      console.log('DATA',data);
-      console.log('DATE',data.startTime);
-      API.reservation.insertReservation(data);
+    console.log('DATA',data);
+    console.log('DATE',data.startTime);
+    API.reservation.insertReservation(data);
   };
 
 
@@ -206,27 +206,30 @@ const DoingReservation = (props)=>{
                     xs={12}
                   >
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid container justify="space-around">
+                      <Grid
+                        container
+                        justify="space-around"
+                      >
                         <KeyboardDatePicker
-                          margin="normal"
-                          id="date-Check-in"
-                          label="Date Check-in"
                           format="MM/dd/yyyy"
-                          value={state.selectedDateCheckIn}
-                          onChange={handleDateChangeCheckIn}
+                          id="date-Check-in"
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          label="Date Check-in"
+                          margin="normal"
+                          onChange={handleDateChangeCheckIn}
+                          value={state.selectedDateCheckIn}
                         />
                         <KeyboardTimePicker
-                          margin="normal"
                           id="time-Check-in"
-                          label="Time Check-in"
-                          value={state.selectedDateCheckIn}
-                          onChange={handleDateChangeCheckIn}
                           KeyboardButtonProps={{
                             'aria-label': 'change time',
                           }}
+                          label="Time Check-in"
+                          margin="normal"
+                          onChange={handleDateChangeCheckIn}
+                          value={state.selectedDateCheckIn}
                         />
                       </Grid>
                     </MuiPickersUtilsProvider>
@@ -238,27 +241,30 @@ const DoingReservation = (props)=>{
                     xs={12}
                   >
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid container justify="space-around">
+                      <Grid
+                        container
+                        justify="space-around"
+                      >
                         <KeyboardDatePicker
-                          margin="normal"
-                          id="date-Check-out"
-                          label="Date Check-out"
                           format="MM/dd/yyyy"
-                          value={state.selectedDateCheckOut}
-                          onChange={handleDateChangeCheckOut}
+                          id="date-Check-out"
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          label="Date Check-out"
+                          margin="normal"
+                          onChange={handleDateChangeCheckOut}
+                          value={state.selectedDateCheckOut}
                         />
                         <KeyboardTimePicker
-                          margin="normal"
                           id="time-Check-out"
-                          label="Time Check-out"
-                          value={state.selectedDateCheckOut}
-                          onChange={handleDateChangeCheckOut}
                           KeyboardButtonProps={{
                             'aria-label': 'change time',
                           }}
+                          label="Time Check-out"
+                          margin="normal"
+                          onChange={handleDateChangeCheckOut}
+                          value={state.selectedDateCheckOut}
                         />
                       </Grid>
                     </MuiPickersUtilsProvider>
@@ -336,10 +342,10 @@ const DoingReservation = (props)=>{
               <Divider />
               <CardActions>
                 <Button
-                  type="submit"
                   color="primary"
-                  variant="contained"
                   onClick={handleSubmit}
+                  type="submit"
+                  variant="contained"
                 >
                   Save Reservation
                 </Button>

@@ -49,9 +49,9 @@ const CarsToolbar = props => {
         <span className={classes.spacer} />
         <Button
           color="primary"
-          variant="contained"
           component={CustomRouterLink}
           to={CarInsert}
+          variant="contained"
         >
           Add car
         </Button>

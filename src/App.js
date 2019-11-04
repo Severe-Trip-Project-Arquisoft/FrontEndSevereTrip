@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
 import validate from 'validate.js';
 import validators from './common/validators';
-import {UserContext} from "./contexts/UserContext";
+import {UserContext} from './contexts/UserContext';
 
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -27,24 +27,24 @@ validate.validators = {
   ...validators
 };
 
- const App = ()=> {
+const App = ()=> {
 
-   const [user, setUser] = useState({
-     logged: false
-   });
-   const globalUser = useMemo( () => ({user, setUser}), [user, setUser]);
+  const [user, setUser] = useState({
+    logged: false
+  });
+  const globalUser = useMemo( () => ({user, setUser}), [user, setUser]);
 
 
-    return (
-      <UserContext.Provider value = {globalUser}>
-        <ThemeProvider theme={theme}>
-          <Router history={browserHistory}>
-            <Routes />
-          </Router>
-        </ThemeProvider>
-      </UserContext.Provider>
+  return (
+    <UserContext.Provider value = {globalUser}>
+      <ThemeProvider theme={theme}>
+        <Router history={browserHistory}>
+          <Routes />
+        </Router>
+      </ThemeProvider>
+    </UserContext.Provider>
 
-    );
+  );
 
 }
 

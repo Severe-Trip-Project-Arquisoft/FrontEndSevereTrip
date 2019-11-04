@@ -50,17 +50,17 @@ const CarsToolbar = props => {
         <span className={classes.spacer} />
         <Button
           color="primary"
-          variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={DeleteCar}
+          variant="contained"
         >
           Delete car
         </Button>
-	<Button
+        <Button
           color="primary"
-          variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={Reservation}
+          variant="contained"
         >
           Reserve
         </Button>

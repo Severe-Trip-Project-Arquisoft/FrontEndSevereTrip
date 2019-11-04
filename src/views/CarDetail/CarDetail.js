@@ -57,121 +57,126 @@ const CarDetail = () => {
       <CarDetailToolbar />
       <div className={classes.content}>
 
-    <Card
-      className={classes.root}
-    >
-      <CardContent>
-	<div className={classes.imageContainer}>
-          <img
-            alt="Car 1"
-            className={classes.image}
-            src={car.imageUrl}
-          />
-        </div>
-        <Typography
-          align="center"
-          variant="h4"
+        <Card
+          className={classes.root}
         >
-          {car.title}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {car.description}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {car.city} - {car.country}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {car.address}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {car.email}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {car.phone}
-        </Typography>
-        <Typography
-          align="center"
-          variant="h5"
-        >
+          <CardContent>
+            <div className={classes.imageContainer}>
+              <img
+                alt="Car 1"
+                className={classes.image}
+                src={car.imageUrl}
+              />
+            </div>
+            <Typography
+              align="center"
+              variant="h4"
+            >
+              {car.title}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {car.description}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {car.city} - {car.country}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {car.address}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {car.email}
+            </Typography>
+            <Typography
+              align="center"
+              variant="body1"
+            >
+              {car.phone}
+            </Typography>
+            <Typography
+              align="center"
+              variant="h5"
+            >
           Precio del carro {car.price}
-        </Typography>
-      </CardContent>
+            </Typography>
+          </CardContent>
 
 
 
           <div className={classes.demo}>
 
 
-              {car.adiciones.map( (add, index) => (
-            <Grid  key = {index} item xs={12} md={6}>
+            {car.adiciones.map( (add, index) => (
+              <Grid
+                item
+                key = {index}
+                md={6}
+                xs={12}
+              >
                 <ListItem>
                   <ListItemIcon>
                     <RadioButtonCheckedIcon />
                   </ListItemIcon>
-			<Typography
-          			align="center"
-			        variant="body1"
-		        >
+                  <Typography
+                    align="center"
+                    variant="body1"
+                  >
 		          {add.tx}
 		        </Typography>
 
                 </ListItem>
-            </Grid>
-              ))}
+              </Grid>
+            ))}
 
           </div>
 
 
 
 
-      <Divider />
-	<CardActions>
-        <Grid
-          container
-          justify="space-between"
-        >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <AccessTimeIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
+          <Divider />
+          <CardActions>
+            <Grid
+              container
+              justify="space-between"
             >
+              <Grid
+                className={classes.statsItem}
+                item
+              >
+                <AccessTimeIcon className={classes.statsIcon} />
+                <Typography
+                  display="inline"
+                  variant="body2"
+                >
               Updated 2hr ago
-            </Typography>
-          </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <StarIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-          >
-              {car.calification}
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardActions>
-    </Card>
+                </Typography>
+              </Grid>
+              <Grid
+                className={classes.statsItem}
+                item
+              >
+                <StarIcon className={classes.statsIcon} />
+                <Typography
+                  display="inline"
+                  variant="body2"
+                >
+                  {car.calification}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardActions>
+        </Card>
 
 
 

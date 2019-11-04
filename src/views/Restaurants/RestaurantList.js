@@ -5,7 +5,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { RestaurantsToolbar } from './components';
 import {PostCard} from '../PostList/components';
-import {API} from 'HTTPRequests'
+import {API} from 'API'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +32,7 @@ const RestaurantList = () => {
 
   useEffect( () => {   
     async function cargarDatos () {
-      const rensponse = await API.postProvider.getByType("restaurant")
+      const rensponse = await API.postProvider.getByType('restaurant')
         .catch(err => console.log(err));
       setState({
         isDataLoaded: true,

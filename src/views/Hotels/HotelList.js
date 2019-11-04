@@ -6,7 +6,7 @@ import { HotelsToolbar } from './components';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CircularProgress from '@material-ui/core/CircularProgress'
-import {API} from 'HTTPRequests'
+import {API} from 'API'
 import {PostCard} from '../PostList/components';
 
 

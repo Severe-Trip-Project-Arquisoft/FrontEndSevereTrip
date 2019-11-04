@@ -51,9 +51,9 @@ const FlightsToolbar = props => {
         <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
-          variant="contained"
           component={CustomRouterLink}
           to={FlightInsert}
+          variant="contained"
         >
           Add flight
         </Button>

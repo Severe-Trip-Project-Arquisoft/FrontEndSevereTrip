@@ -37,9 +37,9 @@ const ReservationsToolbar = props => {
         <span className={classes.spacer} />
         <Button
           color="primary"
-          variant="contained"
-          component={ RouterLink }
+          component={RouterLink}
           to="/doingReservations"
+          variant="contained"
         >
           Add reservation
         </Button>

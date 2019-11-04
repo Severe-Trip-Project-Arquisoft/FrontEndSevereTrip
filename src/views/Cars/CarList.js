@@ -4,7 +4,7 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import { CarsToolbar } from './components';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {API} from 'HTTPRequests'
+import {API} from 'API'
 import {PostCard} from '../PostList/components';
 
 
@@ -33,7 +33,7 @@ const CarList = () => {
 
   useEffect( () => {   
     async function cargarDatos () {
-      const rensponse = await API.postProvider.getByType("rentCar")
+      const rensponse = await API.postProvider.getByType('rentCar')
         .catch(err => console.log(err));
       setState({
         isDataLoaded: true,

@@ -5,7 +5,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { UserContext }  from '../../contexts/UserContext';
 import { PostCard } from './components';
-import { API }  from 'HTTPRequests';
+import { API }  from 'API';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,8 +44,9 @@ const PostList = () => {
         for (let postId in res.data) {
           favorites[postId] = false;
         }
-
-        let resF = await API.favorites.getById(user.id);
+        let resF = [];
+        if(user.rol === 'client')
+          resF = await API.favorites.getById(user.id);
         for (let fav in resF.data) {
           favorites[fav.postId] = true;
         }

@@ -1,8 +1,8 @@
 import uuid from 'uuid/v1';
 export default
-  {
-    title: 'Car 1',
-    description:
+{
+  title: 'Car 1',
+  description:
       `Información importante
     DOCUMENTACIÓN
     Necesaria
@@ -35,18 +35,18 @@ export default
     KILOMETRAJE
     Ilimitado
     Este alquiler incluye kilómetro ilimitado gratis.`,
-    imageUrl: '/images/cars/car3.png',
-    city:'Bogota',
-    country:'Colombia',
-    price:'366.855,89',
-    calification: '4.7',
-    createdAt: '25/06/2019',
-    address:'carrera 40 # 20',
-    email:'car@carino.com',
-    phone:'3000001212',
-    adiciones:[
-	{id: uuid(),tx:'Theft Protection'},
-	{id: uuid(),tx:'Air Conditioning'},
-	{id: uuid(),tx:'Automatic gearbox'}
-	]
-  };
+  imageUrl: '/images/cars/car3.png',
+  city:'Bogota',
+  country:'Colombia',
+  price:'366.855,89',
+  calification: '4.7',
+  createdAt: '25/06/2019',
+  address:'carrera 40 # 20',
+  email:'car@carino.com',
+  phone:'3000001212',
+  adiciones:[
+    {id: uuid(),tx:'Theft Protection'},
+    {id: uuid(),tx:'Air Conditioning'},
+    {id: uuid(),tx:'Automatic gearbox'}
+  ]
+};

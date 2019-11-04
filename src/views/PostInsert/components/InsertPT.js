@@ -13,7 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import { API } from 'HTTPRequests';
+import { API } from 'API';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {useParams, useHistory } from 'react-router-dom';
@@ -28,7 +28,7 @@ const InsertPT = props => {
   const { className, ...rest } = props;
 
   const {postType} = useParams();
-  var titleCard ="Insert a new "+postType.toString();
+  var titleCard ='Insert a new '+postType.toString();
 
   let history = useHistory();
 
@@ -138,97 +138,97 @@ const InsertPT = props => {
   var auxTagType =  [];
 
   for (var i = 0; i < lTag.length; i++) {
-	if(lTag[i][0].includes(postType)){
-		var tag = [lTag[i][0],lTag[i][1],i];
-		auxTagType.push(tag);
-	}
+    if(lTag[i][0].includes(postType)){
+      var tag = [lTag[i][0],lTag[i][1],i];
+      auxTagType.push(tag);
+    }
   } 
 
   var tagDesciption =[
-    "Free parking",
-    "Restaurant",
-    "Business Center Internet Access",
-    "Breakfast Available",
-    "Laundry Service",
-    "Conference Facilities",
-    "Meeting Rooms",
-    "Internet",
-    "Free Internet",
-    "Non Smoking Rooms",
-    "Suites",
-    "Rooms Families",
-    "Room Service",
-    "SafeBox",
-    "Flat Screen TV",
-    "Chinese Food",
-    "Italian food",
-    "Indian food",
-    "French food",
-    "Thailand food",
-    "Spain food",
-    "American food",
-    "Mexico food",
-    "Middle Eastern food",
-    "Australia food",
-    "Argentine food",
-    "Peru food",
-    "Colombian food",
-    "Russia food",
-    "European food",
-    "Contemporary food",
-    "Mediterranean Food",
-    "Local food",
-    "Vegan Food Options",
-    "Food Gluten Free Options",
-    "free parking",
-    "Serve alcohol",
-    "Accept Digital Payments",
-    "Private Events",
-    "First class",
-    "Executive class",
-    "Premium Economy Class",
-    "Tourist class",
-    "Aerolineas Argentinas",
-    "Aeroméxico",
-    "Air Canada",
-    "Air Europa",
-    "Air France",
-    "American Airlines",
-    "Avianca",
-    "Avior Airlines",
-    "Conviasa",
-    "Copa Airlines",
-    "Cubana",
-    "Delta",
-    "Iberia",
-    "Interjet",
-    "JetBlue",
-    "KLM",
-    "LATAM",
-    "Lufthansa",
-    "Spirit",
-    "Turkish Airlines",
-    "United Airlines",
-    "Viva Air",
-    "Wingo",
-    "EasyFly",
-    "Satena",
-    "5 seats",
-    "4 doors",
-    "1 large suitcase",
-    "1 small suitcase",
-    "Air conditioning",
-    "Manual transmission",
-    "Automatic transmission",
-    "Fuel Policy Full / Full",
-    "Fuel Policy Full / Empty",
-    "Fuel policy Empty / Empty",
-    "Cancellation",
-    "Changes in the reservation",
-    "Coverage in case of theft",
-    "Partial Collision Coverage (CDW)",
-    "Unlimited mileage",
-    "Meet & Greet at local airport"
+    'Free parking',
+    'Restaurant',
+    'Business Center Internet Access',
+    'Breakfast Available',
+    'Laundry Service',
+    'Conference Facilities',
+    'Meeting Rooms',
+    'Internet',
+    'Free Internet',
+    'Non Smoking Rooms',
+    'Suites',
+    'Rooms Families',
+    'Room Service',
+    'SafeBox',
+    'Flat Screen TV',
+    'Chinese Food',
+    'Italian food',
+    'Indian food',
+    'French food',
+    'Thailand food',
+    'Spain food',
+    'American food',
+    'Mexico food',
+    'Middle Eastern food',
+    'Australia food',
+    'Argentine food',
+    'Peru food',
+    'Colombian food',
+    'Russia food',
+    'European food',
+    'Contemporary food',
+    'Mediterranean Food',
+    'Local food',
+    'Vegan Food Options',
+    'Food Gluten Free Options',
+    'free parking',
+    'Serve alcohol',
+    'Accept Digital Payments',
+    'Private Events',
+    'First class',
+    'Executive class',
+    'Premium Economy Class',
+    'Tourist class',
+    'Aerolineas Argentinas',
+    'Aeroméxico',
+    'Air Canada',
+    'Air Europa',
+    'Air France',
+    'American Airlines',
+    'Avianca',
+    'Avior Airlines',
+    'Conviasa',
+    'Copa Airlines',
+    'Cubana',
+    'Delta',
+    'Iberia',
+    'Interjet',
+    'JetBlue',
+    'KLM',
+    'LATAM',
+    'Lufthansa',
+    'Spirit',
+    'Turkish Airlines',
+    'United Airlines',
+    'Viva Air',
+    'Wingo',
+    'EasyFly',
+    'Satena',
+    '5 seats',
+    '4 doors',
+    '1 large suitcase',
+    '1 small suitcase',
+    'Air conditioning',
+    'Manual transmission',
+    'Automatic transmission',
+    'Fuel Policy Full / Full',
+    'Fuel Policy Full / Empty',
+    'Fuel policy Empty / Empty',
+    'Cancellation',
+    'Changes in the reservation',
+    'Coverage in case of theft',
+    'Partial Collision Coverage (CDW)',
+    'Unlimited mileage',
+    'Meet & Greet at local airport'
   ];
 
   const handleChange = event => {
@@ -242,43 +242,43 @@ const InsertPT = props => {
 
 
   const handleSubmit = event => {
-        event.preventDefault();
+    event.preventDefault();
 
 
 
-	var arraytags =  [];
+    var arraytags =  [];
 
-	for (var i = 0; i < lTag.length; i++) {
-		if(lTag[i][1]){
-			var tag = {
-			description : tagDesciption[i],
-			name : lTag[i][0]
-			}
-			arraytags.push(tag);
-		}
-	}
+    for (var i = 0; i < lTag.length; i++) {
+      if(lTag[i][1]){
+        var tag = {
+          description : tagDesciption[i],
+          name : lTag[i][0]
+        }
+        arraytags.push(tag);
+      }
+    }
 
-	var data = {
-		providerId: "0123558",
-		name: values.serviceName,
-		serviceType: postType,
-		address: values.address,
-		postalCode: values.postalCode,
-		city: values.city,
-		telephone: values.phone,
-		latitude: values.latitude,
+    var data = {
+      providerId: '0123558',
+      name: values.serviceName,
+      serviceType: postType,
+      address: values.address,
+      postalCode: values.postalCode,
+      city: values.city,
+      telephone: values.phone,
+      latitude: values.latitude,
 	        longitude: values.longitude,
-		description: values.description,
-		commentIds: [],
-		price: values.price,
-		tags:arraytags
-	}
+      description: values.description,
+      commentIds: [],
+      price: values.price,
+      tags:arraytags
+    }
 
-//	    var dataPost = JSON.stringify(data);
-//      console.log('DATA I ',data.telephone);
-//      console.log('form submission data',data);
-      API.postProvider.createPost(data);
-      history.push("/posts");
+    //	    var dataPost = JSON.stringify(data);
+    //      console.log('DATA I ',data.telephone);
+    //      console.log('form submission data',data);
+    API.postProvider.createPost(data);
+    history.push('/posts');
   }
 
   return (
@@ -306,7 +306,7 @@ const InsertPT = props => {
           >
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -322,7 +322,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -338,7 +338,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -347,15 +347,15 @@ const InsertPT = props => {
                 margin="dense"
                 name="latitude"
                 onChange={handleChange}
+                required
                 type="number"
-		required
                 value={values.latitude}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -364,15 +364,15 @@ const InsertPT = props => {
                 margin="dense"
                 name="longitude"
                 onChange={handleChange}
+                required
                 type="number"
-		required
                 value={values.longitude}
                 variant="outlined"
               />
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -388,7 +388,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -404,7 +404,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -420,7 +420,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -436,7 +436,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -452,7 +452,7 @@ const InsertPT = props => {
             </Grid>
             <Grid
               item
-	      md={6}
+              md={6}
               xs={12}
             >
               <TextField
@@ -468,9 +468,9 @@ const InsertPT = props => {
             </Grid>
 	    <Grid
               item
-	      md={12}
+              md={12}
               xs={12}
-            >
+	    >
               <TextField
                 fullWidth
                 label="Description"
@@ -498,41 +498,41 @@ const InsertPT = props => {
 
 
 
-                  {auxTagType.map((post, index) => (
+            {auxTagType.map((post, index) => (
 
 			    <Grid
-			      item
-			      md={4}
-			      sm={6}
-			      xs={12}
+                item
+                md={4}
+                sm={6}
+                xs={12}
 			    >
 
-				<FormControlLabel
-				    control={<Checkbox
-					name={auxTagType[index][0]}
-					onChange={handleChange}
-					/>}
-				  />
+                <FormControlLabel
+                  control={<Checkbox
+                    name={auxTagType[index][0]}
+                    onChange={handleChange}
+                  />}
+                />
 
-				<label>
+                <label>
 				    {tagDesciption[auxTagType[index][2]]}
-				</label>
+                </label>
 
 			    </Grid>
 
 
 
-                  ))}
+            ))}
 
           </Grid>
         </CardContent>
         <Divider />
         <CardActions>
           <Button
-	    type="submit"
             color="primary"
+            onClick={handleSubmit}
+            type="submit"
             variant="contained"
-	    onClick={handleSubmit}
           >
             Save Post
           </Button>
