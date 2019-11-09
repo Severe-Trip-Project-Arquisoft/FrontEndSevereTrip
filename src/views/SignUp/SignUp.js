@@ -269,20 +269,23 @@ const SignUp = props => {
         // "country": "Colombinisimo",
         // "cellphone": "3112983636"
 
-        'clientId': formState.values.userName,
-        'firstName': formState.values.firstName,
-        'secondName': formState.values.lastName,
-        'localAirport': 'Aeropuerto internacional Jonathan Brando',
-        'email': formState.values.email,
-        'address': formState.values.address,
-        'city': 'Bogota',
-        'stateProvinceRegion': 'Cundinamarca',
-        'postalCode': '11001',
-        'country': formState.values.country,
-        'cellphone': formState.values.cellphone
+	username: formState.values.userName,
+        firstName: formState.values.firstName,
+        secondName: formState.values.lastName,
+        email: formState.values.email,
+        address: formState.values.address,
+        city: "Bogota",
+        country: formState.values.country,
+        cellphone: formState.values.cellphone,
+        rol: "provider",
+        creationTime: (new Date()).toJSON(),
+        localAirport: "Aeropuerto internacional Jonathan Brando",
+        stateProvinceRegion: "Cundinamarca",
+        postalCode: "11001",
+        favorites: []
       }
       
-      console.log('envio...' + data)
+      console.log('envio...', data)
       await API.users.createClient(data);
     }
     if (formState.values.rol === 'provider') {
@@ -303,23 +306,29 @@ const SignUp = props => {
         // "country": "Colombinisimo",
         // "cellphone": "3112983636"
 
-        'providerId': formState.values.userName,
-        'firstName': formState.values.firstName,
-        'secondName': formState.values.lastName,
-        'localAirport': 'Aeropuerto internacional Jonathan Brando',
-        'bankAccount': numeroAleatorio(45000000, 60000000),
-        'yearsExperience': numeroAleatorio(1, 20),
-        'updateDate': new Date(),
-        'email': formState.values.email,
-        'address': formState.values.address,
-        'city': 'Bogota',
-        'stateProvinceRegion': 'Cundinamarca',
-        'postalCode': numeroAleatorio(10000,99000),
-        'country': formState.values.country,
-        'cellphone': formState.values.cellphone
+	username: formState.values.userName,
+        firstName: formState.values.firstName,
+        secondName: formState.values.lastName,
+        email: formState.values.email,
+        address: formState.values.address,
+        city: "Bogota",
+        country: formState.values.country,
+        cellphone: formState.values.cellphone,
+        rol: "provider",
+        creationTime: (new Date()).toJSON(),
+        localAirport: "Aeropuerto internacional Jonathan Brando",
+        stateProvinceRegion: "Cundinamarca",
+        postalCode: "11001",
+        favorites: []
+
+
+//        bankAccount: numeroAleatorio(45000000, 60000000),
+//        yearsExperience: numeroAleatorio(1, 20),
+//        stateProvinceRegion: 'Cundinamarca',
+//        postalCode: numeroAleatorio(10000,99000)
       }
  
-      console.log('envio...' + data)
+      console.log('envio...',data)
       const res = await API.users.createProvider(data);
     }
     history.push('/sign-in');
