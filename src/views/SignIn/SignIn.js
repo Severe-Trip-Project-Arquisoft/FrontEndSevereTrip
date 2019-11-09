@@ -13,11 +13,17 @@ import {
   MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { API } from 'API';
-import {UserContext} from '../../contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
+import AuthService from '../AuthService/AuthService';
 
 const schema = {
   userName: {
+    presence: { allowEmpty: false, message: 'is required' },
+    length: {
+      maximum: 64
+    }
+  },
+  password: {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
       maximum: 64
@@ -135,7 +141,7 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = props => {
   const { history } = props;
-  const {user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
@@ -159,14 +165,14 @@ const SignIn = props => {
   };
 
   const handleChange = event => {
-    event.persist();
+    event.persist();    
 
     setFormState(formState => ({
       ...formState,
       values: {
         ...formState.values,
         [event.target.name]:
-            event.target.value
+          event.target.value
       },
       touched: {
         ...formState.touched,
@@ -177,33 +183,28 @@ const SignIn = props => {
 
   const handleSignIn = async event => {
     event.preventDefault();
-    try{
-      var res;
-      if(formState.values.rol === 'client'){
-        res = await API.users.getByName(formState.values.userName);
+      const credentials = {username: formState.values.userName, password: formState.values.password};     
+      AuthService.login(credentials).then(res => {
         console.log(res);
-      }
-      if(formState.values.rol === 'provider'){
-        res = await API.users.getByName(formState.values.userName);
-        console.log(res);
-      }
-      
-      if (res.status === 200){
-        history.push('/posts');
-        if(!user.logged) {
-          setUser({
-            ...user,
-            ...res.data,
-            logged: true,
-            rol: formState.values.rol[0].toUpperCase() + formState.values.rol.slice(1)
-          });
+        
+        if(res.status === 200){          
+            sessionStorage.setItem("userInfo", JSON.stringify(res.headers.authorization));
+            console.log(sessionStorage.getItem("userInfo"));
+            history.push('/posts');
+            if (!user.logged) {
+              setUser({
+                ...user,
+                ...res.data,
+                logged: true,
+                rol: formState.values.rol[0].toUpperCase() + formState.values.rol.slice(1)
+              });
+            }
+
+        }else {
+            this.setState({message: res.data.message});
+            history.push('/sign-up');
         }
-      }else if( res.status === 204){
-        history.push('/sign-up');
-      }
-    } catch(e){
-      console.error(e);
-    }
+    });
   };
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
@@ -272,6 +273,20 @@ const SignIn = props => {
                   onChange={handleChange}
                   type="text"
                   value={formState.values.userName || ''}
+                  variant="outlined"
+                />
+                <TextField
+                  className={classes.textField}
+                  error={hasError('password')}
+                  fullWidth
+                  helperText={
+                    hasError('password') ? formState.errors.password[0] : null
+                  }
+                  label="Password"
+                  name="password"
+                  onChange={handleChange}
+                  type="password"
+                  value={formState.values.password || ''}
                   variant="outlined"
                 />
                 <Button
