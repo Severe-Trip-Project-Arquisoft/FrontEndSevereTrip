@@ -241,7 +241,6 @@ const SignUp = props => {
   //   })
   // }
 
-  console.log(formState.values);
 
   const handleBack = () => {
     history.goBack();
@@ -256,80 +255,46 @@ const SignUp = props => {
     var data;
     if (formState.values.rol === 'client') {
       data = {
-        // datos de prueba.................
-        // "clientId": "Soy cliente",
-        // "firstName": "Jonathan",
-        // "secondName": "Castel",
-        // "localAirport": "Aeropuerto internacional Jonathan Brando",
-        // "email": "prov@funciona.com",
-        // "address": "Cll del cielo",
-        // "city": "Bogota",
-        // "stateProvinceRegion": "Cundinamarca",
-        // "postalCode": numeroAleatorio(10000, 99000),
-        // "country": "Colombinisimo",
-        // "cellphone": "3112983636"
 
 	username: formState.values.userName,
         firstName: formState.values.firstName,
         secondName: formState.values.lastName,
+        localAirport: "Aeropuerto internacional Jonathan Brando",
         email: formState.values.email,
         address: formState.values.address,
         city: "Bogota",
-        country: formState.values.country,
-        cellphone: formState.values.cellphone,
-        rol: "provider",
-        creationTime: (new Date()).toJSON(),
-        localAirport: "Aeropuerto internacional Jonathan Brando",
         stateProvinceRegion: "Cundinamarca",
         postalCode: "11001",
+        country: formState.values.country,
+        cellphone: formState.values.cellphone,
+	password: formState.values.password,
         favorites: []
       }
       
-      console.log('envio...', data)
-      await API.users.createClient(data);
+      console.log('envio cliente...', data)
+      const res = await API.users.createClient(data);
+      console.log('respuesta creaci0n cliente...', res)
     }
     if (formState.values.rol === 'provider') {
       data = {
-        // datos de prueba.................
-        // "providerId": "Soy proveedor",
-        // "firstName": "Jonathan",
-        // "secondName": "Castel",
-        // "localAirport": "Aeropuerto internacional Jonathan Brando",
-        // "bankAccount": numeroAleatorio(45000000, 60000000),
-        // "yearsExperience": numeroAleatorio(1, 20),
-        // "updateDate": new Date(),
-        // "email": "prov@funciona.com",
-        // "address": "Cll del cielo",
-        // "city": "Bogota",
-        // "stateProvinceRegion": "Cundinamarca",
-        // "postalCode": numeroAleatorio(10000, 99000),
-        // "country": "Colombinisimo",
-        // "cellphone": "3112983636"
-
 	username: formState.values.userName,
         firstName: formState.values.firstName,
         secondName: formState.values.lastName,
+	yearsExperience: numeroAleatorio(1, 20),
+	bankAccount: numeroAleatorio(45000000, 60000000),
+	updateDate: (new Date()).toJSON(),
         email: formState.values.email,
         address: formState.values.address,
-        city: "Bogota",
         country: formState.values.country,
+        city: "Bogota",
         cellphone: formState.values.cellphone,
-        rol: "provider",
-        creationTime: (new Date()).toJSON(),
-        localAirport: "Aeropuerto internacional Jonathan Brando",
-        stateProvinceRegion: "Cundinamarca",
-        postalCode: "11001",
-        favorites: []
+	password: formState.values.password
 
-
-//        bankAccount: numeroAleatorio(45000000, 60000000),
-//        yearsExperience: numeroAleatorio(1, 20),
-//        stateProvinceRegion: 'Cundinamarca',
-//        postalCode: numeroAleatorio(10000,99000)
       }
  
-      console.log('envio...',data)
+      console.log('envio proveedor...',data)
       const res = await API.users.createProvider(data);
+      console.log('respuesta creacion proveedor...', res)
     }
     history.push('/sign-in');
   };

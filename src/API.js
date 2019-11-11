@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const base_url = 'http://52.5.42.71:8080';
+//const base_url = 'http://52.5.42.71:8080';
+const base_url = 'https://localhost:8443';
 export const API =
 {
   postProvider:{
