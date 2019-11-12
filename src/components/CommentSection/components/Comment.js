@@ -30,11 +30,11 @@ const Comment = props =>{
   useEffect(
     () =>{
       const fetchData = async ()=>{
-        const res = await API.users.getById(comment.clientId);
+        const res = await API.users.getById(comment.clientid);
         console.log(res);
         if(res.status === 200){
           setUser( 
-            {   username : res.data.clientId , loaded: true } 
+            {   username : res.data.username , loaded: true }
           );
         }
                 

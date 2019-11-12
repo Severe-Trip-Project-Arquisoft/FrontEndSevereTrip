@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'API';
-import { UserContext } from '../../contexts/UserContext';
 
 const schema = {
   firstName: {
@@ -179,7 +178,6 @@ const SignUp = props => {
 
   const classes = useStyles();
 
-  //const { user, setUser } = useContext(UserContext);
 
   const [formState, setFormState] = useState({
     isValid: false,

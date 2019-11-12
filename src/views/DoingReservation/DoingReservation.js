@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { API } from 'API';
+
 import {UserContext} from '../../contexts/UserContext'
 import {useParams } from 'react-router-dom';
 
@@ -43,6 +44,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const DoingReservation = (props)=>{
+
+  const {user, setUser} = useContext(UserContext);
   const classes = useStyles();
   const {user} = useContext(UserContext);
   const {postId} = useParams();
@@ -71,7 +74,8 @@ const DoingReservation = (props)=>{
           post: res.data
         }
       );
-      let res1 = await API.users.getById(user.id);
+
+      let res1 = await API.users.getById('user.id');
       console.log(res1.data);
       setState(
         {
