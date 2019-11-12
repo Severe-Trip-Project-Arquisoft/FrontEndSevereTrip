@@ -29,6 +29,7 @@ const Comment = props =>{
 
   useEffect(
     () =>{
+	if(user.logged){
       const fetchData = async ()=>{
         const res = await API.users.getById(comment.clientid);
         console.log(res);
@@ -40,7 +41,7 @@ const Comment = props =>{
                 
       }   
       fetchData();
-
+     }
 
     }
 
