@@ -1,7 +1,14 @@
 import axios from 'axios';
 
-//const base_url = 'http://52.5.42.71:8080';
-const base_url = 'https://localhost:8443';
+const base_url = 'http://52.5.42.71:8080';
+// const base_url = 'http://localhost:8443';
+
+const APIheaders = {
+  headers: {
+    'authorization': sessionStorage.getItem("userInfo")
+  }
+}
+
 export const API =
 {
   postProvider:{
@@ -9,7 +16,7 @@ export const API =
     getAll: async ()=>{
       const url = base_url + '/posts/';
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -17,7 +24,7 @@ export const API =
 
       const url = base_url + '/posts/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -25,7 +32,7 @@ export const API =
 
       const url = base_url + '/posts/type/' + type;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getByProvider: async (providerId)=>{
@@ -33,7 +40,7 @@ export const API =
       const url = base_url + '/posts/provider/' + providerId;
 
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getByIdList: async (ids)=>{
@@ -43,7 +50,7 @@ export const API =
         url+= ',' + ids[id]
       }
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     //POST
@@ -51,7 +58,7 @@ export const API =
 
       const url = base_url + '/posts/';
       return await axios.post(
-        url, {...postRequest}
+        url, {...postRequest}, APIheaders
       ).catch(e => console.log('Error: ', e));
 
 
@@ -61,7 +68,7 @@ export const API =
 
       const url = base_url + '/posts/';
       return await axios.put(
-        url, {...postRequest}
+        url, {...postRequest}, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -70,7 +77,7 @@ export const API =
 
       const url = base_url + '/posts/' + postId;
       return await axios.delete(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -78,7 +85,7 @@ export const API =
 
       const url = base_url + '/comments/' + postId;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
 
@@ -87,7 +94,7 @@ export const API =
 
       const url = base_url + '/comments/' + postId;
       return await axios.put(
-        url, {...commentRequest}
+        url, {...commentRequest}, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -95,7 +102,7 @@ export const API =
 
       let url = base_url + '/comments/?postId=' + postId + '&commentId=' + commentId;
       return await axios.delete(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     }
   },
@@ -105,7 +112,7 @@ export const API =
 
       let url = base_url + '/users/';
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -113,7 +120,7 @@ export const API =
 
       let url = base_url + '/users/all/';
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -121,21 +128,23 @@ export const API =
 
       const url = base_url + '/users/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getAvailability: async (username)=>{
 
       const url = base_url + '/users/available/' + username;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getByName: async (username)=>{
 
       const url = base_url + '/users/username/' + username;
       let res;
-      res = await axios.get(url).catch( e=> {res = e.response});
+      res = await axios.get(
+        url, APIheaders
+        ).catch( e=> {res = e.response});
       return res;
 
     },
@@ -144,7 +153,7 @@ export const API =
 
       let url = base_url + '/users/delete/' + userId;
       return await axios.delete(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -153,7 +162,7 @@ export const API =
 
       let url = base_url + '/users/insert/client/';
       return await axios.post(
-        url, {...clientBody}
+        url, {...clientBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -161,7 +170,7 @@ export const API =
 
       let url = base_url + '/users/insert/provider/';
       return await axios.post(
-        url, {...clientBody}
+        url, {...clientBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -170,14 +179,14 @@ export const API =
 
       let url = base_url + '/users/update/client/' + clientId;
       return await axios.put(
-        url, {...clientBody}
+        url, {...clientBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     updateProvider: async (clientId, clientBody)=> {
 
       let url = base_url + '/users/update/provider/' + clientId;
       return await axios.put(
-        url, {...clientBody}
+        url, {...clientBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
     }
   },
@@ -185,7 +194,7 @@ export const API =
     getById: async (id)=>{
       const url = base_url + '/favorites/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     //POST
@@ -193,7 +202,7 @@ export const API =
 
       let url = base_url + '/favorites/' + clientId + '/insert/' + postId;
       return await axios.post(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -202,7 +211,7 @@ export const API =
 
       let url = base_url + '/favorites/' + clientId + '/remove/' + postId;
       return await axios.delete(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     }
   },
@@ -210,13 +219,13 @@ export const API =
     getById: async (id)=>{
       const url = base_url + '/messages/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     createMessage: async (messageBody)=>{
       const url = base_url + '/messages/';
       return await axios.post(
-        url, {...messageBody}
+        url, {...messageBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
     }
   },
@@ -227,7 +236,7 @@ export const API =
 
       let url = base_url + '/payment/';
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -235,7 +244,7 @@ export const API =
 
       let url = base_url + '/reservation/';
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -243,28 +252,28 @@ export const API =
 
       const url = base_url + '/reservation/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getByPost: async (id)=>{
 
       const url = base_url + '/reservation/post/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getByClient: async (id)=>{
 
       const url = base_url + '/reservation/client/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     getByProvider: async (id)=>{
 
       const url = base_url + '/reservation/provider/' + id;
       return await axios.get(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
     },
     //DELETE
@@ -272,7 +281,7 @@ export const API =
 
       let url = base_url + '/reservation/' + id;
       return await axios.delete(
-        url
+        url, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -281,7 +290,7 @@ export const API =
 
       let url = base_url + '/reservation/';
       return await axios.post(
-        url, {...reservationBody}
+        url, {...reservationBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -290,7 +299,7 @@ export const API =
 
       let url = base_url + '/reservation/';
       return await axios.put(
-        url, {...reservationBody}
+        url, {...reservationBody}, APIheaders
       ).catch(e => console.log('Error: ', e));
     }
   }
