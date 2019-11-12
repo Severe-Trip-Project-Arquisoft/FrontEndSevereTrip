@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const base_url = 'http://52.5.42.71:8080';
-// const base_url = 'http://localhost:8443';
+
 
 const APIheaders = {
   headers: {
-    'authorization': sessionStorage.getItem("userInfo")
+    'authorization': sessionStorage.getItem('userInfo')
   }
 }
 
@@ -144,7 +144,7 @@ export const API =
       let res;
       res = await axios.get(
         url, APIheaders
-        ).catch( e=> {res = e.response});
+      ).catch( e=> {res = e.response});
       return res;
 
     },

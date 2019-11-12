@@ -20,6 +20,7 @@ import AuthService from '../AuthService/AuthService';
 
 import Dialog from '@material-ui/core/Dialog';
 import { AlertSessionNotStarted } from 'components';
+import {API} from '../../API';
 
 const schema = {
   userName: {
@@ -151,11 +152,11 @@ const SignIn = props => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const AlertDescription = {
-		titulo:"Error de inicio de sesion",
-		contenido:"Su usuario o contraseña no coinciden",
-		opcion:"Registrarse",
-		ruta:'/sign-up'
-	};
+    titulo:'Error de inicio de sesion',
+    contenido:'Su usuario o contraseña no coinciden',
+    opcion:'Registrarse',
+    ruta:'/sign-up'
+  };
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -196,38 +197,49 @@ const SignIn = props => {
   const handleClose = () => {
     setOpen(false);
   };
-const handleClickOpen = () => {
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
 
   const handleSignIn = async event => {
     event.preventDefault();
-      const credentials = {username: formState.values.userName, password: formState.values.password};     
-      var res = await AuthService.login(credentials).then(res => {
-        console.log(res);
+    const credentials = {username: formState.values.userName, password: formState.values.password};     
+    await AuthService.login(credentials).then(res => {
+      console.log(res);
 
         
-        if(res.status === 200){          
-            sessionStorage.setItem("userInfo", JSON.stringify(res.headers.authorization));
-            console.log(sessionStorage.getItem("userInfo"));
-            history.push('/posts');
-            if (!user.logged) {
-              setUser({
-                ...user,
-                ...res.data,
-                logged: true,
-                rol: formState.values.rol[0].toUpperCase() + formState.values.rol.slice(1)
-              });
-            }
+      if(res.status === 200){          
+        sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization));
+        console.log(sessionStorage.getItem('userInfo'));
 
-        }else {
-	    handleClickOpen();
+        API.users.getByName(credentials.username).then( userRes => {
+          console.log(userRes);
+
+          if(userRes && userRes.status === 200){
+            setUser({...userRes.data});
+          }
+        }).catch((error) => {
+          handleClickOpen();
+          console.log(error);
+        });
+        history.push('/posts');
+        if (!user.logged) {
+          setUser({
+            ...user,
+            ...res.data,
+            logged: true,
+            rol: formState.values.rol[0].toUpperCase() + formState.values.rol.slice(1)
+          });
         }
+
+      } else {
+	      handleClickOpen();
+      }
     }).catch((error) => {
 	    handleClickOpen();
-        console.log(error);
-	});
+      console.log(error);
+    });
   };
 
 
@@ -345,14 +357,14 @@ const handleClickOpen = () => {
       </Grid>
 
 
-<Dialog 
-	open={open}
+      <Dialog 
         onClose={handleClose}
->
+        open={open}
+      >
         <AlertSessionNotStarted
-                AlertDescription={AlertDescription}
+          AlertDescription={AlertDescription}
         />
-</Dialog>
+      </Dialog>
 
 	
     </div>

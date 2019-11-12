@@ -62,7 +62,7 @@ const AccountProfile = props => {
                   gutterBottom
                   variant="h2"
                 >
-                  {user.clientId}
+                  {user.username}
                 </Typography>
                 <Typography
                   className={classes.locationText}
