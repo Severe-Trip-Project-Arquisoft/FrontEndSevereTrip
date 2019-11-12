@@ -276,7 +276,7 @@ const InsertPT = props => {
 
     //	    var dataPost = JSON.stringify(data);
     //      console.log('DATA I ',data.telephone);
-    //      console.log('form submission data',data);
+          console.log('form submission data',data);
     API.postProvider.createPost(data);
     history.push('/posts');
   }

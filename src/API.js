@@ -5,7 +5,6 @@ const base_url = 'http://52.5.42.71:8080';
 
 const APIheaders = {
   headers: {
-    'Content-Type': "application/json",
     'Authorization': sessionStorage.getItem('userInfo')
   }
 }

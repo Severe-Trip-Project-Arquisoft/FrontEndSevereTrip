@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
@@ -6,10 +6,15 @@ import { Button } from '@material-ui/core';
 import { forwardRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
+import Dialog from '@material-ui/core/Dialog';
+import { AlertSessionNotStarted } from 'components';
+
+import { UserContext } from 'contexts/UserContext';
 const Reservation = '/doingReservations';
 const DeleteHotel = '/';
 
 const CustomRouterLink = forwardRef((props, ref) => (
+
   <div
     ref={ref}
   >
@@ -38,9 +43,24 @@ const useStyles = makeStyles(theme => ({
 
 const PostDetailToolbar = props => {
   const { className } = props;
+  const [open, setOpen] = React.useState(false);
   const { postId } = props;
+  const { user } = useContext(UserContext);
+//  const handleClickOpen = () => {
+//    setOpen(true);
+//  };
+//  const handleClose = () => {
+//    setOpen(false);
+//  };
   const classes = useStyles();
   console.log(postId);
+
+  const AlertDescription = {
+    titulo:'Usted no ha iniciado sesion',
+    contenido:'Para continuar con la accion deseada, por favor inicie sesion',
+    opcion:'sign - in',
+    ruta:'/sign-in'
+  };
 
   return (
     <div
@@ -66,6 +86,9 @@ const PostDetailToolbar = props => {
           Reserve
         </Button>
       </div>
+
+	
+
     </div>
   );
 };

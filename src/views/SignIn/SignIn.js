@@ -210,28 +210,27 @@ const SignIn = props => {
 
         
       if(res.status === 200){          
-        sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization));
+        sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization).substr(1,JSON.stringify(res.headers.authorization).length-2));
         console.log(sessionStorage.getItem('userInfo'));
 
         API.users.getByName(credentials.username).then( userRes => {
           console.log(userRes);
-
           if(userRes && userRes.status === 200){
-            setUser({...userRes.data});
+            setUser({...userRes.data,
+              logged: true
+            });
           }
         }).catch((error) => {
           handleClickOpen();
           console.log(error);
         });
         history.push('/posts');
-        if (!user.logged) {
+        /*if (!user.logged) {
           setUser({
             ...user,
-            ...res.data,
-            logged: true,
-            rol: formState.values.rol[0].toUpperCase() + formState.values.rol.slice(1)
+            ...res.data
           });
-        }
+        }*/
 
       } else {
 	      handleClickOpen();
