@@ -95,7 +95,7 @@ const Routes = () => {
         component={DoingReservationView}
         exact
         layout={MainLayout}
-        path="/doingReservations"
+        path="/doingReservations/:postId"
       />
       <RouteWithLayout
         component={FavoritesView}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //const USER_API_BASE_URL = 'https://localhost:8443/login';
-const USER_API_BASE_URL = 'https://3.222.8.195:8443/login';
+const USER_API_BASE_URL = 'http://3.222.8.195:8080/login';
 
 class AuthService {
     

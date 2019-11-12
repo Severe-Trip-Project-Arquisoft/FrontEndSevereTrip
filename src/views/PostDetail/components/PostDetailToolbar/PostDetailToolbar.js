@@ -38,8 +38,9 @@ const useStyles = makeStyles(theme => ({
 
 const PostDetailToolbar = props => {
   const { className } = props;
-
+  const { postId } = props;
   const classes = useStyles();
+  console.log(postId);
 
   return (
     <div
@@ -59,7 +60,7 @@ const PostDetailToolbar = props => {
         <Button
           color="primary"
           component={CustomRouterLink}
-          to={Reservation}
+          to={Reservation+'/'+postId}
           variant="contained"
         >
           Reserve

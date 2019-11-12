@@ -1,10 +1,12 @@
 import 'date-fns';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { API } from 'API';
+import {UserContext} from '../../contexts/UserContext'
+import {useParams } from 'react-router-dom';
 
 import {
   IconButton,
@@ -42,6 +44,8 @@ const useStyles = makeStyles(theme => ({
 
 const DoingReservation = (props)=>{
   const classes = useStyles();
+  const {user} = useContext(UserContext);
+  const {postId} = useParams();
   const [state, setState] = useState({
     post : [],
     client : [],
@@ -60,14 +64,14 @@ const DoingReservation = (props)=>{
   useEffect( () =>{
     const fetchReservation = async ()=>{
 
-      let res = await API.postProvider.getById('5db09a8eb24da600017a3cff');
+      let res = await API.postProvider.getById(postId);
       console.log(res.data);
       setState(
         {
           post: res.data
         }
       );
-      let res1 = await API.users.getById('5dacf583a0c08b00014acd1c');
+      let res1 = await API.users.getById(user.id);
       console.log(res1.data);
       setState(
         {
