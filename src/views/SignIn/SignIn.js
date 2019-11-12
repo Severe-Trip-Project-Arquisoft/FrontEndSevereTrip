@@ -16,6 +16,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../AuthService/AuthService';
 
+
+
+import Dialog from '@material-ui/core/Dialog';
+import { AlertSessionNotStarted } from 'components';
+
 const schema = {
   userName: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -139,10 +144,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const SignIn = props => {
   const { history } = props;
   const { user, setUser } = useContext(UserContext);
+  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
+  const AlertDescription = {
+		titulo:"Error de inicio de sesion",
+		contenido:"Su usuario o contraseña no coinciden",
+		opcion:"Registrarse",
+		ruta:'/sign-up'
+	};
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -180,12 +193,20 @@ const SignIn = props => {
       }
     }));
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
+const handleClickOpen = () => {
+    setOpen(true);
+  };
+
 
   const handleSignIn = async event => {
     event.preventDefault();
       const credentials = {username: formState.values.userName, password: formState.values.password};     
-      AuthService.login(credentials).then(res => {
+      var res = await AuthService.login(credentials).then(res => {
         console.log(res);
+
         
         if(res.status === 200){          
             sessionStorage.setItem("userInfo", JSON.stringify(res.headers.authorization));
@@ -201,11 +222,15 @@ const SignIn = props => {
             }
 
         }else {
-            this.setState({message: res.data.message});
-            history.push('/sign-up');
+	    handleClickOpen();
         }
-    });
+    }).catch((error) => {
+	    handleClickOpen();
+        console.log(error);
+	});
   };
+
+
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -318,6 +343,18 @@ const SignIn = props => {
           </div>
         </Grid>
       </Grid>
+
+
+<Dialog 
+	open={open}
+        onClose={handleClose}
+>
+        <AlertSessionNotStarted
+                AlertDescription={AlertDescription}
+        />
+</Dialog>
+
+	
     </div>
   );
 };
