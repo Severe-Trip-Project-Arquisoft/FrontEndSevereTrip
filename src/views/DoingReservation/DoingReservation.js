@@ -47,7 +47,6 @@ const DoingReservation = (props)=>{
 
   const {user, setUser} = useContext(UserContext);
   const classes = useStyles();
-  const {user} = useContext(UserContext);
   const {postId} = useParams();
   const [state, setState] = useState({
     post : [],

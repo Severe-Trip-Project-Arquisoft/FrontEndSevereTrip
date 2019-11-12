@@ -5,7 +5,8 @@ const base_url = 'http://52.5.42.71:8080';
 
 const APIheaders = {
   headers: {
-    'authorization': sessionStorage.getItem('userInfo')
+    'Content-Type': "application/json",
+    'Authorization': sessionStorage.getItem('userInfo')
   }
 }
 
@@ -139,7 +140,7 @@ export const API =
       ).catch(e => console.log('Error: ', e));
     },
     getByName: async (username)=>{
-
+	console.log(sessionStorage.getItem('userInfo'));
       const url = base_url + '/users/username/' + username;
       let res;
       res = await axios.get(
