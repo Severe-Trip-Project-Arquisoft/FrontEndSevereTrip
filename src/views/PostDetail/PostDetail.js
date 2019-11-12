@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography, CardContent, Card, CardActions, Divider } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -10,7 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import {UserContext} from '../../contexts/UserContext';
+
 import CommentSection from '../../components/CommentSection';
 
 import { PostDetailToolbar} from './components';
@@ -69,7 +69,6 @@ const mapServiceTypeUnit = (type) =>{
 const PostDetail = () => {
   const classes = useStyles();
   const [Post,setPost] = useState(mockData)
-  const { user } =  useContext(UserContext)
   const [loaded,setLoaded] = useState(false);
   const {postId} = useParams();
 
@@ -84,8 +83,10 @@ const PostDetail = () => {
   },[]);
   return (
     <div className={classes.root}>
-{(user.logged) ?
-      <PostDetailToolbar postId = {Post.id}/>:<div></div>}
+
+
+      <PostDetailToolbar postId = {Post.id}/>
+
       <div className={classes.content}>
 
         <Card

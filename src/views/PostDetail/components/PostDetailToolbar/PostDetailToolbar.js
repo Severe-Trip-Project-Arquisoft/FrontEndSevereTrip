@@ -46,21 +46,22 @@ const PostDetailToolbar = props => {
   const [open, setOpen] = React.useState(false);
   const { postId } = props;
   const { user } = useContext(UserContext);
-//  const handleClickOpen = () => {
-//    setOpen(true);
-//  };
-//  const handleClose = () => {
-//    setOpen(false);
-//  };
+
   const classes = useStyles();
-  console.log(postId);
+//  console.log(postId);
 
   const AlertDescription = {
-    titulo:'Usted no ha iniciado sesion',
-    contenido:'Para continuar con la accion deseada, por favor inicie sesion',
+    titulo:'Usted no ha iniciado sesion ó no tiene los permisos necesarios',
+    contenido:'Para continuar con la accion deseada, por favor inicie sesion en modo cliente.',
     opcion:'sign - in',
     ruta:'/sign-in'
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };	
 
   return (
     <div
@@ -69,6 +70,7 @@ const PostDetailToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
+{(user.logged && user.rol==="PROVIDER") ?
         <Button
           color="primary"
           component={CustomRouterLink}
@@ -77,16 +79,38 @@ const PostDetailToolbar = props => {
         >
           Delete hotel
         </Button>
+:
+<div></div>
+}
+
+{(user.logged && user.rol==="CLIENT") ?
         <Button
           color="primary"
           component={CustomRouterLink}
           to={Reservation+'/'+postId}
           variant="contained"
         >
-          Reserve
+          booking
         </Button>
+:
+        <Button
+          color="primary"
+          variant="contained"
+	  onClick={handleClickOpen}
+        >
+          Booking
+        </Button>
+}
       </div>
 
+      <Dialog 
+        open={open}
+        onClose={handleClose}
+      >
+        <AlertSessionNotStarted
+          AlertDescription={AlertDescription}
+        />
+      </Dialog>
 	
 
     </div>

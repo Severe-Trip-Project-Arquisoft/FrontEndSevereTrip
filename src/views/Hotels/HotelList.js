@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
@@ -8,7 +8,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import {API} from 'API'
 import {PostCard} from '../PostList/components';
-import {UserContext} from '../../contexts/UserContext';
 
 
 const styles = theme => ({
@@ -36,7 +35,6 @@ const styles = theme => ({
 
 
 const HotelList = (props)=>{
-  const { user } =  useContext(UserContext)
   const [state , setState] = useState({
     isDataLoaded: false,
     datosHoteles: []
@@ -63,8 +61,7 @@ const HotelList = (props)=>{
   return (
     state.isDataLoaded ?
       <div className={classes.root}>
-{(user.logged) ?
-        <HotelsToolbar />:<div></div>}
+        <HotelsToolbar />
         <div className={classes.content}>
           <Grid
             container

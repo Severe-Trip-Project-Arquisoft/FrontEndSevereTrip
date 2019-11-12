@@ -5,7 +5,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -21,13 +20,9 @@ const AlertSessionNotStarted = props => {
   const { AlertDescription } = props;
   const [open, setOpen] = React.useState(true);
 
-console.log(AlertDescription);
+//console.log(AlertDescription);
 
   const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleRedirection = () => {
     setOpen(false);
   };
 

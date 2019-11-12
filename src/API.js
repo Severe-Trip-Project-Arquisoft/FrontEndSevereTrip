@@ -139,7 +139,7 @@ export const API =
       ).catch(e => console.log('Error: ', e));
     },
     getByName: async (username)=>{
-	console.log(sessionStorage.getItem('userInfo'));
+
       const url = base_url + '/users/username/' + username;
       let res;
       res = await axios.get(

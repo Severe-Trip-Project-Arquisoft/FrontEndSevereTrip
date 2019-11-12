@@ -148,7 +148,7 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = props => {
   const { history } = props;
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const AlertDescription = {
@@ -205,40 +205,45 @@ const SignIn = props => {
   const handleSignIn = async event => {
     event.preventDefault();
     const credentials = {username: formState.values.userName, password: formState.values.password};     
-    await AuthService.login(credentials).then(res => {
-      console.log(res);
+	
+	var dialogo1 = true;
+	var dialogo2 = true;
 
+    await AuthService.login(credentials).then(res => {
+//      console.log(res);
         
       if(res.status === 200){          
         sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization).substr(1,JSON.stringify(res.headers.authorization).length-2));
-        console.log(sessionStorage.getItem('userInfo'));
+//        console.log(sessionStorage.getItem('userInfo'));
+            dialogo1 =false;
+	}
+    }).catch((error) => {
+	dialogo1 =true;
+//      console.log(error);
+    });
 
-        API.users.getByName(credentials.username).then( userRes => {
-          console.log(userRes);
+	await API.users.getByName(credentials.username).then( userRes => {
+//          console.log(userRes);
           if(userRes && userRes.status === 200){
             setUser({...userRes.data,
               logged: true
             });
+            dialogo2 =false;
           }
         }).catch((error) => {
-          handleClickOpen();
-          console.log(error);
+//          console.log(error);
         });
-        history.push('/posts');
-        /*if (!user.logged) {
-          setUser({
-            ...user,
-            ...res.data
-          });
-        }*/
 
-      } else {
-	      handleClickOpen();
-      }
-    }).catch((error) => {
-	    handleClickOpen();
-      console.log(error);
-    });
+//console.log("dialogo1...",dialogo1);
+//console.log("dialogo2...",dialogo2);
+	if(dialogo1 || dialogo2){
+          handleClickOpen();
+	}else{
+		history.push('/posts');
+	}
+
+
+
   };
 
 

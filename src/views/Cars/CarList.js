@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import { CarsToolbar } from './components';
@@ -6,8 +6,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {API} from 'API'
 import {PostCard} from '../PostList/components';
-
-import {UserContext} from '../../contexts/UserContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 
 const CarList = () => {
   const classes = useStyles();
-  const { user } =  useContext(UserContext)
   const [state , setState] = useState({
     isDataLoaded: false,
     datosCarros: []
@@ -49,8 +46,7 @@ const CarList = () => {
 
   return (
     <div className={classes.root}>
-{(user.logged) ?
-      <CarsToolbar />:<div></div>}
+      <CarsToolbar />
       <div className={classes.content}>
         <Grid
           container

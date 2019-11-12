@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -6,7 +6,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { RestaurantsToolbar } from './components';
 import {PostCard} from '../PostList/components';
 import {API} from 'API'
-import {UserContext} from '../../contexts/UserContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 
 const RestaurantList = () => {
   const classes = useStyles();
-  const { user } =  useContext(UserContext)
   const [state , setState] = useState({
     isDataLoaded: false,
     datosRestaurantes: []
@@ -48,8 +46,7 @@ const RestaurantList = () => {
 
   return (
     <div className={classes.root}>
-{(user.logged) ?
-      <RestaurantsToolbar />:<div></div>}
+      <RestaurantsToolbar />
       <div className={classes.content}>
         <Grid
           container
