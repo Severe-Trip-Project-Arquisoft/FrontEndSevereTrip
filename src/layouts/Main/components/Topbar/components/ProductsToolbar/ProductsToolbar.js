@@ -31,12 +31,6 @@ const ProductsToolbar = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Search "
-        />
-      </div>
     </div>
   );
 };
