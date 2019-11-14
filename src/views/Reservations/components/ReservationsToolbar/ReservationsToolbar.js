@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -25,21 +25,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ReservationsToolbar = props => {
-  const { className, ...rest } = props;
+  const { className } = props;
 
   const classes = useStyles();
 
   return (
     <div
-      {...rest}
       className={clsx(classes.root, className)}
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
         <Button
           color="primary"
+          component={RouterLink}
+          to="/doingReservations"
           variant="contained"
         >
           Add reservation
@@ -53,4 +52,4 @@ ReservationsToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default ReservationsToolbar;
+export default withRouter(ReservationsToolbar);

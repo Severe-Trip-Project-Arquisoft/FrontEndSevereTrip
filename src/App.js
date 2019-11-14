@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Chart } from 'react-chartjs-2';
@@ -7,13 +7,14 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
 import validate from 'validate.js';
 import validators from './common/validators';
-
+import {UserContext} from './contexts/UserContext';
 
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import './assets/scss/index.scss';
 
 import Routes from './Routes';
+
 
 const browserHistory = createBrowserHistory();
 
@@ -26,14 +27,25 @@ validate.validators = {
   ...validators
 };
 
-export default class App extends Component {
-  render() {
-    return (
+const App = ()=> {
+
+  const [user, setUser] = useState({
+    logged: false
+  });
+  const globalUser = useMemo( () => ({user, setUser}), [user, setUser]);
+
+
+  return (
+    <UserContext.Provider value = {globalUser}>
       <ThemeProvider theme={theme}>
         <Router history={browserHistory}>
           <Routes />
         </Router>
       </ThemeProvider>
-    );
-  }
+    </UserContext.Provider>
+
+  );
+
 }
+
+export default App;

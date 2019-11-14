@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -11,7 +13,7 @@ import {
   Divider
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -39,6 +41,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div
+    ref={ref}
+  >
+    <RouterLink {...props} />
+  </div>
+));
+
 const CarCard = props => {
   const { className, car, ...rest } = props;
 
@@ -54,15 +64,16 @@ const CarCard = props => {
           <img
             alt="Car"
             className={classes.image}
-            src={car.imageUrl}
+            src={'images/cars/car3.png'}
           />
         </div>
         <Typography
           align="center"
-          gutterBottom
+          component={CustomRouterLink}
+          to="/carDetail"
           variant="h4"
         >
-          {car.title}
+          {car.name}
         </Typography>
         <Typography
           align="center"
@@ -93,12 +104,12 @@ const CarCard = props => {
             className={classes.statsItem}
             item
           >
-            <GetAppIcon className={classes.statsIcon} />
+            <StarIcon className={classes.statsIcon} />
             <Typography
               display="inline"
               variant="body2"
             >
-              {car.totalDownloads} Downloads
+              {car.calification}
             </Typography>
           </Grid>
         </Grid>
@@ -108,8 +119,8 @@ const CarCard = props => {
 };
 
 CarCard.propTypes = {
-  className: PropTypes.string,
-  car: PropTypes.object.isRequired
+  car: PropTypes.object.isRequired,
+  className: PropTypes.string
 };
 
 export default CarCard;

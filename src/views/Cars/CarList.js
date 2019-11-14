@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
+import { CarsToolbar } from './components';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import { CarsToolbar, CarCard } from './components';
-import mockData from './data';
+import {API} from 'API'
+import {PostCard} from '../PostList/components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,8 +24,25 @@ const useStyles = makeStyles(theme => ({
 
 const CarList = () => {
   const classes = useStyles();
+  const [state , setState] = useState({
+    isDataLoaded: false,
+    datosCarros: []
+  });
 
-  const [cars] = useState(mockData);
+  useEffect( () => {   
+    async function cargarDatos () {
+      const rensponse = await API.postProvider.getByType('rentCar')
+        .catch(err => console.log(err));
+      setState({
+        isDataLoaded: true,
+        datosCarros: rensponse.data
+      })
+
+    }
+    cargarDatos();
+    
+    //return () =>{} 
+  }  , [])
 
   return (
     <div className={classes.root}>
@@ -35,7 +52,7 @@ const CarList = () => {
           container
           spacing={3}
         >
-          {cars.map(car => (
+          {state.datosCarros.map(car => (
             <Grid
               item
               key={car.id}
@@ -43,7 +60,7 @@ const CarList = () => {
               md={6}
               xs={12}
             >
-              <CarCard car={car} />
+              <PostCard post={car} />
             </Grid>
           ))}
         </Grid>

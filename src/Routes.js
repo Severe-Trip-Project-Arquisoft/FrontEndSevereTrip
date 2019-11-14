@@ -5,21 +5,24 @@ import { RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
-  ProductList as ProductListView,
+  PostList as PostListView,
   UserList as UserListView,
   Account as AccountView,
   Hotels as HotelsView,
-  HotelInsert as HotelInsertView,
+  PostInsert as PostInsertView,
   HotelDetail as HotelDetailView,
+  PostDetail as PostDetailView,
+  DoingReservation as DoingReservationView,
   Reservations as ReservationsView,
   Favorites as FavoritesView,
   Cars as CarsView,
-  CarInsert as CarInsertView,
+  CarDetail as CarDetailView,
   Restaurants as RestaurantsView,
   Flights as FlightsView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView
+
 } from './views';
 
 const Routes = () => {
@@ -28,7 +31,7 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/products"
+        to="/posts"
       />
       <RouteWithLayout
         component={UserListView}
@@ -37,10 +40,10 @@ const Routes = () => {
         path="/users"
       />
       <RouteWithLayout
-        component={ProductListView}
+        component={PostListView}
         exact
         layout={MainLayout}
-        path="/products"
+        path="/posts"
       />
       <RouteWithLayout
         component={AccountView}
@@ -67,22 +70,32 @@ const Routes = () => {
         path="/hotels"
       />
       <RouteWithLayout
-        component={HotelInsertView}
+        component={PostInsertView}
         exact
         layout={MainLayout}
-        path="/hotelInsert"
+        path="/postInsert/:postType"
       />
       <RouteWithLayout
         component={HotelDetailView}
-        exact
         layout={MainLayout}
-        path="/hotelDetail"
+        path="/hotelDetail/:postId"
+      />
+      <RouteWithLayout
+        component={PostDetailView}
+        layout={MainLayout}
+        path="/postDetail/:postId"
       />
       <RouteWithLayout
         component={ReservationsView}
         exact
         layout={MainLayout}
         path="/reservations"
+      />
+      <RouteWithLayout
+        component={DoingReservationView}
+        exact
+        layout={MainLayout}
+        path="/doingReservations/:postId"
       />
       <RouteWithLayout
         component={FavoritesView}
@@ -97,10 +110,9 @@ const Routes = () => {
         path="/cars"
       />
       <RouteWithLayout
-        component={CarInsertView}
-        exact
+        component={CarDetailView}
         layout={MainLayout}
-        path="/carInsert"
+        path="/carDetail/:postId"
       />
       <RouteWithLayout
         component={RestaurantsView}
@@ -120,7 +132,7 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/not-found"
       />
-      <Redirect to="/not-found" />
+      <Redirect to="/not-found"/>
     </Switch>
   );
 };

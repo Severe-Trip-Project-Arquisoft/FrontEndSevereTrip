@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -9,16 +9,22 @@ import {
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  MenuItem
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { UserContext } from '../../contexts/UserContext';
+import AuthService from '../AuthService/AuthService';
 
-import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
+
+
+import Dialog from '@material-ui/core/Dialog';
+import { AlertSessionNotStarted } from 'components';
+import {API} from '../../API';
 
 const schema = {
-  email: {
+  userName: {
     presence: { allowEmpty: false, message: 'is required' },
-    email: true,
     length: {
       maximum: 64
     }
@@ -26,10 +32,24 @@ const schema = {
   password: {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
-      maximum: 128
+      maximum: 64
     }
-  }
+  },
+  rol: {
+    presence: { allowEmpty: false, message: 'is required' },
+  },
 };
+
+const currencies = [
+  {
+    value: 'provider',
+    label: 'provider',
+  },
+  {
+    value: 'client',
+    label: 'client',
+  },
+];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -125,10 +145,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const SignIn = props => {
   const { history } = props;
-
+  const { setUser } = useContext(UserContext);
+  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
+  const AlertDescription = {
+    titulo:'Error de inicio de sesion',
+    contenido:'Su usuario o contraseña no coinciden',
+    opcion:'Registrarse',
+    ruta:'/sign-up'
+  };
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -139,10 +167,9 @@ const SignIn = props => {
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
-
     setFormState(formState => ({
       ...formState,
-      isValid: errors ? false : true,
+      isValid: !errors,
       errors: errors || {}
     }));
   }, [formState.values]);
@@ -152,16 +179,14 @@ const SignIn = props => {
   };
 
   const handleChange = event => {
-    event.persist();
+    event.persist();    
 
     setFormState(formState => ({
       ...formState,
       values: {
         ...formState.values,
         [event.target.name]:
-          event.target.type === 'checkbox'
-            ? event.target.checked
-            : event.target.value
+          event.target.value
       },
       touched: {
         ...formState.touched,
@@ -169,11 +194,58 @@ const SignIn = props => {
       }
     }));
   };
-
-  const handleSignIn = event => {
-    event.preventDefault();
-    history.push('/');
+  const handleClose = () => {
+    setOpen(false);
   };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+
+  const handleSignIn = async event => {
+    event.preventDefault();
+    const credentials = {username: formState.values.userName, password: formState.values.password};     
+	
+	var dialogo1 = true;
+	var dialogo2 = true;
+
+    await AuthService.login(credentials).then(res => {
+//      console.log(res);
+        
+      if(res.status === 200){          
+        sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization).substr(1,JSON.stringify(res.headers.authorization).length-2));
+//        console.log(sessionStorage.getItem('userInfo'));
+            dialogo1 =false;
+	}
+    }).catch((error) => {
+	dialogo1 =true;
+//      console.log(error);
+    });
+
+	await API.users.getByName(credentials.username).then( userRes => {
+//          console.log(userRes);
+          if(userRes && userRes.status === 200){
+            setUser({...userRes.data,
+              logged: true
+            });
+            dialogo2 =false;
+          }
+        }).catch((error) => {
+//          console.log(error);
+        });
+
+//console.log("dialogo1...",dialogo1);
+//console.log("dialogo2...",dialogo2);
+	if(dialogo1 || dialogo2){
+          handleClickOpen();
+	}else{
+		history.push('/posts');
+	}
+
+
+
+  };
+
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
@@ -184,37 +256,6 @@ const SignIn = props => {
         className={classes.grid}
         container
       >
-        <Grid
-          className={classes.quoteContainer}
-          item
-          lg={5}
-        >
-          <div className={classes.quote}>
-            <div className={classes.quoteInner}>
-              <Typography
-                className={classes.quoteText}
-                variant="h1"
-              >
-                Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                they sold out High Life.
-              </Typography>
-              <div className={classes.person}>
-                <Typography
-                  className={classes.name}
-                  variant="body1"
-                >
-                  Takamaru Ayako
-                </Typography>
-                <Typography
-                  className={classes.bio}
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </div>
-            </div>
-          </div>
-        </Grid>
         <Grid
           className={classes.content}
           item
@@ -238,59 +279,41 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Sign in with social media
-                </Typography>
-                <Grid
-                  className={classes.socialButtons}
-                  container
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Button
-                      color="primary"
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <FacebookIcon className={classes.socialIcon} />
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <GoogleIcon className={classes.socialIcon} />
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Typography
-                  align="center"
-                  className={classes.sugestion}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  or login with email address
-                </Typography>
                 <TextField
                   className={classes.textField}
-                  error={hasError('email')}
+                  error={hasError('rol')}
                   fullWidth
                   helperText={
-                    hasError('email') ? formState.errors.email[0] : null
+                    hasError('rol') ? formState.errors.rol[0] : null
                   }
-                  label="Email address"
-                  name="email"
+                  label="Select your rol"
+                  name="rol"
+                  onChange={handleChange}
+                  select
+                  value={formState.values.rol || ''}
+                  variant="outlined"
+                >
+                  {currencies.map(option => (
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  className={classes.textField}
+                  error={hasError('userName')}
+                  fullWidth
+                  helperText={
+                    hasError('userName') ? formState.errors.userName[0] : null
+                  }
+                  label="User name"
+                  name="userName"
                   onChange={handleChange}
                   type="text"
-                  value={formState.values.email || ''}
+                  value={formState.values.userName || ''}
                   variant="outlined"
                 />
                 <TextField
@@ -336,6 +359,18 @@ const SignIn = props => {
           </div>
         </Grid>
       </Grid>
+
+
+      <Dialog 
+        onClose={handleClose}
+        open={open}
+      >
+        <AlertSessionNotStarted
+          AlertDescription={AlertDescription}
+        />
+      </Dialog>
+
+	
     </div>
   );
 };

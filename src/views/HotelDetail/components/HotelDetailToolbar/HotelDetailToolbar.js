@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 import { forwardRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Reservation = '/reservations';
+const Reservation = '/doingReservations';
 const DeleteHotel = '/';
 
 const CustomRouterLink = forwardRef((props, ref) => (
@@ -50,17 +50,17 @@ const HotelsToolbar = props => {
         <span className={classes.spacer} />
         <Button
           color="primary"
-          variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={DeleteHotel}
+          variant="contained"
         >
           Delete hotel
         </Button>
-	<Button
+        <Button
           color="primary"
-          variant="contained"
-	  component={CustomRouterLink}
+          component={CustomRouterLink}
           to={Reservation}
+          variant="contained"
         >
           Reserve
         </Button>

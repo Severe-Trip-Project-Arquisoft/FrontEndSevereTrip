@@ -14,7 +14,7 @@ import { ProductsToolbar} from './components';
 const CustomRouterLink = forwardRef((props, ref) => (
   <div
     ref={ref}
-    style={{ flexGrow: "right" }}
+    style={{ flexGrow: 'right' }}
   >
     <RouterLink {...props} />
   </div>
@@ -54,27 +54,28 @@ const Topbar = props => {
         <ProductsToolbar />
         <div className={classes.flexGrow} />
 
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-
-          <IconButton
-	    activeClassName={classes.active}
-            className={classes.signOutButton}
-            color="inherit"
-	    component={CustomRouterLink}
-	    to={"/sign-in"}
+        <IconButton color="inherit">
+          <Badge
+            badgeContent={notifications.length}
+            color="primary"
+            variant="dot"
           >
-            <InputIcon />
-          </IconButton>
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+
+        <IconButton
+          activeclassname={classes.active}
+          className={classes.signOutButton}
+          color="inherit"
+          component={CustomRouterLink}
+          to={'/sign-in'}
+        >
+          <InputIcon />
+        </IconButton>
         <Hidden lgUp>
           <IconButton
+            label="llllll"
             color="inherit"
             onClick={onSidebarOpen}
           >

@@ -53,7 +53,6 @@ const HotelCard = props => {
   const { className, hotel, ...rest } = props;
 
   const classes = useStyles();
-
   return (
     <Card
       {...rest}
@@ -64,22 +63,22 @@ const HotelCard = props => {
           <img
             alt="Hotel"
             className={classes.image}
-            src={hotel.imageUrl}
+            src={'/images/hotels/hotel5.png'}
           />
         </div>
         <Typography
-          align="rihth"
+          align="right"
+          component={CustomRouterLink}
+          to={'/hotelDetail/'+hotel.id}
           variant="h4"
-	  component={CustomRouterLink}
-          to="/hotelDetail"
         >
-          {hotel.title}
+          {hotel.name}
         </Typography>
         <Typography
           align="center"
           variant="body1"
         >
-          {hotel.description}
+          {hotel.name}
         </Typography>
         <Typography
           align="center"
@@ -121,7 +120,7 @@ const HotelCard = props => {
               display="inline"
               variant="body2"
             >
-              {hotel.calification} 
+              {hotel.calification}
             </Typography>
           </Grid>
         </Grid>

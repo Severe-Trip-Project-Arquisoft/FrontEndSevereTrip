@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import { FlightsToolbar, FlightCard } from './components';
-import mockData from './data';
+import { FlightsToolbar } from './components';
+
+import {API} from 'API'
+import {PostCard} from '../PostList/components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,8 +26,25 @@ const useStyles = makeStyles(theme => ({
 
 const FlightList = () => {
   const classes = useStyles();
+  const [flights , setFlights] = useState({
+    isDataLoaded: false,
+    datosFlights: []
+  });
 
-  const [flights] = useState(mockData);
+  useEffect( () => {   
+    async function cargarDatos () {
+      const rensponse = await API.postProvider.getByType('flight')
+        .catch(err => console.log(err));
+      setFlights({
+        isDataLoaded: true,
+        datosFlights: rensponse.data
+      })
+
+    }
+    cargarDatos();
+    
+    //return () =>{} 
+  }  , [])
 
   return (
     <div className={classes.root}>
@@ -35,7 +54,7 @@ const FlightList = () => {
           container
           spacing={3}
         >
-          {flights.map(flight => (
+          {flights.datosFlights.map(flight => (
             <Grid
               item
               key={flight.id}
@@ -43,7 +62,7 @@ const FlightList = () => {
               md={6}
               xs={12}
             >
-              <FlightCard flight={flight} />
+              <PostCard post={flight} />
             </Grid>
           ))}
         </Grid>
