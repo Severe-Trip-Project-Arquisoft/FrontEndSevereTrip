@@ -85,11 +85,15 @@ const PostCard = props => {
 
     if(!fav){
       const res = await API.favorites.insertFavorite(user.id,post.id);
-      setFavId(res.data);
-      setFav(true);
 
-      console.log('FAV', res);
-      console.log(fav);
+      if(res){
+        setFavId(res.data);
+        setFav(true);
+
+        console.log(fav);
+      }else{
+
+      }
 
 
     }else{
