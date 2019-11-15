@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
@@ -12,7 +12,24 @@ import {
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { API } from 'API';
+import {UserContext} from '../../../../contexts/UserContext'
+import { Link as RouterLink } from 'react-router-dom';
+import { forwardRef } from 'react';
+const mapServiceTypeUnit = (type) =>{
+  switch(type){
+    case 'restaurant':
+      return 'plato (aprox)';
+    case 'hotel':
+      return 'noche por persona';
+    case 'rentCar':
+      return 'día de alquiler';
+    case 'flight':
+      return 'pasaje';
+  }
+}
 
+const ruta = '/reservationDetail';
 const useStyles = makeStyles(theme => ({
   root: {},
   imageContainer: {
@@ -39,10 +56,32 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div
+    ref={ref}
+  >
+    <RouterLink {...props} />
+  </div>
+));	
+
 const ReservationCard = props => {
   const { className, reservation, ...rest } = props;
-
+  const {user} = useContext(UserContext);
   const classes = useStyles();
+
+  const [post,setPost] = useState([]);
+
+  useEffect(()=>{
+    const fetchPostData = async ()=>{
+      let receivedPostData = await API.postProvider.getById(reservation.postId)
+      if(receivedPostData && receivedPostData.status === 200){
+	setPost(Object.assign({},post,receivedPostData.data));
+	}
+    }
+console.log("post",post);
+    fetchPostData();
+    },[]);
+
 
   return (
     <Card
@@ -52,57 +91,38 @@ const ReservationCard = props => {
       <CardContent>
         <div className={classes.imageContainer}>
           <img
-            alt="Reservation"
+            alt="Post"
             className={classes.image}
-            src={reservation.imageUrl}
+            src={'/images/'+post.serviceType+'s/'+post.serviceType+'5.png'}
           />
         </div>
         <Typography
           align="center"
-          gutterBottom
+          component={CustomRouterLink}
+          to={ruta+'/'+reservation.id}
           variant="h4"
         >
-          {reservation.title}
+          {post.name}
         </Typography>
         <Typography
           align="center"
           variant="body1"
         >
-          {reservation.description}
+          {post.description}
+        </Typography>
+        <Typography
+          align="center"
+          variant="h6"
+        >
+          Ubicado en: {post.city}
+        </Typography>
+        <Typography
+          align="center"
+          variant="h5"
+        >
+          Precio por {mapServiceTypeUnit(post.serviceType)}: ${post.price}
         </Typography>
       </CardContent>
-      <Divider />
-      <CardActions>
-        <Grid
-          container
-          justify="space-between"
-        >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <AccessTimeIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              Updated 2hr ago
-            </Typography>
-          </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <GetAppIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              {reservation.totalDownloads} Downloads
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardActions>
     </Card>
   );
 };

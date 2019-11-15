@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { API } from 'API';
+import mockData from './data';
+
 
 import {UserContext} from '../../contexts/UserContext'
 import {useParams } from 'react-router-dom';
@@ -43,71 +45,56 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DoingReservation = (props)=>{
+const DoingReservation = props =>{
+  const {className, history } = props;
   const classes = useStyles();
   const {user} = useContext(UserContext);
   const {postId} = useParams();
-  var post='';
-  var client='';
-    const [state, setState] = useState({
-	    serviceName: 'El virrey',
-	    serviceType: 'hotel',
-	    clientName: 'pepito',
+
+    const [dataPost, setDataPost] = useState({
 	    serviceNumber: '2',
-	    priceReservation: '245432',
 	    serviceStatePaid: 'false',
 	    serviceStateApproved: 'false',
 	    selectedDateCheckIn: new Date('2019-09-19T06:00:00'),
 	    selectedDateCheckOut: new Date('2019-09-19T06:00:00')
     });
 
-    
-  useEffect( () =>{
-    const fetchReservation = async ()=>{
-
-      let res = await API.postProvider.getById(postId);
-      console.log(res.data);
-      post = res.data;
-      console.log("VAR",post);
-      let res1 = await API.users.getById(user.id);
-      console.log(res1.data);
-      client = res1.data;
-      console.log(client.firstName);
-      setState(
-        {
-          serviceName: post.name,
-          serviceType: post.serviceType,
-          clientName: client.firstName +' '+ client.secondName,
-          priceReservation: post.price,
-        }
-      );
+  const [Post,setPost] = useState(mockData);
+  const [loaded,setLoaded] = useState(false);
+  useEffect(()=>{
+    const fetchPostData = async ()=>{
+      let receivedPostData = await API.postProvider.getById(postId)
+      if(receivedPostData && receivedPostData.status === 200){
+	setPost(Object.assign({},Post,receivedPostData.data));
+        setLoaded(true);
+	}
     }
 
-    fetchReservation().then(r => console.log(r));
-    },[]
-  );
+    fetchPostData();
+    },[]);
 
-
-  const {className } = props;
   const handleDateChangeCheckIn = date => {
-        setState(
+        setDataPost(
             {
+		...dataPost,
                 selectedDateCheckIn: date
             }
         )
   };
 
   const handleDateChangeCheckOut = date => {
-        setState(
+        setDataPost(
             {
+		...dataPost,
                 selectedDateCheckOut: date
             }
         )
   };
 
   const handleChange = event => {
-      setState(
+      setDataPost(
             {
+	      ...dataPost,
 	      [event.target.name]: event.target.value
             }
         )
@@ -116,20 +103,24 @@ const DoingReservation = (props)=>{
   const handleSubmit = event => {
       event.preventDefault();
       const data = {
-        clientId: client.id,
-        providerId: post.providerId,
-        postId: post.id,
-        startTime: state.selectedDateCheckIn.toJSON(),
-        endTime: state.selectedDateCheckOut.toJSON(),
-        amount: state.serviceNumber,
-        prizePerHead: state.priceReservation,
+        clientId: user.id,
+        providerId: Post.providerId,
+        postId: Post.id,
+        startTime: dataPost.selectedDateCheckIn.toJSON(),
+        endTime: dataPost.selectedDateCheckOut.toJSON(),
+        amount: dataPost.serviceNumber,
+        prizePerHead: Post.price,
         paid: false,
-              approved: false
+        approved: false
       }
 
-      console.log('DATA',data);
-      console.log('DATE',data.startTime);
+//      console.log('DATA',data);
+//      console.log('DATE',data.startTime);
       API.reservation.insertReservation(data);
+      history.push('/posts');
+//      var reservas ='hjkl';
+//      var reservas = API.reservation.getByClient(user.id);
+//      console.log('Reservaciones........',reservas);      
   };
 
 
@@ -177,7 +168,7 @@ const DoingReservation = (props)=>{
                       align="center"
                       variant="h4"
                     >
-                      {state.serviceName}
+                      {Post.name}
                     </Typography>
 
 
@@ -191,7 +182,7 @@ const DoingReservation = (props)=>{
                       align="center"
                       variant="h4"
                     >
-                      {state.clientName}
+                      {user.firstName} {user.secondName}
                     </Typography>
 
 
@@ -210,7 +201,7 @@ const DoingReservation = (props)=>{
                           id="date-Check-in"
                           label="Date Check-in"
                           format="MM/dd/yyyy"
-                          value={state.selectedDateCheckIn}
+                          value={dataPost.selectedDateCheckIn}
                           onChange={handleDateChangeCheckIn}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -220,7 +211,7 @@ const DoingReservation = (props)=>{
                           margin="normal"
                           id="time-Check-in"
                           label="Time Check-in"
-                          value={state.selectedDateCheckIn}
+                          value={dataPost.selectedDateCheckIn}
                           onChange={handleDateChangeCheckIn}
                           KeyboardButtonProps={{
                             'aria-label': 'change time',
@@ -242,7 +233,7 @@ const DoingReservation = (props)=>{
                           id="date-Check-out"
                           label="Date Check-out"
                           format="MM/dd/yyyy"
-                          value={state.selectedDateCheckOut}
+                          value={dataPost.selectedDateCheckOut}
                           onChange={handleDateChangeCheckOut}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -252,7 +243,7 @@ const DoingReservation = (props)=>{
                           margin="normal"
                           id="time-Check-out"
                           label="Time Check-out"
-                          value={state.selectedDateCheckOut}
+                          value={dataPost.selectedDateCheckOut}
                           onChange={handleDateChangeCheckOut}
                           KeyboardButtonProps={{
                             'aria-label': 'change time',
@@ -271,7 +262,7 @@ const DoingReservation = (props)=>{
                       align="center"
                       variant="h4"
                     >
-                      Service type: {state.serviceType}
+                      Service type: {Post.serviceType}
                     </Typography>
                   </Grid>
 
@@ -287,7 +278,7 @@ const DoingReservation = (props)=>{
                       name="serviceNumber"
                       onChange={handleChange}
                       type="number"
-                      value={state.serviceNumber}
+                      value={dataPost.serviceNumber}
                       variant="outlined"
                     />
                   </Grid>
@@ -300,7 +291,7 @@ const DoingReservation = (props)=>{
                       align="center"
                       variant="h4"
                     >
-                      Price Reservation $ {state.priceReservation}
+                      Price Reservation $ {Post.price}
                     </Typography>
                   </Grid>
                   <Grid
@@ -312,7 +303,7 @@ const DoingReservation = (props)=>{
                       align="center"
                       variant="h4"
                     >
-                      State Paid: {state.serviceStatePaid}
+                      State Paid: {dataPost.serviceStatePaid}
                     </Typography>
                   </Grid>
 
@@ -325,7 +316,7 @@ const DoingReservation = (props)=>{
                       align="center"
                       variant="h4"
                     >
-                      State Approved: {state.serviceStateApproved}
+                      State Approved: {dataPost.serviceStateApproved}
                     </Typography>
                   </Grid>
 
@@ -369,4 +360,3 @@ const DoingReservation = (props)=>{
 
 
 export default (DoingReservation);
-

@@ -12,6 +12,7 @@ import {
   PostInsert as PostInsertView,
   HotelDetail as HotelDetailView,
   PostDetail as PostDetailView,
+  ReservationDetail as ReservationDetailView,
   DoingReservation as DoingReservationView,
   Reservations as ReservationsView,
   Favorites as FavoritesView,
@@ -84,6 +85,11 @@ const Routes = () => {
         component={PostDetailView}
         layout={MainLayout}
         path="/postDetail/:postId"
+      />
+      <RouteWithLayout
+        component={ReservationDetailView}
+        layout={MainLayout}
+        path="/reservationDetail/:reservationId"
       />
       <RouteWithLayout
         component={ReservationsView}
