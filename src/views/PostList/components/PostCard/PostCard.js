@@ -12,6 +12,7 @@ import {
   Grid,
   Divider
 } from '@material-ui/core';
+import { sizing, maxHeight, maxWidth } from '@material-ui/system';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
@@ -39,8 +40,8 @@ const useStyles = makeStyles(theme => ({
   root: {},
   button: {},
   imageContainer: {
-    height: 64,
-    width: 64,
+    height: 300,
+    width: 400,
     margin: '0 auto',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',

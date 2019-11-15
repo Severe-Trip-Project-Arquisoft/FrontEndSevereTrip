@@ -16,6 +16,7 @@ import CommentSection from '../../components/CommentSection';
 import { PostDetailToolbar} from './components';
 import mockData from './data';
 import { API }  from 'API';
+import { maxWidth } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   imageContainer: {
-    height: 64,
-    width: 64,
+    height: 300,
+    width: maxWidth,
     margin: '0 auto',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',
@@ -93,19 +94,19 @@ const PostDetail = () => {
           className={classes.root}
         >
           <CardContent>
+            <Typography
+              align="center"
+              variant="h1"
+            >
+              {Post.name}
+            </Typography>
             <div className={classes.imageContainer}>
               <img
                 alt="Post"
                 className={classes.image}
                 src={'/images/'+Post.serviceType+'s/'+Post.serviceType+'5.png'}
               />
-            </div>
-            <Typography
-              align="center"
-              variant="h4"
-            >
-              {Post.name}
-            </Typography>
+            </div>            
             <Typography
               align="center"
               variant="body1"
