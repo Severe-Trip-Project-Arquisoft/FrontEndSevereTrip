@@ -26,13 +26,16 @@ const ReservationList = () => {
   const classes = useStyles();
   const {user} = useContext(UserContext);
 
-  const [reservations] = useState([]);
+  const [reservations,setReservations] = useState([]);
+  const [loaded,setLoaded] = useState(false);
   useEffect( ()=>{
     const fetchReservations = async ()=>{
       const res = await API.reservation.getByClient( user.id );
-      console.log(res);
-      //setReservations()
-
+	if(res && res.status === 200){
+		setReservations(Object.assign([],reservations,res.data));
+	        setLoaded(true);
+	}
+	console.log(reservations);
     }
     if(user.logged) fetchReservations().then(r => console.log(r));
   }
@@ -47,12 +50,13 @@ const ReservationList = () => {
           container
           spacing={3}
         >
+
           {
             reservations.length <= 0 ?
               <Typography variant= "h3" >
               Aún no tienes reservaciones.
               </Typography>
-              :reservations.map(reservation => (
+              : reservations.map(reservation => (
                 <Grid
                   item
                   key={reservation.id}
@@ -63,6 +67,7 @@ const ReservationList = () => {
                   <ReservationCard reservation={reservation} />
                 </Grid>
               ))}
+
         </Grid>
       </div>
       <div className={classes.pagination}>

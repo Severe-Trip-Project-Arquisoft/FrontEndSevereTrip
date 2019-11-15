@@ -3,6 +3,7 @@ export { default as Hotels } from './Hotels';
 export { default as PostInsert } from './PostInsert';
 export { default as HotelDetail } from './HotelDetail';
 export { default as PostDetail} from './PostDetail';
+export { default as ReservationDetail} from './ReservationDetail';
 export { default as DoingReservation } from './DoingReservation';
 export { default as Favorites } from './Favorites';
 export { default as Reservations } from './Reservations';

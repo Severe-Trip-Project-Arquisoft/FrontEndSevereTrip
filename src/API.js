@@ -202,7 +202,7 @@ export const API =
 
       let url = base_url + '/favorites/' + clientId + '/insert/' + postId;
       return await axios.post(
-        url, APIheaders
+        url, {},APIheaders
       ).catch(e => console.log('Error: ', e));
 
     },

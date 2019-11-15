@@ -30,6 +30,7 @@ const FavoriteList = () => {
   const fetchFav = async  ()=>{
 
     const res = await API.favorites.getById(user.id);
+    console.log(res);
     let pairs = [];
     for(let element of res.data) {
       let tmp = await API.postProvider.getById(element.postId);
