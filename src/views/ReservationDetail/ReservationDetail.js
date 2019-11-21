@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CardContent, Card, CardHeader, CardActions, Divider } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import StarIcon from '@material-ui/icons/Star';
+import { Grid, Typography, CardContent, Card, CardHeader, Divider } from '@material-ui/core';
+// import { CardActions } from '@material-ui/core';
+// import AccessTimeIcon from '@material-ui/icons/AccessTime';
+// import StarIcon from '@material-ui/icons/Star';
 import {useParams } from 'react-router-dom';
 import {UserContext} from '../../contexts/UserContext';
 
-import ListItem from '@material-ui/core/ListItem';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+// import ListItem from '@material-ui/core/ListItem';
+// import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 
 import { ReservationDetailToolbar} from './components';
@@ -51,20 +52,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const mapServiceTypeUnit = (type) =>{
-  switch(type){
-    case 'restaurant':
-      return 'plato (aprox)';
-    case 'hotel':
-      return 'noche por persona';
-    case 'rentCar':
-      return 'día de alquiler';
-    case 'flight':
-      return 'pasaje';
-    default:
-      return ''
-  }
-}
+// const mapServiceTypeUnit = (type) =>{
+//   switch(type){
+//     case 'restaurant':
+//       return 'plato (aprox)';
+//     case 'hotel':
+//       return 'noche por persona';
+//     case 'rentCar':
+//       return 'día de alquiler';
+//     case 'flight':
+//       return 'pasaje';
+//     default:
+//       return ''
+//   }
+// }
 
 const ReservationDetail = props => {
   const {className, history } = props;

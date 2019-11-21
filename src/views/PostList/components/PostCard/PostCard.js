@@ -12,7 +12,7 @@ import {
   Grid,
   Divider
 } from '@material-ui/core';
-import { sizing, maxHeight, maxWidth } from '@material-ui/system';
+// import { sizing, maxHeight, maxWidth } from '@material-ui/system';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
@@ -32,9 +32,9 @@ const mapServiceTypeUnit = (type) =>{
   }
 }
 
-const firstLetterUppercase = (str) =>{
-  return (str[0].toUpperCase() + str.slice(1));
-}
+// const firstLetterUppercase = (str) =>{
+//   return (str[0].toUpperCase() + str.slice(1));
+// }
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -71,7 +71,7 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
-const ruta = '/postDetail';
+// const ruta = '/postDetail';
 const PostCard = props => {
   const { className, post, favorite } = props;
   const { user } =  useContext(UserContext)

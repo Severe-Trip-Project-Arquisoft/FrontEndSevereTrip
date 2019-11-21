@@ -51,6 +51,13 @@ export default {
     default: '#F4F6F8',
     paper: white
   },
+  image: {
+    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundRepeat: 'no-repeat',
+    // backgroundColor: theme.palette.grey[50],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
   icon: colors.blueGrey[600],
   divider: colors.grey[200]
 };

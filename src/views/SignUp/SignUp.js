@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   Button,
-  IconButton,
   TextField,
   Link,
   FormHelperText,
@@ -14,7 +13,6 @@ import {
   Typography,
   MenuItem
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'API';
 
 import MuiPhoneNumber from 'material-ui-phone-number'
@@ -207,43 +205,12 @@ const currenciesCountry = [
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
     height: '100%'
   },
-  grid: {
-    height: '100%'
-  },
-  quoteContainer: {
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
-  },
-  quote: {
-    backgroundColor: theme.palette.neutral,
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundImage: 'url(/images/auth.jpg)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  },
-  quoteInner: {
-    textAlign: 'center',
-    flexBasis: '600px'
-  },
-  quoteText: {
-    color: theme.palette.white,
-    fontWeight: 300
-  },
-  name: {
-    marginTop: theme.spacing(3),
-    color: theme.palette.white
-  },
-  bio: {
-    color: theme.palette.white
-  },
+  // grid: {
+  //   height: '100%'
+  // },
   contentContainer: {},
   content: {
     height: '100%',
@@ -258,21 +225,22 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
-  logoImage: {
-    marginLeft: theme.spacing(4)
-  },
+  // logoImage: {
+  //   marginLeft: theme.spacing(4)
+  // },
   contentBody: {
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center'
-    }
+    },
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
   },
   form: {
-    paddingLeft: 100,
-    paddingRight: 100,
-    paddingBottom: 125,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 50,
     flexBasis: 700,
     [theme.breakpoints.down('sm')]: {
       paddingLeft: theme.spacing(2),
@@ -358,10 +326,6 @@ const SignUp = props => {
     console.log(formState.values);
   };
 
-  const handleBack = () => {
-    history.goBack();
-  };
-
   function numeroAleatorio(min, max) {
     return Math.round(Math.random() * (max - min) + min);
   }
@@ -422,11 +386,6 @@ const SignUp = props => {
     <div className={classes.root}>
 
       <div className={classes.content}>
-        <div className={classes.contentHeader}>
-          <IconButton onClick={handleBack}>
-            <ArrowBackIcon />
-          </IconButton>
-        </div>
         <div className={classes.contentBody}>
           <form
             className={classes.form}
@@ -434,7 +393,7 @@ const SignUp = props => {
           >
             <Grid
               container
-              spacing={3}
+              // spacing={1}
             >
 
               <Grid
@@ -517,7 +476,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -537,7 +496,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -557,7 +516,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -577,7 +536,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -607,7 +566,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <MuiPhoneNumber 
@@ -627,7 +586,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
