@@ -6,7 +6,6 @@
   "version": "0.3.0",
   "private": false,
   "scripts": {
-    
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -39,6 +38,7 @@
     "clsx": "^1.0.4",
     "date-fns": "^2.5.0",
     "history": "^4.9.0",
+    "material-ui-phone-number": "^2.2.4",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
