@@ -16,4 +16,5 @@ export { default as PostList } from './PostList';
 export { default as SignIn } from './SignIn';
 export { default as SignUp } from './SignUp';
 export { default as UserList } from './UserList';
+export { default as Mailbox } from './Mailbox';
 export { default as AuthService } from './AuthService';
