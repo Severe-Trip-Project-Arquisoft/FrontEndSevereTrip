@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base_url = 'https://52.5.42.71:8080';
+const base_url = 'http://52.5.42.71:8080';
 // const base_url = 'https://localhost:8443/login';
 
 const APIheaders = {
@@ -295,9 +295,9 @@ export const API =
 
     },
     //PUT
-    updateReservation: async (reservationBody)=> {
+    updateReservation: async (reservationBody,reservationId)=> {
 
-      let url = base_url + '/reservation/';
+      let url = base_url + '/reservation/'+reservationId;
       return await axios.put(
         url, {...reservationBody}, APIheaders
       ).catch(e => console.log('Error: ', e));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CardContent, Card, CardHeader, Divider } from '@material-ui/core';
+import { Grid, Typography, CardContent, Card,  CardActions,  Button, CardHeader, Divider } from '@material-ui/core';
 // import { CardActions } from '@material-ui/core';
 // import AccessTimeIcon from '@material-ui/icons/AccessTime';
 // import StarIcon from '@material-ui/icons/Star';
@@ -77,8 +77,9 @@ const ReservationDetail = props => {
   useEffect(()=>{
     const fetchReservationData = async ()=>{
 console.log("++++++",reservationId);
+let one = await API.reservation.getById(reservationId)
 await API.reservation.getById(reservationId).then(res => {
-      console.log(res);
+      console.log("res",res);
         
       if(res.status === 200){          
 	setReservation(Object.assign({},reservation,res.data));
@@ -88,7 +89,10 @@ await API.reservation.getById(reservationId).then(res => {
 //	dialogo1 =true;
       console.log(error);
     });
-await API.postProvider.getById(reservation.postId).then(res => {
+
+      console.log('reservation_postId:',one.data.postId);
+
+await API.postProvider.getById(one.data.postId).then(res => {
       console.log(res);
         
       if(res.status === 200){          
@@ -102,6 +106,31 @@ await API.postProvider.getById(reservation.postId).then(res => {
     }
     fetchReservationData();
     },[]);
+
+  const handleSubmit = event => {
+      event.preventDefault();
+
+      const data = {
+        clientId: reservation.clientId,
+        providerId: reservation.providerId,
+        postId: reservation.postId,
+        startTime: reservation.startTime,
+        endTime: reservation.endTime,
+        amount: reservation.amount,
+        prizePerHead: reservation.prizePerHead,
+        paid: reservation.paid,
+        approved: true,
+	payment: reservation.payment
+      }
+
+      console.log('DATA',data);
+//      console.log('DATE',data.startTime);
+      API.reservation.updateReservation(data,reservation.id);
+      history.push('/posts');
+//      var reservas ='hjkl';
+//      var reservas = API.reservation.getByClient(user.id);
+//      console.log('Reservaciones........',reservas);      
+  };
 
 
   return (
@@ -233,7 +262,7 @@ await API.postProvider.getById(reservation.postId).then(res => {
                       align="center"
                       variant="h4"
                     >
-                      State Paid: {reservation.paid}
+                      State Paid: {''+reservation.paid+''}
                     </Typography>
                   </Grid>
 
@@ -246,12 +275,23 @@ await API.postProvider.getById(reservation.postId).then(res => {
                       align="center"
                       variant="h4"
                     >
-                      State Approved: {reservation.approved}
+                      State Approved: {''+reservation.approved+''}
                     </Typography>
                   </Grid>
 
                 </Grid>
               </CardContent>
+              <Divider />
+              <CardActions>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSubmit}
+                >
+                  Save Reservation
+                </Button>
+              </CardActions>
             </form>
           </Card>
 

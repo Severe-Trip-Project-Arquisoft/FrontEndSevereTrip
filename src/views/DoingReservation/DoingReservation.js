@@ -114,7 +114,7 @@ const DoingReservation = props =>{
         approved: false
       }
 
-//      console.log('DATA',data);
+      console.log('DATA',data);
 //      console.log('DATE',data.startTime);
       API.reservation.insertReservation(data);
       history.push('/posts');
