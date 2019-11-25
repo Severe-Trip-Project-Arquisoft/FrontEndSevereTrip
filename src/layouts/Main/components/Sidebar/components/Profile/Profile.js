@@ -30,7 +30,7 @@ const Profile = props => {
   const classes = useStyles();
 
   let {user} = useContext(UserContext);
-  user = {...user, avatar:'/images/avatars/avatar_11.png' };
+  user = {...user, avatar:'/images/avatars/avatar_1.png' };
   return (
     <div
       {...rest}
