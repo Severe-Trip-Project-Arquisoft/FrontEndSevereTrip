@@ -22,9 +22,10 @@ import {
   Flights as FlightsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
-
+  NotFound as NotFoundView,
+  Mailbox as MessageView
 } from './views';
+
 
 const Routes = () => {
   return (
@@ -131,6 +132,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/flights"
+      />
+      <RouteWithLayout
+        component={MessageView}
+        exact
+        layout={MainLayout}
+        path="/messages"
       />
       <RouteWithLayout
         component={NotFoundView}
