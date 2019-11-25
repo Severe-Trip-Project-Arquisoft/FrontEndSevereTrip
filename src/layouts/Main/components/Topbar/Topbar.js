@@ -48,7 +48,7 @@ const Topbar = props => {
         <RouterLink to="/">
           <img
             alt="Logo"
-            src="/images/logos/LogoSevereTRIP.svg"
+            src="/images/logos/LogoSevereTrip.png"
             vspace={'1in'}
           />
         </RouterLink>

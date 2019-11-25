@@ -47,10 +47,10 @@ const Mailbox = () => {
 
   return (
     <Grid
+      alignItems="flex-start"
       container
       direction="row"
       justify="flex-start"
-      alignItems="flex-start"
     >
       <ConversationList messages = {messages}/>
     </Grid>
