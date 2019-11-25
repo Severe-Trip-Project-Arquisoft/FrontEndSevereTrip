@@ -33,8 +33,6 @@ const App = ()=> {
     logged: false
   });
   const globalUser = useMemo( () => ({user, setUser}), [user, setUser]);
-
-
   return (
     <UserContext.Provider value = {globalUser}>
       <ThemeProvider theme={theme}>
@@ -43,7 +41,6 @@ const App = ()=> {
         </Router>
       </ThemeProvider>
     </UserContext.Provider>
-
   );
 
 }

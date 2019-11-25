@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   Button,
-  IconButton,
   TextField,
   Link,
   FormHelperText,
@@ -14,8 +13,9 @@ import {
   Typography,
   MenuItem
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { API } from 'API';
+
+import MuiPhoneNumber from 'material-ui-phone-number'
 
 const schema = {
   firstName: {
@@ -57,9 +57,6 @@ const schema = {
   },
   cellphone: {
     presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      maximum: 12
-    }
   },
   rol: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -80,45 +77,140 @@ const currencies = [
   },
 ];
 
+const currenciesCountry = [
+  {
+    value: 'Antigua y Barbuda',
+    label: 'Antigua y Barbuda',
+  }, {
+    value: 'Argentina',
+    label: 'Argentina',
+  }, {
+    value: 'Bahamas',
+    label: 'Bahamas',
+  }, {
+    value: 'Barbados',
+    label: 'Barbados',
+  }, {
+    value: 'Belice',
+    label: 'Belice',
+  }, {
+    value: 'Bolivia',
+    label: 'Bolivia',
+  }, {
+    value: 'Brasil',
+    label: 'Brasil',
+  }, {
+    value: 'Canadá',
+    label: 'Canadá',
+  }, {
+    value: 'Chile',
+    label: 'Chile',
+  }, {
+    value: 'Colombia',
+    label: 'Colombia',
+  }, {
+    value: 'Costa Rica',
+    label: 'Costa Rica',
+  }, {
+    value: 'Cuba',
+    label: 'Cuba',
+  }, {
+    value: 'Dominica',
+    label: 'Dominica',
+  }, {
+    value: 'Ecuador',
+    label: 'Ecuador',
+  }, {
+    value: 'El Salvador',
+    label: 'El Salvador',
+  }, {
+    value: 'Estados Unidos',
+    label: 'Estados Unidos',
+  }, {
+    value: 'Granada',
+    label: 'Granada',
+  }, {
+    value: 'Guatemala',
+    label: 'Guatemala',
+  },
+  {
+    value: 'Guyana',
+    label: 'Guyana',
+  },
+  {
+    value: 'Haití',
+    label: 'Haití',
+  },
+  {
+    value: 'Honduras',
+    label: 'Honduras',
+  },
+  {
+    value: 'Jamaica',
+    label: 'Jamaica',
+  },
+  {
+    value: 'México',
+    label: 'México',
+  },
+  {
+    value: 'Nicaragua',
+    label: 'Nicaragua',
+  },
+  {
+    value: 'Panamá',
+    label: 'Panamá',
+  },
+  {
+    value: 'Paraguay',
+    label: 'Paraguay',
+  },
+  {
+    value: 'Perú',
+    label: 'Perú',
+  },
+  {
+    value: 'República Dominicana',
+    label: 'República Dominicana',
+  },
+  {
+    value: 'San Cristóbal y Nieves',
+    label: 'San Cristóbal y Nieves',
+  },
+  {
+    value: 'San Vicente y las Granadinas',
+    label: 'San Vicente y las Granadinas',
+  },
+  {
+    value: 'Santa Lucía',
+    label: 'Santa Lucía',
+  },
+  {
+    value: 'Surinam',
+    label: 'Surinam',
+  },
+  {
+    value: 'Trinidad y Tobago',
+    label: 'Trinidad y Tobago',
+  },
+  {
+    value: 'Uruguay',
+    label: 'Uruguay',
+  },
+  {
+    value: 'Venezuela',
+    label: 'Venezuela',
+  },
+];
+
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
     height: '100%'
   },
-  grid: {
-    height: '100%'
-  },
-  quoteContainer: {
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
-  },
-  quote: {
-    backgroundColor: theme.palette.neutral,
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundImage: 'url(/images/auth.jpg)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  },
-  quoteInner: {
-    textAlign: 'center',
-    flexBasis: '600px'
-  },
-  quoteText: {
-    color: theme.palette.white,
-    fontWeight: 300
-  },
-  name: {
-    marginTop: theme.spacing(3),
-    color: theme.palette.white
-  },
-  bio: {
-    color: theme.palette.white
-  },
+  // grid: {
+  //   height: '100%'
+  // },
   contentContainer: {},
   content: {
     height: '100%',
@@ -133,21 +225,22 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
-  logoImage: {
-    marginLeft: theme.spacing(4)
-  },
+  // logoImage: {
+  //   marginLeft: theme.spacing(4)
+  // },
   contentBody: {
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center'
-    }
+    },
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
   },
   form: {
-    paddingLeft: 100,
-    paddingRight: 100,
-    paddingBottom: 125,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 50,
     flexBasis: 700,
     [theme.breakpoints.down('sm')]: {
       paddingLeft: theme.spacing(2),
@@ -196,7 +289,7 @@ const SignUp = props => {
   }, [formState.values]);
 
   const handleChange = event => {
-    event.persist();    
+    event.persist();
 
     setFormState(formState => ({
       ...formState,
@@ -212,36 +305,25 @@ const SignUp = props => {
         [event.target.name]: true
       },
     }));
+
+    console.log(formState.values);
+    
   };
 
-  // Modificar en backend client
-  // const handleChangeUserName = async event => {
-  //   event.persist();
-  //   if(event.target.name === "userName"){
-  //     setFormState(formState => ({
-  //       ...formState,
-  //       values: {
-  //         ...formState.values,
-  //         [event.target.name]:
-  //             event.target.value,
-  //       },
-  //       touched: {
-  //         ...formState.touched,
-  //         [event.target.name]: true
-  //       },
-  //     }));
-  //   }
-  //   await API.users.getAvailability(formState.values.name)
-  //   .then((res)=>{
-  //     console.log(res.data);
-      
+  const handleChangeCellphone = value => {
 
-  //   })
-  // }
-
-
-  const handleBack = () => {
-    history.goBack();
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        cellphone : value
+      },
+      touched: {
+        ...formState.touched,
+        cellphone : true
+      },
+    }));    
+    console.log(formState.values);
   };
 
   function numeroAleatorio(min, max) {
@@ -254,7 +336,7 @@ const SignUp = props => {
     if (formState.values.rol === 'client') {
       data = {
 
-	username: formState.values.userName,
+        username: formState.values.userName,
         firstName: formState.values.firstName,
         secondName: formState.values.lastName,
         localAirport: "Aeropuerto internacional Jonathan Brando",
@@ -265,32 +347,32 @@ const SignUp = props => {
         postalCode: "11001",
         country: formState.values.country,
         cellphone: formState.values.cellphone,
-	password: formState.values.password,
+        password: formState.values.password,
         favorites: []
       }
-      
+
       console.log('envio cliente...', data)
       const res = await API.users.createClient(data);
       console.log('respuesta creaci0n cliente...', res)
     }
     if (formState.values.rol === 'provider') {
       data = {
-	username: formState.values.userName,
+        username: formState.values.userName,
         firstName: formState.values.firstName,
         secondName: formState.values.lastName,
-	yearsExperience: numeroAleatorio(1, 20),
-	bankAccount: numeroAleatorio(45000000, 60000000),
-	updateDate: (new Date()).toJSON(),
+        yearsExperience: numeroAleatorio(1, 20),
+        bankAccount: numeroAleatorio(45000000, 60000000),
+        updateDate: (new Date()).toJSON(),
         email: formState.values.email,
         address: formState.values.address,
         country: formState.values.country,
         city: "Bogota",
         cellphone: formState.values.cellphone,
-	password: formState.values.password
+        password: formState.values.password
 
       }
- 
-      console.log('envio proveedor...',data)
+
+      console.log('envio proveedor...', data)
       const res = await API.users.createProvider(data);
       console.log('respuesta creacion proveedor...', res)
     }
@@ -304,11 +386,6 @@ const SignUp = props => {
     <div className={classes.root}>
 
       <div className={classes.content}>
-        <div className={classes.contentHeader}>
-          <IconButton onClick={handleBack}>
-            <ArrowBackIcon />
-          </IconButton>
-        </div>
         <div className={classes.contentBody}>
           <form
             className={classes.form}
@@ -316,7 +393,7 @@ const SignUp = props => {
           >
             <Grid
               container
-              spacing={3}
+              // spacing={1}
             >
 
               <Grid
@@ -399,7 +476,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -419,7 +496,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -439,7 +516,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -459,7 +536,7 @@ const SignUp = props => {
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
@@ -469,20 +546,31 @@ const SignUp = props => {
                   helperText={
                     hasError('country') ? formState.errors.country[0] : null
                   }
-                  label="Country"
+                  label="select your country"
                   name="country"
                   onChange={handleChange}
-                  type="text"
+                  select
+                  // type="text"
                   value={formState.values.country || ''}
                   variant="outlined"
-                />
+                >
+                  {currenciesCountry.map(option => (
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
-                <TextField
+                <MuiPhoneNumber 
+                  defaultCountry={'co'} 
                   className={classes.textField}
                   error={hasError('cellphone')}
                   fullWidth
@@ -491,15 +579,14 @@ const SignUp = props => {
                   }
                   label="Cellphone"
                   name="cellphone"
-                  onChange={handleChange}
-                  type="number"
+                  onChange={handleChangeCellphone}
                   value={formState.values.cellphone || ''}
                   variant="outlined"
-                />
+                  />
               </Grid>
               <Grid
                 item
-                md={6}
+                md={12}
                 xs={12}
               >
                 <TextField
