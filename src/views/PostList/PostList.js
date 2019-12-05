@@ -74,7 +74,7 @@ const PostList = () => {
   useEffect(() => {
     const fetchData = async () => {
       let filteredData = state.posts.filter(item => {
-        return item.name.includes(enteredFilter);
+        return item.name.toLowerCase().includes(enteredFilter.toLowerCase());
       });
       setData(filteredData);
     };
