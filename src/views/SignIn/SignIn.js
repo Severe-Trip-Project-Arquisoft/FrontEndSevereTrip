@@ -68,9 +68,6 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
-  // logoImage: {
-  //   marginLeft: theme.spacing(4)
-  // },
   contentBody: {
     flexGrow: 1,
     display: 'flex',
@@ -78,10 +75,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center'
     },
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '25px'
   },
   form: {
-    // paddingTop: 100,
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 50,
@@ -209,7 +206,7 @@ const SignIn = props => {
         <Grid
           className={classes.content}
           item
-          lg={7}
+          // lg={7}
           xs={12}
         >
           <div className={classes.contentBody}>
