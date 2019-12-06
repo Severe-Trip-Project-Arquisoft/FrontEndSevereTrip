@@ -1,4 +1,4 @@
-import React , {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { forwardRef } from 'react';
@@ -16,11 +16,11 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
-import {UserContext} from '../../../../contexts/UserContext';
-import {API} from '../../../../API';
+import { UserContext } from '../../../../contexts/UserContext';
+import { API } from '../../../../API';
 
-const mapServiceTypeUnit = (type) =>{
-  switch(type){
+const mapServiceTypeUnit = (type) => {
+  switch (type) {
     case 'restaurant':
       return 'plato (aprox)';
     case 'hotel':
@@ -40,8 +40,8 @@ const useStyles = makeStyles(theme => ({
   root: {},
   button: {},
   imageContainer: {
-    height: 300,
-    width: 400,
+    height: '100%',
+    width: '100%',
     margin: '0 auto',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',
@@ -74,30 +74,27 @@ const CustomRouterLink = forwardRef((props, ref) => (
 // const ruta = '/postDetail';
 const PostCard = props => {
   const { className, post, favorite } = props;
-  const { user } =  useContext(UserContext)
+  const { user } = useContext(UserContext)
   const classes = useStyles();
   const [fav, setFav] = useState(favorite);
   const [favId, setFavId] = useState(null);
   const ruta = '/postDetail';
-  const handleFavorite = async() =>{
-  
+  const handleFavorite = async () => {
 
+    if (!fav) {
+      const res = await API.favorites.insertFavorite(user.id, post.id);
 
-    if(!fav){
-      const res = await API.favorites.insertFavorite(user.id,post.id);
-
-      if(res){
+      if (res) {
         setFavId(res.data);
         setFav(true);
 
         console.log(fav);
-      }else{
+      } else {
 
       }
 
-
-    }else{
-      const res = await API.favorites.deleteFavorite(user.id,post.id);
+    } else {
+      const res = await API.favorites.deleteFavorite(user.id, post.id);
       setFavId('');
       setFav(false);
 
@@ -105,30 +102,32 @@ const PostCard = props => {
       console.log(fav);
     }
 
-
-
-
   }
   return (
     <Card
       className={clsx(classes.root, className)}
     >
       <CardContent>
-        <div className={classes.imageContainer}>
-          <img
-            alt="Post"
-            className={classes.image}
-            src={'/images/'+post.serviceType+'s/'+post.serviceType+'5.png'}
-          />
-        </div>
         <Typography
           align="center"
-          component={CustomRouterLink}
-          to={ruta+'/'+post.id}
           variant="h4"
         >
           {post.name}
         </Typography>
+        <div className={classes.imageContainer}>
+          <Typography
+            align="center"
+            component={CustomRouterLink}
+            to={ruta + '/' + post.id}
+            variant="h4"
+          >
+            <img
+              alt="Post"
+              className={classes.image}
+              src={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
+            />
+          </Typography>
+        </div>
         <Typography
           align="center"
           variant="body1"
@@ -177,9 +176,9 @@ const PostCard = props => {
               >
                 <StarIcon
                   className={classes.statsIcon}
-                  color = {fav ? 'primary' : 'error'}
+                  color={fav ? 'primary' : 'error'}
                 />
-              </IconButton>: <React.Fragment/>}
+              </IconButton> : <React.Fragment />}
             <Typography
               display="inline"
               variant="body2"

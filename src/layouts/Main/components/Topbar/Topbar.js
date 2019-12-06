@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { forwardRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { UserContext } from '../../../../contexts/UserContext';
 
 import { ProductsToolbar} from './components';
 
@@ -39,6 +40,8 @@ const Topbar = props => {
 
   const [notifications] = useState([]);
 
+  const { user } = useContext(UserContext)
+
   return (
     <AppBar
       {...rest}
@@ -64,16 +67,26 @@ const Topbar = props => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-
+          {(user.logged) ? '' :
+            <IconButton
+            activeclassname={classes.active}
+            className={classes.signOutButton}
+            color="inherit"
+            component={CustomRouterLink}
+            to={'/sign-in'}
+          >
+            sign in
+          </IconButton>}
         <IconButton
           activeclassname={classes.active}
           className={classes.signOutButton}
           color="inherit"
           component={CustomRouterLink}
-          to={'/sign-in'}
+          to={'/sign-up'}
         >
-          <InputIcon />
+          <ExitToAppIcon />
         </IconButton>
+
         <Hidden lgUp>
           <IconButton
             label="llllll"
