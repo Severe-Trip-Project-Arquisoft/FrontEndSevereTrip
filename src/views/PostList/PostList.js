@@ -27,9 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const PostList = () => {
-    
 
   const [state, setState] = useState ({
     posts : [],
@@ -87,22 +85,22 @@ const PostList = () => {
 
     <div className={classes.root}>
       <div className={classes.content}>
-      <form noValidate autoComplete="off">
-            <div horizontal-align="left">
-              <TextField
-                className={classes.input}
-                id="standard-full-width"
-                placeholder="Placeholder"
-                label="Search here..."
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                onChange={
-                  e => setEnteredFilter(e.target.value)
-                }
-              />
-            </div>
-        </form>
+        <form noValidate autoComplete="off">
+              <div horizontal-align="left">
+                <TextField
+                  className={classes.input}
+                  id="standard-full-width"
+                  placeholder="Placeholder"
+                  label="Search here..."
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={
+                    e => setEnteredFilter(e.target.value)
+                  }
+                />
+              </div>
+          </form>
         <Grid
           container
           spacing={3}

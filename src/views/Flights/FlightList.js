@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { withRouter } from 'react-router-dom';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { FlightsToolbar } from './components';
 
 import {API} from 'API'
 import {PostCard} from '../PostList/components';
+import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     padding: theme.spacing(3)
   },
@@ -21,40 +23,77 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end'
+  },
+  progress: {
+    display: 'block',
+    margin: theme.spacing(3),
+    marginLeft: 'auto',
+    marginRight: 'auto',   
   }
-}));
+});
 
-const FlightList = () => {
-  const classes = useStyles();
-  const [flights , setFlights] = useState({
+const FlightList = (props) => {
+  const [state , setState] = useState({
     isDataLoaded: false,
     datosFlights: []
   });
+
+  const [data, setData] = useState([]);
+  const [enteredFilter, setEnteredFilter] = useState("");
 
   useEffect( () => {   
     async function cargarDatos () {
       const rensponse = await API.postProvider.getByType('flight')
         .catch(err => console.log(err));
-      setFlights({
+      setState({
         isDataLoaded: true,
         datosFlights: rensponse.data
       })
-
+      setData(rensponse.data)
     }
     cargarDatos();
     
     //return () =>{} 
   }  , [])
 
+  useEffect(() => {
+    const cargarDatos = async () => {
+      let filteredData = state.datosFlights.filter(item => {
+        return item.name.toLowerCase().includes(enteredFilter.toLowerCase());
+      });
+      setData(filteredData);
+    };
+    cargarDatos();
+  }, [enteredFilter]);
+
+  const { classes } = props;
+
   return (
+    state.isDataLoaded ?
     <div className={classes.root}>
-      <FlightsToolbar />
       <div className={classes.content}>
+        <form noValidate autoComplete="off">
+              <div horizontal-align="left">
+                <TextField
+                  className={classes.input}
+                  id="standard-full-width"
+                  placeholder="Placeholder"
+                  label="Search here..."
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={
+                    e => setEnteredFilter(e.target.value)
+                  }
+                />
+              </div>
+          </form>
+          <FlightsToolbar />
         <Grid
           container
           spacing={3}
         >
-          {flights.datosFlights.map(flight => (
+          {data.map(flight => (
             <Grid
               item
               key={flight.id}
@@ -77,7 +116,10 @@ const FlightList = () => {
         </IconButton>
       </div>
     </div>
+    : <div>
+        <CircularProgress className={classes.progress} />
+      </div>
   );
 };
 
-export default FlightList;
+export default withRouter(withStyles(styles)(FlightList));
