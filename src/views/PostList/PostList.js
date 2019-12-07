@@ -6,6 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { UserContext }  from '../../contexts/UserContext';
 import { PostCard } from './components';
 import { API }  from 'API';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,22 +20,25 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end'
+  },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '10px'
   }
 }));
 
-
-
 const PostList = () => {
-    
 
   const [state, setState] = useState ({
     posts : [],
-    favorites: {}
+    favorites: {},
   });
+
+  const [data, setData] = useState([]);
+  const [enteredFilter, setEnteredFilter] = useState("");
 
   const {user} = useContext(UserContext);
   useEffect( ()=>{
-
 
     const fetchData = async ()=>{
       let res = await API.postProvider.getAll();
@@ -54,15 +58,26 @@ const PostList = () => {
         setState(
           {
             posts: res.data,
-            favorites
+            favorites,
           }
         )
+
+        setData(res.data)
       }
     }
     fetchData();
 
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      let filteredData = state.posts.filter(item => {
+        return item.name.toLowerCase().includes(enteredFilter.toLowerCase());
+      });
+      setData(filteredData);
+    };
+    fetchData();
+  }, [enteredFilter]);  
 
   const classes = useStyles();
 
@@ -70,11 +85,27 @@ const PostList = () => {
 
     <div className={classes.root}>
       <div className={classes.content}>
+        <form noValidate autoComplete="off">
+              <div horizontal-align="left">
+                <TextField
+                  className={classes.input}
+                  id="standard-full-width"
+                  placeholder="Placeholder"
+                  label="Search here..."
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={
+                    e => setEnteredFilter(e.target.value)
+                  }
+                />
+              </div>
+          </form>
         <Grid
           container
           spacing={3}
         >
-          {state.posts.map(post => (
+          {data.map(post => (
             <Grid
               item
               key={post.id}

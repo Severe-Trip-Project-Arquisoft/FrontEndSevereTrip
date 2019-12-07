@@ -8,7 +8,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import {API} from 'API'
 import {PostCard} from '../PostList/components';
-
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
@@ -27,9 +27,7 @@ const styles = theme => ({
     display: 'block',
     margin: theme.spacing(3),
     marginLeft: 'auto',
-    marginRight: 'auto',
-
-   
+    marginRight: 'auto',   
   }
 });
 
@@ -40,6 +38,9 @@ const HotelList = (props)=>{
     datosHoteles: []
   });
 
+  const [data, setData] = useState([]);
+  const [enteredFilter, setEnteredFilter] = useState("");
+
   useEffect( () => {   
     async function cargarDatos () {
       const rensponse = await API.postProvider.getByType('hotel')
@@ -48,26 +49,51 @@ const HotelList = (props)=>{
         isDataLoaded: true,
         datosHoteles: rensponse.data
       })
-
+      setData(rensponse.data)
     }
     cargarDatos();
     
     //return () =>{} 
   }  , [])
-  
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      let filteredData = state.datosHoteles.filter(item => {
+        return item.name.toLowerCase().includes(enteredFilter.toLowerCase());
+      });
+      setData(filteredData);
+    };
+    cargarDatos();
+  }, [enteredFilter]);  
   
   const { classes } = props;
 
   return (
     state.isDataLoaded ?
       <div className={classes.root}>
-        <HotelsToolbar />
         <div className={classes.content}>
+          <form noValidate autoComplete="off">
+              <div horizontal-align="left">
+                <TextField
+                  className={classes.input}
+                  id="standard-full-width"
+                  placeholder="Placeholder"
+                  label="Search here..."
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={
+                    e => setEnteredFilter(e.target.value)
+                  }
+                />
+              </div>
+          </form>
+          <HotelsToolbar />
           <Grid
             container
             spacing={3}
           >
-            {state.datosHoteles.map(hotel => (
+            {data.map(hotel => (
               <Grid
                 item
                 key={hotel.id}

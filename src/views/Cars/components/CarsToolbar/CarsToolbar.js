@@ -75,7 +75,7 @@ const CarsToolbar = props => {
           to={CarInsert}
           variant="contained"
         >
-          Add hotel
+          Add car
         </Button>
 :
         <Button
@@ -83,7 +83,7 @@ const CarsToolbar = props => {
 	  onClick={handleClickOpen}
           variant="contained"
         >
-          Add hotel
+          Add car
         </Button>
 }
       </div>
