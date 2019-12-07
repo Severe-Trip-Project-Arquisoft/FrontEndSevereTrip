@@ -110,22 +110,8 @@ await API.postProvider.getById(one.data.postId).then(res => {
   const handleSubmit = event => {
       event.preventDefault();
 
-      const data = {
-        clientId: reservation.clientId,
-        providerId: reservation.providerId,
-        postId: reservation.postId,
-        startTime: reservation.startTime,
-        endTime: reservation.endTime,
-        amount: reservation.amount,
-        prizePerHead: reservation.prizePerHead,
-        paid: reservation.paid,
-        approved: true,
-	payment: reservation.payment
-      }
-
-      console.log('DATA',data);
 //      console.log('DATE',data.startTime);
-      API.reservation.updateReservation(data,reservation.id);
+      API.reservation.answerReservation(reservation.id);
       history.push('/posts');
 //      var reservas ='hjkl';
 //      var reservas = API.reservation.getByClient(user.id);
