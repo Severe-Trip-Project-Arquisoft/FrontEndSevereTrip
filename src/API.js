@@ -1,4 +1,5 @@
 import axios from 'axios';
+import crypto from 'crypto'
 
 const base_url = 'http://52.5.42.71:8080';
 // const base_url = 'https://localhost:8443/login';
@@ -159,6 +160,7 @@ export const API =
     createClient: async (clientBody)=> {
 
       let url = base_url + '/users/insert/client/';
+      clientBody.password = crypto.createHash('sha256').update(clientBody.password).digest('hex');
       return await axios.post(
         url, {...clientBody}
       ).catch(e => console.log('Error: ', e));
@@ -167,6 +169,7 @@ export const API =
     createProvider: async (clientBody)=> {
 
       let url = base_url + '/users/insert/provider/';
+      clientBody.password = crypto.createHash('sha256').update(clientBody.password).digest('hex');
       return await axios.post(
         url, {...clientBody}
       ).catch(e => console.log('Error: ', e));
