@@ -41,6 +41,16 @@ const Topbar = props => {
   const [notifications] = useState([]);
 
   const { user } = useContext(UserContext)
+// -----------prueba borrar
+  user.logged = true;
+  user.firstName = 'Sebastian'
+  user.lastName = 'Camacho'
+  user.username = 'sebcamacho'
+  user.email = 'sebcamacho@julmail.com'
+  user.phone = '3113113111'
+  user.country = 'Colombia'
+  user.avatar = '/images/avatars/avatar_1.png';
+  // ----------------------------------
 
   return (
     <AppBar
@@ -67,8 +77,8 @@ const Topbar = props => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-          {(user.logged) ? '' :
-            <IconButton
+        {(user.logged) ? '' :
+          <IconButton
             activeclassname={classes.active}
             className={classes.signOutButton}
             color="inherit"
@@ -77,15 +87,16 @@ const Topbar = props => {
           >
             sign in
           </IconButton>}
-        <IconButton
-          activeclassname={classes.active}
-          className={classes.signOutButton}
-          color="inherit"
-          component={CustomRouterLink}
-          to={'/sign-up'}
-        >
-          <ExitToAppIcon />
-        </IconButton>
+        {(!user.logged) ? '' :
+          <IconButton
+            activeclassname={classes.active}
+            className={classes.signOutButton}
+            color="inherit"
+            component={CustomRouterLink}
+            to={'/sign-up'}
+          >
+            <ExitToAppIcon />
+          </IconButton>}
 
         <Hidden lgUp>
           <IconButton

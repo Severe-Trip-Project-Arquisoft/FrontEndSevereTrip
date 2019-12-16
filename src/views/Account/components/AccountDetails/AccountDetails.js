@@ -79,7 +79,7 @@ const AccountDetails = props => {
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={user.secondName}
+                value={user.lastName}
                 variant="outlined"
               />
             </Grid>
@@ -111,7 +111,7 @@ const AccountDetails = props => {
                 name="phone"
                 onChange={handleChange}
                 type="number"
-                value={user.cellphone}
+                value={user.phone}
                 variant="outlined"
               />
             </Grid>
@@ -143,6 +143,7 @@ const AccountDetails = props => {
           <Button
             color="primary"
             variant="contained"
+            
           >
             Save details
           </Button>

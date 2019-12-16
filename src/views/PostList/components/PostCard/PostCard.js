@@ -10,7 +10,9 @@ import {
   CardActions,
   Typography,
   Grid,
-  Divider
+  Divider,
+  CardHeader,
+  CardMedia
 } from '@material-ui/core';
 // import { sizing, maxHeight, maxWidth } from '@material-ui/system';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -43,15 +45,11 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     width: '100%',
     margin: '0 auto',
-    border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  image: {
-    width: '100%'
   },
   statsItem: {
     display: 'flex',
@@ -60,6 +58,14 @@ const useStyles = makeStyles(theme => ({
   statsIcon: {
     color: theme.palette.icon,
     marginRight: theme.spacing(1)
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9,
+  },
+  titlePost:{
+    marginTop: 5,
+    marginBottom: 5
   }
 }));
 
@@ -103,18 +109,28 @@ const PostCard = props => {
     }
 
   }
+  
   return (
     <Card
       className={clsx(classes.root, className)}
     >
-      <CardContent>
-        <Typography
+      <Typography
+          className={classes.titlePost}
           align="center"
-          variant="h4"
+          variant="h2"
         >
           {post.name}
         </Typography>
-        <div className={classes.imageContainer}>
+      <CardMedia
+        alt="Post"
+        className={classes.media}
+        image={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
+        component={CustomRouterLink}
+        to={ruta + '/' + post.id}
+        
+      />
+      <CardContent>
+        {/* <div className={classes.imageContainer}>
           <Typography
             align="center"
             component={CustomRouterLink}
@@ -127,7 +143,7 @@ const PostCard = props => {
               src={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
             />
           </Typography>
-        </div>
+        </div> */}
         <Typography
           align="center"
           variant="body1"
@@ -148,6 +164,7 @@ const PostCard = props => {
         </Typography>
       </CardContent>
       <Divider />
+
       <CardActions>
         <Grid
           container

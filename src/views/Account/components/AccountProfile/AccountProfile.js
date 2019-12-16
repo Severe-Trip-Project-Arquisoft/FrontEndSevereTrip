@@ -35,18 +35,11 @@ const useStyles = makeStyles(theme => ({
 
 const AccountProfile = props => {
   const { className, user, ...rest } = props;
-
   const classes = useStyles();
-
-  const user2 = {
-    name: 'Shen Zhi',
-    city: 'Los Angeles',
-    country: 'USA',
-    timezone: 'GTM-7',
-    avatar: '/images/avatars/avatar_4.png'
-  };
+  // ------------------------ borrar
+  console.log('accountProfile:...----------------------');
   console.log(user);
-  console.log(user2);
+  // ----------------------------------------------------------
 
   return (
     <React.Fragment>
@@ -79,7 +72,7 @@ const AccountProfile = props => {
               </div>
               <Avatar
                 className={classes.avatar}
-                src={user2.avatar}
+                src={user.avatar}
               />
             </div>
             <div className={classes.progress}>
