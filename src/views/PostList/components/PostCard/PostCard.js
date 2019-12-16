@@ -11,7 +11,6 @@ import {
   Typography,
   Grid,
   Divider,
-  CardHeader,
   CardMedia
 } from '@material-ui/core';
 // import { sizing, maxHeight, maxWidth } from '@material-ui/system';
@@ -31,6 +30,8 @@ const mapServiceTypeUnit = (type) => {
       return 'día de alquiler';
     case 'flight':
       return 'pasaje';
+    default:
+      return '';
   }
 }
 

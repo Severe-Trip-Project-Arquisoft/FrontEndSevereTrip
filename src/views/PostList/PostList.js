@@ -35,7 +35,7 @@ const PostList = () => {
   const datosPrueba = [{
     'id':'12h1h4uhdtjtkdstd413h',
     'name':'pruebaName1',
-    'serviceType':'Hotel',
+    'serviceType':'hotel',
     'description':'PRUEBA Interesante prueba',
     'city':'pruebaBogota',
   },
@@ -63,7 +63,7 @@ const PostList = () => {
   {
     'id':'12h1h4uhdtje45j7tkdstd413h',
     'name':'pruebaName5',
-    'serviceType':'Hotel',
+    'serviceType':'hotel',
     'description':'PRUEBA Interesante prueba',
     'city':'pruebaBogota',
   },

@@ -44,12 +44,17 @@ const HotelList = (props)=>{
   useEffect( () => {   
     async function cargarDatos () {
       const rensponse = await API.postProvider.getByType('hotel')
-        .catch(err => console.log(err));
-      setState({
-        isDataLoaded: true,
-        datosHoteles: rensponse.data
-      })
-      setData(rensponse.data)
+      .then(res => {
+        setState({
+          isDataLoaded: true,
+          datosHoteles: rensponse.data
+        })
+        setData(rensponse.data)
+      })  
+      .catch(err => {
+        console.log(err)
+        console.log('error en hotel list');
+      });
     }
     cargarDatos();
     

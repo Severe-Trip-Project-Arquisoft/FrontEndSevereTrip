@@ -43,12 +43,14 @@ const CarList = (props) => {
   useEffect( () => {   
     async function cargarDatos () {
       const rensponse = await API.postProvider.getByType('rentCar')
-        .catch(err => console.log(err));
-      setState({
-        isDataLoaded: true,
-        datosCarros: rensponse.data
+      .then(res => {
+        setState({
+          isDataLoaded: true,
+          datosCarros: rensponse.data
+        })
+        setData(rensponse.data)
       })
-      setData(rensponse.data)
+      .catch(err => console.log(err));
     }
     cargarDatos();
     
