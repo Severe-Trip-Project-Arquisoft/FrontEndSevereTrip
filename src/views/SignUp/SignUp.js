@@ -306,8 +306,6 @@ const SignUp = props => {
         [event.target.name]: true
       },
     }));
-
-    console.log(formState.values);
     
   };
 
@@ -323,8 +321,7 @@ const SignUp = props => {
         ...formState.touched,
         cellphone : true
       },
-    }));    
-    console.log(formState.values);
+    }));
   };
 
   function numeroAleatorio(min, max) {

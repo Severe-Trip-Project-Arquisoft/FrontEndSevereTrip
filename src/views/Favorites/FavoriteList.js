@@ -28,14 +28,18 @@ const FavoriteList = () => {
   const [pairs, setPairs] = useState({set:[],loaded:false});
 
   const fetchFav = async  ()=>{
-
+    console.log(user)
     const res = await API.favorites.getById(user.id);
     console.log(res);
     let pairs = [];
+
     for(let element of res.data) {
-      let tmp = await API.postProvider.getById(element.postId);
+      let tmp = await API.postProvider.getById(element);
+      console.log(tmp)
       pairs.push({post: tmp.data,favorite: element});
+
     }
+    console.log(pairs)
     setPairs({set:pairs,loaded:true});
   }
 

@@ -40,20 +40,7 @@ const Topbar = props => {
 
   const [notifications] = useState([]);
 
-  const { user } = useContext(UserContext)
-  user.avatar = '/images/avatars/avatar_1.png';
-// -----------prueba borrar
-  user.logged = true;
-  user.id = 'eufh478qrg47w47'
-  user.rol = 'provider'
-  user.firstName = 'Sebastian'
-  user.lastName = 'Camacho'
-  user.username = 'sebcamacho'
-  user.email = 'sebcamacho@julmail.com'
-  user.phone = '3113113111'
-  user.country = 'Colombia'
-  // ----------------------------------
-
+  const { user } = useContext(UserContext);
   return (
     <AppBar
       {...rest}
