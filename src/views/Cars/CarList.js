@@ -38,24 +38,26 @@ const CarList = (props) => {
   });
 
   const [data, setData] = useState([]);
-  const [enteredFilter, setEnteredFilter] = useState("");
+  const [enteredFilter, setEnteredFilter] = useState('');
 
   useEffect( () => {   
     async function cargarDatos () {
-      const rensponse = await API.postProvider.getByType('rentCar')
-      .then(res => {
-        setState({
-          isDataLoaded: true,
-          datosCarros: rensponse.data
+      API.postProvider.getByType('rentCar')
+        .then(res => {
+          setState({
+            isDataLoaded: true,
+            datosCarros: res.data
+          })
+          setData(res.data)
         })
-        setData(rensponse.data)
-      })
-      .catch(err => console.log(err));
+        .catch(err => console.log(err));
     }
     cargarDatos();
     
     //return () =>{} 
   }  , [])
+
+
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -71,53 +73,56 @@ const CarList = (props) => {
 
   return (
     state.isDataLoaded ?
-    <div className={classes.root}>
-      <div className={classes.content}>
-        <form noValidate autoComplete="off">
-                <div horizontal-align="left">
-                  <TextField
-                    className={classes.input}
-                    id="standard-full-width"
-                    placeholder="Placeholder"
-                    label="Search here..."
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    onChange={
-                      e => setEnteredFilter(e.target.value)
-                    }
-                  />
-                </div>
-            </form>
-            <CarsToolbar />
-        <Grid
-          container
-          spacing={3}
-        >
-          {data.map(car => (
-            <Grid
-              item
-              key={car.id}
-              lg={4}
-              md={6}
-              xs={12}
-            >
-              <PostCard post={car} />
-            </Grid>
-          ))}
-        </Grid>
+      <div className={classes.root}>
+        <div className={classes.content}>
+          <form
+            autoComplete="off"
+            noValidate
+          >
+            <div horizontal-align="left">
+              <TextField
+                className={classes.input}
+                fullWidth
+                id="standard-full-width"
+                label="Search here..."
+                margin="normal"
+                onChange={
+                  e => setEnteredFilter(e.target.value)
+                }
+                placeholder="Placeholder"
+                variant="outlined"
+              />
+            </div>
+          </form>
+          <CarsToolbar />
+          <Grid
+            container
+            spacing={3}
+          >
+            {data.map(car => (
+              <Grid
+                item
+                key={car.id}
+                lg={4}
+                md={6}
+                xs={12}
+              >
+                <PostCard post={car} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        <div className={classes.pagination}>
+          <Typography variant="caption">1-6 of 20</Typography>
+          <IconButton>
+            <ChevronLeftIcon />
+          </IconButton>
+          <IconButton>
+            <ChevronRightIcon />
+          </IconButton>
+        </div>
       </div>
-      <div className={classes.pagination}>
-        <Typography variant="caption">1-6 of 20</Typography>
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton>
-          <ChevronRightIcon />
-        </IconButton>
-      </div>
-    </div>
-    : <div>
+      : <div>
         <CircularProgress className={classes.progress} />
       </div>
   );

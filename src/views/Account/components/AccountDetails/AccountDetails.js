@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import clsx from 'clsx';
+import {UserContext} from 'contexts/UserContext';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -23,7 +24,8 @@ const AccountDetails = props => {
 
   const classes = useStyles();
 
-  const [ user, setUser] = useState(props.user);
+  const { user, setUser} = useContext(UserContext);
+  console.log(user)
   const handleChange = event => {
     setUser({
       ...user,

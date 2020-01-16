@@ -148,44 +148,58 @@ const SignIn = props => {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleSignIn = async event => {
     event.preventDefault();
-    const credentials = {username: formState.values.userName, password: formState.values.password};     
-	
+    const credentials = {username: formState.values.userName, password: formState.values.password};
+
     var dialogo1 = true;
     var dialogo2 = true;
 
     await AuthService.login(credentials).then(res => {
       //      console.log(res);
-        
+
       if(res && res.status === 200){
         sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization).substr(1,JSON.stringify(res.headers.authorization).length-2));
         //console.log(sessionStorage.getItem('userInfo'));
         axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('userInfo');
         dialogo1 =false;
-
-        API.users.getByName(credentials.username).then( userRes => {
-          //          console.log(userRes);
-          if(userRes && userRes.status === 200){
-            setUser({...userRes.data,
-              logged: true
-            });
-            dialogo2 =false;
-          }
-        }).catch((error) => {
-          console.log(error);
-        });
-
       }
     }).catch((error) => {
       dialogo1 =true;
       console.log(error);
     });
+
+
+
+    await API.users.getByName(credentials.username).then( userRes => {
+      //          console.log(userRes);
+      if(userRes && userRes.status === 200){
+
+        dialogo2 =false;
+        API.favorites.getById(userRes.data.id).
+        then((res)=>{
+          let favs = []
+          if(res && res.status === 200){
+            console.log(res)
+            favs = res.data
+
+          }
+          setUser({...userRes.data,
+            logged: true,
+            avatar: '/images/avatars/avatar_' + Math.floor(1 + Math.random() * 10) +'.png',
+            favorites: favs
+          });
+        }).catch(e => console.log(e));
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+
 
     if(dialogo1 || dialogo2){
       handleClickOpen();
@@ -195,7 +209,7 @@ const SignIn = props => {
   };
 
   const hasError = field =>
-    formState.touched[field] && formState.errors[field];
+    formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
     <div className={classes.root}>

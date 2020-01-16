@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 const AccountProfile = props => {
   const { className, user, ...rest } = props;
   const classes = useStyles();
-  // ------------------------ borrar
+  // ------------------------
   // console.log('accountProfile:...----------------------');
   // console.log(user);
   // ----------------------------------------------------------

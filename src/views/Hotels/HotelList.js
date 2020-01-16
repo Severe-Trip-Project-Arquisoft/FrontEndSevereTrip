@@ -39,22 +39,22 @@ const HotelList = (props)=>{
   });
 
   const [data, setData] = useState([]);
-  const [enteredFilter, setEnteredFilter] = useState("");
+  const [enteredFilter, setEnteredFilter] = useState('');
 
   useEffect( () => {   
     async function cargarDatos () {
-      const rensponse = await API.postProvider.getByType('hotel')
-      .then(res => {
-        setState({
-          isDataLoaded: true,
-          datosHoteles: rensponse.data
+      API.postProvider.getByType('hotel')
+        .then(res => {
+          setState({
+            isDataLoaded: true,
+            datosHoteles: res.data
+          })
+          setData(res.data)
         })
-        setData(rensponse.data)
-      })  
-      .catch(err => {
-        console.log(err)
-        console.log('error en hotel list');
-      });
+        .catch(err => {
+          console.log(err)
+          console.log('error en hotel list');
+        });
     }
     cargarDatos();
     
@@ -77,21 +77,24 @@ const HotelList = (props)=>{
     state.isDataLoaded ?
       <div className={classes.root}>
         <div className={classes.content}>
-          <form noValidate autoComplete="off">
-              <div horizontal-align="left">
-                <TextField
-                  className={classes.input}
-                  id="standard-full-width"
-                  placeholder="Placeholder"
-                  label="Search here..."
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={
-                    e => setEnteredFilter(e.target.value)
-                  }
-                />
-              </div>
+          <form
+            autoComplete="off"
+            noValidate
+          >
+            <div horizontal-align="left">
+              <TextField
+                className={classes.input}
+                fullWidth
+                id="standard-full-width"
+                label="Search here..."
+                margin="normal"
+                onChange={
+                  e => setEnteredFilter(e.target.value)
+                }
+                placeholder="Placeholder"
+                variant="outlined"
+              />
+            </div>
           </form>
           <HotelsToolbar />
           <Grid
