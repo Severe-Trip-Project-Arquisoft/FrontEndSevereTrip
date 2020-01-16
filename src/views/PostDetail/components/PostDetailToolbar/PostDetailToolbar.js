@@ -90,7 +90,7 @@ const PostDetailToolbar = props => {
           to={Reservation+'/'+postId}
           variant="contained"
         >
-          booking
+          Booking
         </Button>
 :
         <Button

@@ -73,7 +73,7 @@ const [open, setOpen] = React.useState(false);
           to={FlightInsert}
           variant="contained"
         >
-          Add hotel
+          Add flight
         </Button>
 :
         <Button
@@ -81,7 +81,7 @@ const [open, setOpen] = React.useState(false);
 	  onClick={handleClickOpen}
           variant="contained"
         >
-          Add hotel
+          Add flight
         </Button>
 }
       </div>

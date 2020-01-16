@@ -68,9 +68,6 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
-  // logoImage: {
-  //   marginLeft: theme.spacing(4)
-  // },
   contentBody: {
     flexGrow: 1,
     display: 'flex',
@@ -78,10 +75,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center'
     },
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '25px'
   },
   form: {
-    // paddingTop: 100,
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 50,
@@ -171,26 +168,25 @@ const SignIn = props => {
         //console.log(sessionStorage.getItem('userInfo'));
         axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('userInfo');
         dialogo1 =false;
+
+        API.users.getByName(credentials.username).then( userRes => {
+          //          console.log(userRes);
+          if(userRes && userRes.status === 200){
+            setUser({...userRes.data,
+              logged: true
+            });
+            dialogo2 =false;
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
+
       }
     }).catch((error) => {
       dialogo1 =true;
       console.log(error);
     });
 
-    await API.users.getByName(credentials.username).then( userRes => {
-      //          console.log(userRes);
-      if(userRes && userRes.status === 200){
-        setUser({...userRes.data,
-          logged: true
-        });
-        dialogo2 =false;
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    //console.log("dialogo1...",dialogo1);
-    //console.log("dialogo2...",dialogo2);
     if(dialogo1 || dialogo2){
       handleClickOpen();
     }else{
@@ -199,7 +195,7 @@ const SignIn = props => {
   };
 
   const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+    formState.touched[field] && formState.errors[field];
 
   return (
     <div className={classes.root}>
@@ -210,10 +206,9 @@ const SignIn = props => {
         <Grid
           className={classes.content}
           item
-          lg={7}
+          // lg={7}
           xs={12}
         >
-          
           <div className={classes.contentBody}>
             <form
               className={classes.form}

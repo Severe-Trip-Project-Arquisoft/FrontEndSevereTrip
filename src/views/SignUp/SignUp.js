@@ -235,7 +235,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center'
     },
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '25px'
   },
   form: {
     paddingLeft: 10,
@@ -398,7 +399,7 @@ const SignUp = props => {
 
               <Grid
                 item
-                md={12}
+                // md={12}
                 xs={12}
               >
                 <Typography

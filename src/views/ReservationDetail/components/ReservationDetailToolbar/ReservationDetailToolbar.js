@@ -90,7 +90,7 @@ const ReservationDetailToolbar = props => {
           to={Reservation+'/'+postId}
           variant="contained"
         >
-          booking
+          Pay
         </Button>
 :
         <Button
@@ -98,7 +98,7 @@ const ReservationDetailToolbar = props => {
           variant="contained"
 	  onClick={handleClickOpen}
         >
-          Booking
+          Pay
         </Button>
 }
       </div>

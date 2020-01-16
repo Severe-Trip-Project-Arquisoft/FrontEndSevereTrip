@@ -56,8 +56,14 @@ const HotelDetail = (props) => {
 
   const fetchPostData = async ()=>{
     let receivedPostData = await API.postProvider.getById(postId)
-    setHotel(Object.assign({},hotel,receivedPostData.data))
-    setLoaded(true);
+    .then(res => {
+      setHotel(Object.assign({},hotel,receivedPostData.data))
+      setLoaded(true);
+    })
+    .catch(err => {
+      
+    })
+    
   }
 
   useEffect(()=>{

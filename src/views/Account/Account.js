@@ -11,6 +11,10 @@ const useStyles = makeStyles(theme => ({
 const Account = () => {
   const classes = useStyles();
   const {user} = useContext(UserContext);
+  // ------------------------ borrar
+  // console.log('Account:...----------------------');
+  // console.log(user)
+  // -------------------------------------------
   return (
     user.logged ?
       <div className={classes.root}>

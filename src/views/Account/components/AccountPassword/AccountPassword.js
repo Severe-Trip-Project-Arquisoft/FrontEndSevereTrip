@@ -22,6 +22,7 @@ const Password = props => {
   const classes = useStyles();
 
   const [values, setValues] = useState({
+    currentPassword: '',
     password: '',
     confirm: ''
   });
@@ -45,11 +46,21 @@ const Password = props => {
         />
         <Divider />
         <CardContent>
+        <TextField
+            fullWidth
+            label="Current Password"
+            name="currentPassword"
+            onChange={handleChange}
+            type="password"
+            value={values.currentPassword}
+            variant="outlined"
+          />
           <TextField
             fullWidth
             label="Password"
             name="password"
             onChange={handleChange}
+            style={{ marginTop: '1rem' }}
             type="password"
             value={values.password}
             variant="outlined"

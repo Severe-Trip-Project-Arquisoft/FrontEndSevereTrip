@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { forwardRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { UserContext } from '../../../../contexts/UserContext';
 
 import { ProductsToolbar} from './components';
 
@@ -39,6 +40,20 @@ const Topbar = props => {
 
   const [notifications] = useState([]);
 
+  const { user } = useContext(UserContext)
+  user.avatar = '/images/avatars/avatar_1.png';
+// -----------prueba borrar
+  user.logged = true;
+  user.id = 'eufh478qrg47w47'
+  user.rol = 'provider'
+  user.firstName = 'Sebastian'
+  user.lastName = 'Camacho'
+  user.username = 'sebcamacho'
+  user.email = 'sebcamacho@julmail.com'
+  user.phone = '3113113111'
+  user.country = 'Colombia'
+  // ----------------------------------
+
   return (
     <AppBar
       {...rest}
@@ -64,16 +79,27 @@ const Topbar = props => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
+        {(user.logged) ? '' :
+          <IconButton
+            activeclassname={classes.active}
+            className={classes.signOutButton}
+            color="inherit"
+            component={CustomRouterLink}
+            to={'/sign-in'}
+          >
+            sign in
+          </IconButton>}
+        {(!user.logged) ? '' :
+          <IconButton
+            activeclassname={classes.active}
+            className={classes.signOutButton}
+            color="inherit"
+            component={CustomRouterLink}
+            to={'/sign-up'}
+          >
+            <ExitToAppIcon />
+          </IconButton>}
 
-        <IconButton
-          activeclassname={classes.active}
-          className={classes.signOutButton}
-          color="inherit"
-          component={CustomRouterLink}
-          to={'/sign-in'}
-        >
-          <InputIcon />
-        </IconButton>
         <Hidden lgUp>
           <IconButton
             label="llllll"

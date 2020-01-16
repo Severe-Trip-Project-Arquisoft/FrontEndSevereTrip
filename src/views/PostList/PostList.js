@@ -6,35 +6,100 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { UserContext }  from '../../contexts/UserContext';
 import { PostCard } from './components';
 import { API }  from 'API';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3),
   },
   content: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(0),
   },
   pagination: {
     marginTop: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end'
+  },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '10px'
+  },
+  postCard: {
+    alignContent: 'stretch'
   }
 }));
 
-
-
 const PostList = () => {
-    
+// borrar datos de prueba
+  const datosPrueba = [{
+    'id':'12h1h4uhdtjtkdstd413h',
+    'name':'pruebaName1',
+    'serviceType':'hotel',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1h4uh4432ghusye413h',
+    'name':'pruebaName2',
+    'serviceType':'rentCar',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1dhshsth4uh413h',
+    'name':'pruebaName3',
+    'serviceType':'flight',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1h4uh34gg4413h',
+    'name':'pruebaName4',
+    'serviceType':'restaurant',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1h4uhdtje45j7tkdstd413h',
+    'name':'pruebaName5',
+    'serviceType':'hotel',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1h4uh4u6l,4432ghusye413h',
+    'name':'pruebaName6',
+    'serviceType':'rentCar',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1dhyyjshsth4uh413h',
+    'name':'pruebaName7',
+    'serviceType':'flight',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  },
+  {
+    'id':'12h1h4uh3334gg4413h',
+    'name':'pruebaName8',
+    'serviceType':'restaurant',
+    'description':'PRUEBA Interesante prueba',
+    'city':'pruebaBogota',
+  }]
 
   const [state, setState] = useState ({
-    posts : [],
-    favorites: {}
+    // posts : [],
+    posts : datosPrueba,
+    favorites: {},
   });
+
+  const [data, setData] = useState([]);
+  const [enteredFilter, setEnteredFilter] = useState("");
 
   const {user} = useContext(UserContext);
   useEffect( ()=>{
-
 
     const fetchData = async ()=>{
       let res = await API.postProvider.getAll();
@@ -54,15 +119,26 @@ const PostList = () => {
         setState(
           {
             posts: res.data,
-            favorites
+            favorites,
           }
         )
+
+        setData(res.data)
       }
     }
     fetchData();
 
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      let filteredData = state.posts.filter(item => {
+        return item.name.toLowerCase().includes(enteredFilter.toLowerCase());
+      });
+      setData(filteredData);
+    };
+    fetchData();
+  }, [enteredFilter]);  
 
   const classes = useStyles();
 
@@ -70,12 +146,29 @@ const PostList = () => {
 
     <div className={classes.root}>
       <div className={classes.content}>
+        <form noValidate autoComplete="off">
+              <div horizontal-align="left">
+                <TextField
+                  className={classes.input}
+                  id="standard-full-width"
+                  placeholder="Placeholder"
+                  label="Search here..."
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={
+                    e => setEnteredFilter(e.target.value)
+                  }
+                />
+              </div>
+          </form>
         <Grid
           container
           spacing={3}
         >
-          {state.posts.map(post => (
+          {data.map(post => (
             <Grid
+              className={classes.postCard}
               item
               key={post.id}
               lg={4}

@@ -27,7 +27,7 @@ const ReservationList = () => {
   const {user} = useContext(UserContext);
 
   const [reservations,setReservations] = useState([]);
-  const [loaded,setLoaded] = useState(false);
+  const [setLoaded] = useState(false);
   useEffect( ()=>{
     const fetchReservations = async ()=>{
       const res = await API.reservation.getByClient( user.id );

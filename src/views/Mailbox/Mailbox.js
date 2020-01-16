@@ -3,6 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
 import ConversationList from './components/ConversationList';
 import Grid from '@material-ui/core/Grid';
+import {Conversation} from './components';
 
 //import {API} from 'API'
 
@@ -52,7 +53,12 @@ const Mailbox = () => {
       direction="row"
       justify="flex-start"
     >
-      <ConversationList messages = {messages}/>
+      <Grid item xs={6} sm={6}>
+        <ConversationList messages = {messages}/>
+      </Grid>
+      <Grid item xs={6} sm={6}>
+        <Conversation/>
+      </Grid>
     </Grid>
   );
 

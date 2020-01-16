@@ -1,4 +1,4 @@
-import React , {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { forwardRef } from 'react';
@@ -10,17 +10,18 @@ import {
   CardActions,
   Typography,
   Grid,
-  Divider
+  Divider,
+  CardMedia
 } from '@material-ui/core';
 // import { sizing, maxHeight, maxWidth } from '@material-ui/system';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
-import {UserContext} from '../../../../contexts/UserContext';
-import {API} from '../../../../API';
+import { UserContext } from '../../../../contexts/UserContext';
+import { API } from '../../../../API';
 
-const mapServiceTypeUnit = (type) =>{
-  switch(type){
+const mapServiceTypeUnit = (type) => {
+  switch (type) {
     case 'restaurant':
       return 'plato (aprox)';
     case 'hotel':
@@ -29,6 +30,8 @@ const mapServiceTypeUnit = (type) =>{
       return 'día de alquiler';
     case 'flight':
       return 'pasaje';
+    default:
+      return '';
   }
 }
 
@@ -40,18 +43,14 @@ const useStyles = makeStyles(theme => ({
   root: {},
   button: {},
   imageContainer: {
-    height: 300,
-    width: 400,
+    height: '100%',
+    width: '100%',
     margin: '0 auto',
-    border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  image: {
-    width: '100%'
   },
   statsItem: {
     display: 'flex',
@@ -60,6 +59,14 @@ const useStyles = makeStyles(theme => ({
   statsIcon: {
     color: theme.palette.icon,
     marginRight: theme.spacing(1)
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9,
+  },
+  titlePost:{
+    marginTop: 5,
+    marginBottom: 5
   }
 }));
 
@@ -74,30 +81,27 @@ const CustomRouterLink = forwardRef((props, ref) => (
 // const ruta = '/postDetail';
 const PostCard = props => {
   const { className, post, favorite } = props;
-  const { user } =  useContext(UserContext)
+  const { user } = useContext(UserContext)
   const classes = useStyles();
   const [fav, setFav] = useState(favorite);
   const [favId, setFavId] = useState(null);
   const ruta = '/postDetail';
-  const handleFavorite = async() =>{
-  
+  const handleFavorite = async () => {
 
+    if (!fav) {
+      const res = await API.favorites.insertFavorite(user.id, post.id);
 
-    if(!fav){
-      const res = await API.favorites.insertFavorite(user.id,post.id);
-
-      if(res){
+      if (res) {
         setFavId(res.data);
         setFav(true);
 
         console.log(fav);
-      }else{
+      } else {
 
       }
 
-
-    }else{
-      const res = await API.favorites.deleteFavorite(user.id,post.id);
+    } else {
+      const res = await API.favorites.deleteFavorite(user.id, post.id);
       setFavId('');
       setFav(false);
 
@@ -105,30 +109,42 @@ const PostCard = props => {
       console.log(fav);
     }
 
-
-
-
   }
+  
   return (
     <Card
       className={clsx(classes.root, className)}
     >
-      <CardContent>
-        <div className={classes.imageContainer}>
-          <img
-            alt="Post"
-            className={classes.image}
-            src={'/images/'+post.serviceType+'s/'+post.serviceType+'5.png'}
-          />
-        </div>
-        <Typography
+      <Typography
+          className={classes.titlePost}
           align="center"
-          component={CustomRouterLink}
-          to={ruta+'/'+post.id}
-          variant="h4"
+          variant="h2"
         >
           {post.name}
         </Typography>
+      <CardMedia
+        alt="Post"
+        className={classes.media}
+        image={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
+        component={CustomRouterLink}
+        to={ruta + '/' + post.id}
+        
+      />
+      <CardContent>
+        {/* <div className={classes.imageContainer}>
+          <Typography
+            align="center"
+            component={CustomRouterLink}
+            to={ruta + '/' + post.id}
+            variant="h4"
+          >
+            <img
+              alt="Post"
+              className={classes.image}
+              src={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
+            />
+          </Typography>
+        </div> */}
         <Typography
           align="center"
           variant="body1"
@@ -149,6 +165,7 @@ const PostCard = props => {
         </Typography>
       </CardContent>
       <Divider />
+
       <CardActions>
         <Grid
           container
@@ -177,9 +194,9 @@ const PostCard = props => {
               >
                 <StarIcon
                   className={classes.statsIcon}
-                  color = {fav ? 'primary' : 'error'}
+                  color={fav ? 'primary' : 'error'}
                 />
-              </IconButton>: <React.Fragment/>}
+              </IconButton> : <React.Fragment />}
             <Typography
               display="inline"
               variant="body2"

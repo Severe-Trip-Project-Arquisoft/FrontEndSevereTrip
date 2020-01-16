@@ -29,8 +29,14 @@ const Profile = props => {
 
   const classes = useStyles();
 
-  let {user} = useContext(UserContext);
-  user = {...user, avatar:'/images/avatars/avatar_11.png' };
+  var {user} = useContext(UserContext);
+// -------------------------------borrar
+  // console.log('Profile----------------------');
+  // console.log(user);
+  
+  // console.log('ProfileAfter  Avatar ----------------------');
+  // console.log(user);
+  // ----------------------------------------------------
   return (
     <div
       {...rest}
