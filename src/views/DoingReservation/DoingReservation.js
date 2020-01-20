@@ -60,16 +60,15 @@ const DoingReservation = props =>{
     });
 
   const [Post,setPost] = useState(mockData);
-  const [setLoaded] = useState(false);
+  const [loaded,setLoaded] = useState(false);
   useEffect(()=>{
     const fetchPostData = async ()=>{
-      let receivedPostData = await API.postProvider.getById(postId)
+      const receivedPostData = await API.postProvider.getById(postId)
       if(receivedPostData && receivedPostData.status === 200){
         setPost(Object.assign({},Post,receivedPostData.data));
         setLoaded(true);
-	    }
+      }
     }
-
     fetchPostData();
     },[]);
 
@@ -103,12 +102,12 @@ const DoingReservation = props =>{
   const handleSubmit = event => {
       event.preventDefault();
       const data = {
+        amount: dataPost.serviceNumber,
         clientId: user.id,
         providerId: Post.providerId,
         postId: Post.id,
         startTime: dataPost.selectedDateCheckIn.toJSON(),
         endTime: dataPost.selectedDateCheckOut.toJSON(),
-        amount: dataPost.serviceNumber,
         prizePerHead: Post.price,
         paid: false,
         approved: false
