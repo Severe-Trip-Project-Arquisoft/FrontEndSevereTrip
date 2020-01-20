@@ -76,46 +76,46 @@ const ReservationDetail = props => {
   const {user} = useContext(UserContext);
   useEffect(()=>{
     const fetchReservationData = async ()=>{
-console.log("++++++",reservationId);
-let one = await API.reservation.getById(reservationId)
-await API.reservation.getById(reservationId).then(res => {
-      console.log("res",res);
+      console.log('++++++',reservationId);
+      let one = await API.reservation.getById(reservationId)
+      await API.reservation.getById(reservationId).then(res => {
+        console.log('res',res);
         
-      if(res.status === 200){          
-	setReservation(Object.assign({},reservation,res.data));
-	console.log("tttttttttt",reservation);
-	}
-    }).catch((error) => {
-//	dialogo1 =true;
-      console.log(error);
-    });
+        if(res.status === 200){          
+          setReservation(Object.assign({},reservation,res.data));
+          console.log('tttttttttt',reservation);
+        }
+      }).catch((error) => {
+        //	dialogo1 =true;
+        console.log(error);
+      });
 
       console.log('reservation_postId:',one.data.postId);
 
-await API.postProvider.getById(one.data.postId).then(res => {
-      console.log(res);
+      await API.postProvider.getById(one.data.postId).then(res => {
+        console.log(res);
         
-      if(res.status === 200){          
-	setPost(Object.assign({},Post,res.data));
-	console.log("ññññññññ",Post);
-	}
-    }).catch((error) => {
-//	dialogo1 =true;
-      console.log(error);
-    });
+        if(res.status === 200){          
+          setPost(Object.assign({},Post,res.data));
+          console.log('ññññññññ',Post);
+        }
+      }).catch((error) => {
+        //	dialogo1 =true;
+        console.log(error);
+      });
     }
     fetchReservationData();
-    },[]);
+  },[]);
 
   const handleSubmit = event => {
-      event.preventDefault();
+    event.preventDefault();
 
-//      console.log('DATE',data.startTime);
-      API.reservation.answerReservation(reservation.id);
-      history.push('/posts');
-//      var reservas ='hjkl';
-//      var reservas = API.reservation.getByClient(user.id);
-//      console.log('Reservaciones........',reservas);      
+    //      console.log('DATE',data.startTime);
+    API.reservation.answerReservation(reservation.id);
+    history.push('/posts');
+    //      var reservas ='hjkl';
+    //      var reservas = API.reservation.getByClient(user.id);
+    //      console.log('Reservaciones........',reservas);      
   };
 
 
@@ -127,15 +127,10 @@ await API.postProvider.getById(one.data.postId).then(res => {
 
       <div className={classes.content}>
 
- <Grid
+        <Grid
           container
           spacing={3}
         >
-
-
-
-
-
           <Card
             className={clsx(classes.root, className)}
           >
@@ -270,10 +265,10 @@ await API.postProvider.getById(one.data.postId).then(res => {
               <Divider />
               <CardActions>
                 <Button
-                  type="submit"
                   color="primary"
-                  variant="contained"
                   onClick={handleSubmit}
+                  type="submit"
+                  variant="contained"
                 >
                   Save Reservation
                 </Button>
@@ -290,7 +285,7 @@ await API.postProvider.getById(one.data.postId).then(res => {
         </Grid>
 
         
-	</div>          
+      </div>          
     </div>
   );
 };

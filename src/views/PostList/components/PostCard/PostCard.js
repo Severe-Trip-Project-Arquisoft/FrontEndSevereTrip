@@ -180,7 +180,7 @@ const PostCard = props => {
               display="inline"
               variant="body2"
             >
-              Updated 2hr ago
+              Actualizado hace 2 horas
             </Typography>
           </Grid>
           <Grid

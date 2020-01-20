@@ -24,12 +24,12 @@ const Footer = props => {
         &copy;{' '}
         <Link
           component="a"
-          href="https://34.197.134.208:8080/"
+          href="https://github.com/Severe-Trip-Project-Arquisoft"
           target="_blank"
         >
-          Software Architecture
+          Severe Trip | UNAL | Software Architecture
         </Link>
-        . 2019
+        . 2019-2020
       </Typography>
     </div>
   );

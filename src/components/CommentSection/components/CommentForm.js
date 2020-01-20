@@ -91,7 +91,7 @@ const CommentForm =  ({user, postId,classes, reload}) =>{
           multiline
           name = "content"
           onChange= {(e)=> {  setContent(e.target.value)  }}
-          placeholder="Placeholder"                
+          placeholder="Buscar"
           variant="outlined"
         />  
 

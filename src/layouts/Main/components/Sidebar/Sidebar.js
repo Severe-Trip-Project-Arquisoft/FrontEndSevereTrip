@@ -44,40 +44,40 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: 'Post',
+      title: 'Posts',
       href: '/posts',
       icon: <PublicIcon />
     },
     {
-      title: 'Hotels',
+      title: 'Hoteles',
       href: '/hotels',
       icon: <HotelIcon />
     },
     {
-      title: 'Rental Cars',
+      title: 'Renta de carros',
       href: '/cars',
       icon: <DirectionsCarIcon />
     },
     {
-      title: 'Restaurants',
+      title: 'Restaurantes',
       href: '/restaurants',
       icon: <RestaurantIcon />
     },
     {
-      title: 'Flights',
+      title: 'Vuelos',
       href: '/flights',
       icon: <FlightTakeoffIcon />
     }
   ];
 
   if(user.logged)
-    pages.push({
-      title: 'Favorites',
+    pages.unshift({
+      title: 'Favoritos',
       href: '/favorites',
       icon: <FavoriteIcon />
     },
     {
-      title: 'Reservations',
+      title: 'Reservaciones',
       href: '/reservations',
       icon: <LibraryBooksIcon />
     });

@@ -39,7 +39,7 @@ const FlightList = (props) => {
   });
 
   const [data, setData] = useState([]);
-  const [enteredFilter, setEnteredFilter] = useState("");
+  const [enteredFilter, setEnteredFilter] = useState('');
 
   useEffect( () => {   
     async function cargarDatos () {
@@ -70,53 +70,56 @@ const FlightList = (props) => {
 
   return (
     state.isDataLoaded ?
-    <div className={classes.root}>
-      <div className={classes.content}>
-        <form noValidate autoComplete="off">
-              <div horizontal-align="left">
-                <TextField
-                  className={classes.input}
-                  id="standard-full-width"
-                  placeholder="Placeholder"
-                  label="Search here..."
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={
-                    e => setEnteredFilter(e.target.value)
-                  }
-                />
-              </div>
+      <div className={classes.root}>
+        <div className={classes.content}>
+          <form
+            autoComplete="off"
+            noValidate
+          >
+            <div horizontal-align="left">
+              <TextField
+                className={classes.input}
+                fullWidth
+                id="standard-full-width"
+                label="Buscar..."
+                margin="normal"
+                onChange={
+                  e => setEnteredFilter(e.target.value)
+                }
+                placeholder="Buscar"
+                variant="outlined"
+              />
+            </div>
           </form>
           <FlightsToolbar />
-        <Grid
-          container
-          spacing={3}
-        >
-          {data.map(flight => (
-            <Grid
-              item
-              key={flight.id}
-              lg={4}
-              md={6}
-              xs={12}
-            >
-              <PostCard post={flight} />
-            </Grid>
-          ))}
-        </Grid>
+          <Grid
+            container
+            spacing={3}
+          >
+            {data.map(flight => (
+              <Grid
+                item
+                key={flight.id}
+                lg={4}
+                md={6}
+                xs={12}
+              >
+                <PostCard post={flight} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        <div className={classes.pagination}>
+          <Typography variant="caption">1-6 of 20</Typography>
+          <IconButton>
+            <ChevronLeftIcon />
+          </IconButton>
+          <IconButton>
+            <ChevronRightIcon />
+          </IconButton>
+        </div>
       </div>
-      <div className={classes.pagination}>
-        <Typography variant="caption">1-6 of 20</Typography>
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton>
-          <ChevronRightIcon />
-        </IconButton>
-      </div>
-    </div>
-    : <div>
+      : <div>
         <CircularProgress className={classes.progress} />
       </div>
   );

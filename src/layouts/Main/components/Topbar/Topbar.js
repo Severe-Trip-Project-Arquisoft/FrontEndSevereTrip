@@ -4,9 +4,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Hidden, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { UserContext } from '../../../../contexts/UserContext';
 
@@ -56,26 +55,16 @@ const Topbar = props => {
         </RouterLink>
         <ProductsToolbar />
         <div className={classes.flexGrow} />
-
-        <IconButton color="inherit">
-          <Badge
-            badgeContent={notifications.length}
-            color="primary"
-            variant="dot"
-          >
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
         {(user.logged) ? '' :
-          <IconButton
+          <Button
             activeclassname={classes.active}
             className={classes.signOutButton}
             color="inherit"
             component={CustomRouterLink}
             to={'/sign-in'}
           >
-            sign in
-          </IconButton>}
+            Ingresar
+          </Button>}
         {(!user.logged) ? '' :
           <IconButton
             activeclassname={classes.active}

@@ -1,11 +1,14 @@
 import axios from 'axios';
 import crypto from 'crypto'
-
 const base_url = 'http://52.5.42.71:8080';
 // const base_url = 'https://localhost:8443/login';
 
 
-axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('userInfo');
+const token = sessionStorage.getItem('userInfo')
+
+if(token){
+  axios.defaults.headers.common['Authorization'] = token;
+}
 
 
 export const API =

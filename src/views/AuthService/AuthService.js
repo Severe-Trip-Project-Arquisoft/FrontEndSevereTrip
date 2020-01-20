@@ -6,24 +6,23 @@ const USER_API_BASE_URL = 'http://52.5.42.71:8080/login';
 
 class AuthService {
     
-    async login(credentials){
-        credentials.password = crypto.createHash('sha256').update(credentials.password).digest('hex');
-        return await axios.post(USER_API_BASE_URL, credentials
-            ).catch(e => console.log('Error: ', e));
-    }
+  async login(credentials){
+    credentials.password = crypto.createHash('sha256').update(credentials.password).digest('hex');
+    return await axios.post(USER_API_BASE_URL, credentials);
+  }
 
-    getUserInfo(){
-        return JSON.parse(sessionStorage.getItem("userInfo"));
-    }
+  getUserInfo(){
+    return JSON.parse(sessionStorage.getItem('userInfo'));
+  }
 
-    getAuthHeader() {
-       return {headers: {Authorization: 'Bearer ' + this.getUserInfo().token }};
-    }
+  getAuthHeader() {
+    return {headers: {Authorization: 'Bearer ' + this.getUserInfo().token }};
+  }
 
-    logOut() {
-        sessionStorage.removeItem("userInfo");
-        return axios.post(USER_API_BASE_URL + 'logout', {}, this.getAuthHeader());
-    }
+  logOut() {
+    sessionStorage.removeItem('userInfo');
+    return axios.post(USER_API_BASE_URL + 'logout', {}, this.getAuthHeader());
+  }
 }
 
 export default new AuthService();

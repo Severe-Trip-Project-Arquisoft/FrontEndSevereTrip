@@ -69,11 +69,11 @@ const schema = {
 const currencies = [
   {
     value: 'provider',
-    label: 'provider',
+    label: 'Proveedor',
   },
   {
     value: 'client',
-    label: 'client',
+    label: 'Cliente',
   },
 ];
 
@@ -403,13 +403,13 @@ const SignUp = props => {
                   className={classes.title}
                   variant="h2"
                 >
-                  Create new account
+                  Crea una cuenta nueva
   		          </Typography>
                 <Typography
                   color="textSecondary"
                   gutterBottom
                 >
-                  Use your email to create new account
+                  Ingresa tus datos para crear una cuenta nueva.
 	              </Typography>
               </Grid>
               <Grid
@@ -424,7 +424,7 @@ const SignUp = props => {
                   helperText={
                     hasError('userName') ? formState.errors.userName[0] : null
                   }
-                  label="Username"
+                  label="Nombre de usuario"
                   name="userName"
                   onChange={handleChange}
                   type="text"
@@ -444,7 +444,7 @@ const SignUp = props => {
                   helperText={
                     hasError('email') ? formState.errors.email[0] : null
                   }
-                  label="Email address"
+                  label="Email"
                   name="email"
                   onChange={handleChange}
                   type="text"
@@ -464,7 +464,7 @@ const SignUp = props => {
                   helperText={
                     hasError('password') ? formState.errors.password[0] : null
                   }
-                  label="Password"
+                  label="Contraseña"
                   name="password"
                   onChange={handleChange}
                   type="password"
@@ -484,7 +484,7 @@ const SignUp = props => {
                   helperText={
                     hasError('firstName') ? formState.errors.firstName[0] : null
                   }
-                  label="First name"
+                  label="Nombre"
                   name="firstName"
                   onChange={handleChange}
                   type="text"
@@ -504,7 +504,7 @@ const SignUp = props => {
                   helperText={
                     hasError('lastName') ? formState.errors.lastName[0] : null
                   }
-                  label="Last name"
+                  label="Apellido"
                   name="lastName"
                   onChange={handleChange}
                   type="text"
@@ -524,7 +524,7 @@ const SignUp = props => {
                   helperText={
                     hasError('address') ? formState.errors.address[0] : null
                   }
-                  label="Address"
+                  label="Dirección"
                   name="address"
                   onChange={handleChange}
                   type="text"
@@ -544,7 +544,7 @@ const SignUp = props => {
                   helperText={
                     hasError('country') ? formState.errors.country[0] : null
                   }
-                  label="select your country"
+                  label="Selecciona tu país"
                   name="country"
                   onChange={handleChange}
                   select
@@ -575,7 +575,7 @@ const SignUp = props => {
                   helperText={
                     hasError('cellphone') ? formState.errors.cellphone[0] : null
                   }
-                  label="Cellphone"
+                  label="Telefono móvil"
                   name="cellphone"
                   onChange={handleChangeCellphone}
                   value={formState.values.cellphone || ''}
@@ -594,7 +594,7 @@ const SignUp = props => {
                   helperText={
                     hasError('rol') ? formState.errors.rol[0] : null
                   }
-                  label="Select your rol"
+                  label="Elige tu rol"
                   name="rol"
                   onChange={handleChange}
                   select
@@ -624,7 +624,7 @@ const SignUp = props => {
                   color="textSecondary"
                   variant="body1"
                 >
-                  I have read the{' '}
+                  He leido los {' '}
                   <Link
                     color="primary"
                     component={RouterLink}
@@ -632,7 +632,7 @@ const SignUp = props => {
                     underline="always"
                     variant="h6"
                   >
-                    Terms and Conditions
+                    Terminos y condiciones
                   </Link>
                 </Typography>
               </div>
@@ -650,19 +650,19 @@ const SignUp = props => {
                 type="submit"
                 variant="contained"
               >
-                Sign up now
+                Registrarse ahora
               </Button>
               <Typography
                 color="textSecondary"
                 variant="body1"
               >
-                Have an account?{' '}
+                ¿Ya tienes una cuenta?{' '}
                 <Link
                   component={RouterLink}
                   to="/sign-in"
                   variant="h6"
                 >
-                  Sign in
+                  Ingresar
                 </Link>
               </Typography>
 
