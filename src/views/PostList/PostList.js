@@ -98,12 +98,12 @@ const PostList = () => {
               className={classes.input}
               fullWidth
               id="standard-full-width"
-              label="Search here..."
+              label="Buscar..."
               margin="normal"
               onChange={
                 e => setEnteredFilter(e.target.value)
               }
-              placeholder="Placeholder"
+              placeholder="Buscar"
               variant="outlined"
             />
           </div>

@@ -48,7 +48,7 @@ const PostDetailToolbar = props => {
   const { user } = useContext(UserContext);
 
   const classes = useStyles();
-//  console.log(postId);
+  //  console.log(postId);
 
   const AlertDescription = {
     titulo:'Usted no ha iniciado sesion ó no tiene los permisos necesarios',
@@ -70,42 +70,42 @@ const PostDetailToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-{(user.logged && user.rol==="PROVIDER") ?
-        <Button
-          color="primary"
-          component={CustomRouterLink}
-          to={DeleteHotel}
-          variant="contained"
-        >
+        {(user.logged && user.rol==='PROVIDER') ?
+          <Button
+            color="primary"
+            component={CustomRouterLink}
+            to={DeleteHotel}
+            variant="contained"
+          >
           Delete hotel
-        </Button>
-:
-<div></div>
-}
+          </Button>
+          :
+          <div />
+        }
 
-{(user.logged && user.rol==="CLIENT") ?
-        <Button
-          color="primary"
-          component={CustomRouterLink}
-          to={Reservation+'/'+postId}
-          variant="contained"
-        >
-          Booking
-        </Button>
-:
-        <Button
-          color="primary"
-          variant="contained"
-	  onClick={handleClickOpen}
-        >
-          Booking
-        </Button>
-}
+        {(user.logged && user.rol==='CLIENT') ?
+          <Button
+            color="primary"
+            component={CustomRouterLink}
+            to={Reservation+'/'+postId}
+            variant="contained"
+          >
+          Reservar
+          </Button>
+          :
+          <Button
+            color="primary"
+            onClick={handleClickOpen}
+            variant="contained"
+          >
+          Reservar
+          </Button>
+        }
       </div>
 
       <Dialog 
-        open={open}
         onClose={handleClose}
+        open={open}
       >
         <AlertSessionNotStarted
           AlertDescription={AlertDescription}

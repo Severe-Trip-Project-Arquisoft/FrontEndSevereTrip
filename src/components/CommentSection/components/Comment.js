@@ -8,18 +8,23 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import {API} from 'API';
-
-
+import {amber,blue, blueGrey, brown, deepPurple, pink, green, orange, red, lightGreen, lightBlue, lime, yellow, deepOrange, purple, teal, indigo, cyan} from '@material-ui/core/colors'
+const colors = [amber,blue, blueGrey, brown, deepPurple, pink, green, orange, red, lightGreen, lightBlue, lime, yellow, deepOrange, purple, teal, indigo, cyan]
 const styles = theme => ({
   comment: {
     marginBottom: theme.spacing(1)
+  },
+  avatar: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+    backgroundColor: colors[~~(Math.random() * colors.length)][500]
   }
 });
 
 const Comment = props =>{
 
-       
-  const { classes, comment } = props;  
+
+  const { classes, comment } = props;
 
   const [user, setUser] = useState( {
     loaded: false,
@@ -28,24 +33,28 @@ const Comment = props =>{
 
 
   useEffect(
-    () =>{
-	if(user.logged){
-      const fetchData = async ()=>{
-        const res = await API.users.getById(comment.clientid);
+    () =>{      
+      const fetchData = async () =>{
+        const res = await API.users.getById(comment.clientId);
         console.log(res);
-        if(res.status === 200){
-          setUser( 
-            {   username : res.data.username , loaded: true }
-          );
+        if(res) {
+          if(res.status === 200){
+            setUser(
+              {  ...user, ...res.data , loaded: true }
+            );
+          }
+          else if (res.status=== 200){
+            setUser(
+              {  ...user, loaded: false }
+            );
+          }
         }
-                
-      }   
-      fetchData();
-     }
 
+      }
+      fetchData();
     }
 
-  );
+    ,[]);
 
   return (   
         
@@ -63,9 +72,11 @@ const Comment = props =>{
             xs={1}
           >
 
-            <Avatar aria-label="recipe" > 
-              {user !== null && user !== undefined &&user.username!== undefined && user.username!== null && user.username.length > 0 ? user.username[0].toUpperCase() : 'A' }   
-                
+            <Avatar
+              aria-label="recipe" 
+              className = {classes.avatar}
+            >
+              {user.loaded ? user.username[0].toUpperCase() : 'A' }
             </Avatar>
 
 
@@ -75,10 +86,10 @@ const Comment = props =>{
             xs={3}
           >   
             <Typography variant = "h3" > 
-              {user !== null && user !== undefined && user.username!== undefined && user.username!== null && user.username.length > 0 ? user.username : 'Anónimo' }
+              {user.loaded ? user.username : 'Anónimo' }
             </Typography>
             <Typography variant = "body1" > 
-              {user !== null && user !== undefined && user.username!== undefined && user.username!== null && user.username.length > 0 ? comment.username : 'Anónimo' }
+              {user.loaded ? `${user.firstName} ${user.secondName} ` : '' }
             </Typography>
 
           </Grid>
@@ -95,19 +106,13 @@ const Comment = props =>{
                         
 
           </Grid>
+          <Rating
+            name="hover-side"
+            readOnly
+            value={comment.rating}
+          />
 
 
-          <Grid
-            item
-            xs={6}
-          >
-            <Rating
-              name="hover-side"
-              readOnly            
-              value={comment.rating}                    
-            />
-          </Grid>
-   
         </Grid> 
       </CardContent>
     </Card>

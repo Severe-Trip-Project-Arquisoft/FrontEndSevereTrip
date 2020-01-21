@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
     minHeight: 'fit-content'
   },
   avatar: {
-    width: 60,
-    height: 60
+    width: theme.spacing(14),
+    height: theme.spacing(14)
   },
   name: {
     marginTop: theme.spacing(1)
@@ -30,7 +30,7 @@ const Profile = props => {
   const classes = useStyles();
 
   var {user} = useContext(UserContext);
-// -------------------------------borrar
+  // -------------------------------borrar
   // console.log('Profile----------------------');
   // console.log(user);
   
@@ -60,7 +60,7 @@ const Profile = props => {
         className={classes.name}
         variant="h5"
       >
-        {user.rol}
+        {user.rol === "PROVIDER" ? "Proveedor" : "Cliente"}
       </Typography>
     </div>
   );

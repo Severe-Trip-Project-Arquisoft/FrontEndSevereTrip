@@ -76,8 +76,8 @@ const RestaurantList = (props) => {
                   <TextField
                     className={classes.input}
                     id="standard-full-width"
-                    placeholder="Placeholder"
-                    label="Search here..."
+                    placeholder="Buscar"
+                    label="Buscar..."
                     variant="outlined"
                     fullWidth
                     margin="normal"

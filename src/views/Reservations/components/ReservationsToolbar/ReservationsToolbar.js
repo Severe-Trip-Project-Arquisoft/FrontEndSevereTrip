@@ -38,7 +38,7 @@ const ReservationsToolbar = props => {
         <Button
           color="primary"
           component={RouterLink}
-          to="/doingReservations"
+          to="/posts"
           variant="contained"
         >
           Add reservation

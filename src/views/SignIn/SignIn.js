@@ -9,8 +9,7 @@ import {
   Button,
   TextField,
   Link,
-  Typography,
-  MenuItem
+  Typography
 } from '@material-ui/core';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../AuthService/AuthService';
@@ -30,22 +29,8 @@ const schema = {
     length: {
       maximum: 64
     }
-  },
-  rol: {
-    presence: { allowEmpty: false, message: 'is required' },
-  },
+  }
 };
-
-const currencies = [
-  {
-    value: 'provider',
-    label: 'provider',
-  },
-  {
-    value: 'client',
-    label: 'client',
-  },
-];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -161,42 +146,30 @@ const SignIn = props => {
     var dialogo2 = true;
 
     await AuthService.login(credentials).then(res => {
-      //      console.log(res);
-
+      //      console.log(res)
       if(res && res.status === 200){
         sessionStorage.setItem('userInfo', JSON.stringify(res.headers.authorization).substr(1,JSON.stringify(res.headers.authorization).length-2));
         //console.log(sessionStorage.getItem('userInfo'));
         axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('userInfo');
         dialogo1 =false;
       }
-    }).catch((error) => {
+    }).catch(() => {
       dialogo1 =true;
-      console.log(error);
     });
 
 
 
-    await API.users.getByName(credentials.username).then( userRes => {
+    await API.users.getByName(credentials.username).then( 
+      userRes => {
       //          console.log(userRes);
-      if(userRes && userRes.status === 200){
-
-        dialogo2 =false;
-        API.favorites.getById(userRes.data.id).
-        then((res)=>{
-          let favs = []
-          if(res && res.status === 200){
-            console.log(res)
-            favs = res.data
-
-          }
+        if(userRes && userRes.status === 200){
+          dialogo2 =false;
           setUser({...userRes.data,
             logged: true,
-            avatar: '/images/avatars/avatar_' + Math.floor(1 + Math.random() * 10) +'.png',
-            favorites: favs
-          });
-        }).catch(e => console.log(e));
-      }
-    }).catch((error) => {
+            avatar: '/images/avatars/avatar_' + Math.floor(1 + Math.random() * 10) +'.png'
+          }); 
+        }
+      }).catch((error) => {
       console.log(error);
     });
 
@@ -232,31 +205,8 @@ const SignIn = props => {
                 className={classes.title}
                 variant="h2"
               >
-                  Sign in
+                  Inicia sesión
               </Typography>
-              <TextField
-                className={classes.textField}
-                error={hasError('rol')}
-                fullWidth
-                helperText={
-                  hasError('rol') ? formState.errors.rol[0] : null
-                }
-                label="Select your rol"
-                name="rol"
-                onChange={handleChange}
-                select
-                value={formState.values.rol || ''}
-                variant="outlined"
-              >
-                {currencies.map(option => (
-                  <MenuItem
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
               <TextField
                 className={classes.textField}
                 error={hasError('userName')}
@@ -264,7 +214,7 @@ const SignIn = props => {
                 helperText={
                   hasError('userName') ? formState.errors.userName[0] : null
                 }
-                label="User name"
+                label="Nombre de usuario"
                 name="userName"
                 onChange={handleChange}
                 type="text"
@@ -278,7 +228,7 @@ const SignIn = props => {
                 helperText={
                   hasError('password') ? formState.errors.password[0] : null
                 }
-                label="Password"
+                label="Contraseña"
                 name="password"
                 onChange={handleChange}
                 type="password"
@@ -294,19 +244,19 @@ const SignIn = props => {
                 type="submit"
                 variant="contained"
               >
-                  Sign in now
+                  Ingresa ahora
               </Button>
               <Typography
                 color="textSecondary"
                 variant="body1"
               >
-                  Don't have an account?{' '}
+                  ¿No tienes una cuenta? {' '}
                 <Link
                   component={RouterLink}
                   to="/sign-up"
                   variant="h6"
                 >
-                    Sign up
+                    ¡Registrate!
                 </Link>
               </Typography>
             </form>
@@ -323,8 +273,6 @@ const SignIn = props => {
           AlertDescription={AlertDescription}
         />
       </Dialog>
-
-	
     </div>
   );
 };
