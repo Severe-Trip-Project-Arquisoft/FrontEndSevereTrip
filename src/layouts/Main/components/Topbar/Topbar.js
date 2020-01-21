@@ -10,6 +10,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { UserContext } from '../../../../contexts/UserContext';
 
 import { ProductsToolbar} from './components';
+import AuthService from '../../../../views/AuthService/AuthService';
 
 const CustomRouterLink = forwardRef((props, ref) => (
   <div
@@ -72,6 +73,7 @@ const Topbar = props => {
             color="inherit"
             component={CustomRouterLink}
             to={'/sign-up'}
+            onClick={AuthService.logOut}
           >
             <ExitToAppIcon />
           </IconButton>}

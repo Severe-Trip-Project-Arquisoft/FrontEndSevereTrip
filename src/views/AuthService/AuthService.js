@@ -19,9 +19,10 @@ class AuthService {
     return {headers: {Authorization: 'Bearer ' + this.getUserInfo().token }};
   }
 
-  logOut() {
+  async logOut() {
     sessionStorage.removeItem('userInfo');
-    return axios.post(USER_API_BASE_URL + 'logout', {}, this.getAuthHeader());
+    axios.defaults.headers.common['Authorization'] = undefined;
+    console.log(sessionStorage.getItem('userInfo'));
   }
 }
 
