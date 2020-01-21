@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { forwardRef } from 'react';
@@ -80,35 +80,50 @@ const CustomRouterLink = forwardRef((props, ref) => (
 
 // const ruta = '/postDetail';
 const PostCard = props => {
-  const { className, post, favorite } = props;
+  const { className, post } = props;
   const { user } = useContext(UserContext)
   const classes = useStyles();
-  const [fav, setFav] = useState(favorite);
-  const [favId, setFavId] = useState(null);
+  const [fav, setFav] = useState( false);
+  const [favorites, setFavorites] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const getFavorites = async () =>{
+    const res = await API.favorites.getById(user.id);
+    console.log({hey: "aqui", res})
+    if (res && res.status === 200){
+      setFavorites(res.data);
+      setLoaded(true);
+    }
+  }
+  useEffect(
+    () =>{
+      if (user.rol === 'CLIENT' && !loaded) getFavorites().catch((e) => console.log(e));
+    }, []
+  );
+
   const ruta = '/postDetail';
   const handleFavorite = async () => {
+    console.log({user,post});
+    if (user.rol === 'CLIENT' && loaded){
+      console.log({favorites})
+      if(loaded && favorites.includes(post.id)) {
+        const res = await API.favorites.deleteFavorite(user.id, post.id);
+        console.log(res);
+        if (res && res.status === 200) {
+          setFav(false);
+          setLoaded(false);
+          await getFavorites();
 
-    if (!fav) {
-      const res = await API.favorites.insertFavorite(user.id, post.id);
-
-      if (res) {
-        setFavId(res.data);
-        setFav(true);
-
-        console.log(fav);
+        }
       } else {
-
+        const res = await API.favorites.insertFavorite(user.id, post.id);
+        console.log(res);
+        if (res && res.status === 200) {
+          setFav(true);
+          setLoaded(false);
+          await getFavorites();
+        }
       }
-
-    } else {
-      const res = await API.favorites.deleteFavorite(user.id, post.id);
-      setFavId('');
-      setFav(false);
-
-      console.log('NO FAV', res);
-      console.log(fav);
     }
-
   }
   
   return (
@@ -116,17 +131,17 @@ const PostCard = props => {
       className={clsx(classes.root, className)}
     >
       <Typography
-          className={classes.titlePost}
-          align="center"
-          variant="h2"
-        >
-          {post.name}
-        </Typography>
+        align="center"
+        className={classes.titlePost}
+        variant="h2"
+      >
+        {post.name}
+      </Typography>
       <CardMedia
         alt="Post"
         className={classes.media}
-        image={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
         component={CustomRouterLink}
+        image={'/images/' + post.serviceType + 's/' + post.serviceType + '5.png'}
         to={ruta + '/' + post.id}
         
       />
@@ -187,7 +202,7 @@ const PostCard = props => {
             className={classes.statsItem}
             item
           >
-            {(user.logged) ?
+            {(user.logged && user.rol === 'CLIENT' && loaded)  ?
               <IconButton
                 className={classes.button}
                 onClick={handleFavorite}

@@ -159,27 +159,17 @@ const SignIn = props => {
 
 
 
-    await API.users.getByName(credentials.username).then( userRes => {
+    await API.users.getByName(credentials.username).then( 
+      userRes => {
       //          console.log(userRes);
-      if(userRes && userRes.status === 200){
-
-        dialogo2 =false;
-        API.favorites.getById(userRes.data.id).
-          then((res)=>{
-            let favs = []
-            if(res && res.status === 200){
-              console.log(res)
-              favs = res.data
-
-            }
-            setUser({...userRes.data,
-              logged: true,
-              avatar: '/images/avatars/avatar_' + Math.floor(1 + Math.random() * 10) +'.png',
-              favorites: favs
-            });
-          }).catch(e => console.log(e));
-      }
-    }).catch((error) => {
+        if(userRes && userRes.status === 200){
+          dialogo2 =false;
+          setUser({...userRes.data,
+            logged: true,
+            avatar: '/images/avatars/avatar_' + Math.floor(1 + Math.random() * 10) +'.png'
+          }); 
+        }
+      }).catch((error) => {
       console.log(error);
     });
 
@@ -283,8 +273,6 @@ const SignIn = props => {
           AlertDescription={AlertDescription}
         />
       </Dialog>
-
-	
     </div>
   );
 };

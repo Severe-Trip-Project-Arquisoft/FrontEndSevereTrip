@@ -68,6 +68,7 @@ const FavoriteList = () => {
               <PostCard
                 favorite={pair.favorite}
                 post={pair.post}
+                key={pair.favorite.id + 'postcard'}
               />
             </Grid>
           ))}

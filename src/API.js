@@ -4,11 +4,8 @@ const base_url = 'http://52.5.42.71:8080';
 // const base_url = 'https://localhost:8443/login';
 
 
-const token = sessionStorage.getItem('userInfo')
+axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('userInfo');
 
-if(token){
-  axios.defaults.headers.common['Authorization'] = token;
-}
 
 
 export const API =
@@ -206,7 +203,7 @@ export const API =
 
       let url = base_url + '/favorites/' + clientId + '/insert/' + postId;
       return await axios.post(
-        url, {}
+        url
       ).catch(e => console.log('Error: ', e));
 
     },
@@ -214,7 +211,7 @@ export const API =
     deleteFavorite: async (clientId, postId)=> {
 
       let url = base_url + '/favorites/' + clientId + '/remove/' + postId;
-      return await axios.delete(
+      return await axios.post(
         url
       ).catch(e => console.log('Error: ', e));
     }
